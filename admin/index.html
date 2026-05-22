@@ -718,25 +718,18 @@
     const pw = document.getElementById('password-input').value.trim();
     if (!pw) return;
 
-    // Test the password against API
-    fetch(`${API_BASE}/get-leads?password=${encodeURIComponent(pw)}&limit=1`)
-      .then(r => {
-        if (r.ok) {
-          adminPassword = pw;
-          document.getElementById('login-screen').style.display = 'none';
-          document.getElementById('app').style.display = 'block';
-          loadAll();
-        } else {
-          document.getElementById('login-error').style.display = 'block';
-        }
-      })
-      .catch(() => {
-        // If API not available yet (dev mode), allow any password
-        adminPassword = pw;
-        document.getElementById('login-screen').style.display = 'none';
-        document.getElementById('app').style.display = 'block';
-        loadAll();
-      });
+    // Check password locally (hardcoded for now without API)
+    const ADMIN_PASSWORD = 'test123';
+
+    if (pw === ADMIN_PASSWORD) {
+      adminPassword = pw;
+      document.getElementById('login-error').style.display = 'none';
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('app').style.display = 'block';
+      loadAll();
+    } else {
+      document.getElementById('login-error').style.display = 'block';
+    }
   }
 
   function logout() {
