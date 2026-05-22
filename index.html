@@ -93,20 +93,6 @@
 
         .btn-primary svg { width: 18px; height: 18px; }
 
-        .faq-cta {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 48px 0 0;
-            padding: 0 48px;
-        }
-
-        @media (min-width: 768px) {
-            .faq-cta {
-                padding: 0;
-            }
-        }
-
         /* ---- Hero ---- */
         .hero {
             position: relative;
@@ -186,34 +172,6 @@
             height: 100%;
             background: linear-gradient(to right, #fff, transparent);
             z-index: 5;
-        }
-
-        /* ---- Hero inline features ---- */
-        .hero-features {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 16px 0;
-            margin-top: 32px;
-        }
-
-        .hero-feature {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 0 16px;
-            flex: 0 0 auto;
-        }
-
-        .hero-feature:first-child { padding-left: 0; }
-
-        .hero-feature svg { width: 24px; height: 24px; color: #6b7190; flex-shrink: 0; }
-
-        .hero-feature span {
-            font-size: 14px;
-            font-weight: 500;
-            color: #4a5068;
-            line-height: 1.3;
         }
 
         /* ---- Features strip ---- */
@@ -619,39 +577,23 @@
 
         .mobile-menu-btn svg { width: 24px; height: 24px; }
 
-        /* ---- Tablet ---- */
         @media (max-width: 1024px) {
             .hero h1 { font-size: 38px; }
-            .hero-content { flex: 0 0 58%; padding: 140px 32px 60px; }
+            .hero-content { flex: 0 0 60%; padding: 140px 32px 60px; }
             .hero-image { width: 50%; }
-
-            .how-works-section,
-            .countries-section,
-            .faq-section { padding: 64px 32px 48px; }
-
-            .steps-grid { gap: 28px; }
-
-            .countries-grid { grid-template-columns: repeat(3, 1fr); }
         }
 
-        /* ---- Mobile ---- */
         @media (max-width: 768px) {
             .header { padding: 16px 20px; }
-            .header .logo img { height: 64px !important; }
             .nav { display: none; }
             .lang-selector { display: none; }
             .mobile-menu-btn { display: block; }
 
             .hero { flex-direction: column; min-height: auto; }
-            .hero-content { flex: none; padding: 110px 20px 40px; }
+            .hero-content { flex: none; padding: 120px 20px 40px; }
             .hero h1 { font-size: 32px; }
-            .hero-sub { font-size: 16px; margin-bottom: 32px; }
-            .hero-image { position: relative; width: 100%; height: 260px; }
+            .hero-image { position: relative; width: 100%; height: 300px; }
             .hero-image::before { display: none; }
-
-            /* Hero inline features -> 2x2 grid */
-            .hero-features { gap: 20px 0; margin-top: 28px; }
-            .hero-feature { flex: 0 0 50%; padding: 0; }
 
             .features-strip {
                 flex-wrap: wrap;
@@ -664,30 +606,21 @@
             .stat-item { flex: 0 0 50%; }
 
             .trust-section { padding: 48px 20px; }
-            .trust-section h2 { font-size: 24px; }
 
-            .how-works-section,
-            .countries-section,
-            .faq-section { padding: 48px 20px; }
-            .how-works-section h2,
-            .countries-section h2,
-            .faq-section h2 { font-size: 24px; margin-bottom: 32px; }
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
 
-            /* Steps -> single column, centered */
-            .steps-grid { grid-template-columns: 1fr; gap: 32px; }
-            .step-card { align-items: center; text-align: center; }
+            .footer-bottom {
+                flex-direction: column;
+                gap: 20px;
+            }
 
-            /* Countries -> 2 columns */
-            .countries-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-        }
-
-        /* ---- Small phones ---- */
-        @media (max-width: 480px) {
-            .hero h1 { font-size: 27px; }
-            .hero-badge { font-size: 13px; padding: 7px 14px; }
-            .hero-feature span { font-size: 13px; }
-            .country-item { padding: 10px 8px; font-size: 12px; }
-            .country-flag { width: 40px; height: 27px; }
+            .footer-bottom-links {
+                flex-direction: column;
+                gap: 12px;
+            }
         }
 
         /* Footer styles */
@@ -784,30 +717,6 @@
         .footer-bottom-links a:hover {
             color: #4a90e2;
         }
-
-        /* ---- Responsive footer (declared after base styles so it wins the cascade) ---- */
-        @media (max-width: 1024px) {
-            .footer { padding: 60px 32px; }
-            .footer-content { gap: 40px; }
-        }
-
-        @media (max-width: 768px) {
-            .footer { padding: 48px 28px; }
-            .footer-content {
-                grid-template-columns: 1fr;
-                gap: 32px;
-                text-align: center;
-                margin-bottom: 40px;
-            }
-            .footer-logo { flex-direction: column; justify-content: center; gap: 12px; }
-            .footer-links ul,
-            .footer-legal ul { padding: 0; }
-            .footer-bottom {
-                flex-direction: column;
-                gap: 10px;
-                text-align: center;
-            }
-        }
     </style>
 </head>
 <body>
@@ -840,36 +749,36 @@
         </a>
 
         <!-- Features inline -->
-        <div class="hero-features">
-            <div class="hero-feature">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <div style="display: flex; align-items: center; gap: 0; margin-top: 32px;">
+            <div style="display: flex; align-items: center; gap: 12px; padding: 0 16px 0 0; flex: 0 0 auto;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width: 24px; height: 24px; color: #6b7190; flex-shrink: 0;">
                     <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
                 </svg>
-                <span>Secure online<br>submission</span>
+                <span style="font-size: 14px; font-weight: 500; color: #4a5068; line-height: 1.3;">Secure online<br>submission</span>
             </div>
-            <div class="hero-feature">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <div style="display: flex; align-items: center; gap: 12px; padding: 0 16px; flex: 0 0 auto;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width: 24px; height: 24px; color: #6b7190; flex-shrink: 0;">
                     <path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>
                 </svg>
-                <span>Traveler<br>support</span>
+                <span style="font-size: 14px; font-weight: 500; color: #4a5068; line-height: 1.3;">Traveler<br>support</span>
             </div>
-            <div class="hero-feature">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <div style="display: flex; align-items: center; gap: 12px; padding: 0 16px; flex: 0 0 auto;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width: 24px; height: 24px; color: #6b7190; flex-shrink: 0;">
                     <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
                 </svg>
-                <span>Fast<br>processing</span>
+                <span style="font-size: 14px; font-weight: 500; color: #4a5068; line-height: 1.3;">Fast<br>processing</span>
             </div>
-            <div class="hero-feature">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <div style="display: flex; align-items: center; gap: 12px; padding: 0 16px; flex: 0 0 auto;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width: 24px; height: 24px; color: #6b7190; flex-shrink: 0;">
                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/>
                 </svg>
-                <span>Approval Rate<br>99,9%</span>
+                <span style="font-size: 14px; font-weight: 500; color: #4a5068; line-height: 1.3;">Approval Rate<br>99,9%</span>
             </div>
         </div>
     </div>
 
     <div class="hero-image">
-        <img src="airport.webp" alt="Traveler at airport terminal" />
+        <img src="airport.png" alt="Traveler at airport terminal" />
     </div>
 </section>
 
@@ -1241,13 +1150,6 @@
                 We are an independent service provider authorized to help travelers complete the Thailand Digital Arrival Card application. We are not affiliated with any government but work in compliance with Thai immigration regulations.
             </div>
         </div>
-    </div>
-
-    <div class="faq-cta">
-        <a href="apply.html" class="btn-primary" style="padding:16px 32px;font-size:16px;border-radius:12px;">
-            Start application
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-        </a>
     </div>
 </section>
 
