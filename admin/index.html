@@ -752,13 +752,7 @@
 
   // ── LOAD ALL ──────────────────────────────────────────
   async function loadAll() {
-    // API endpoints not available yet - show empty state
-    // When backend is ready, uncomment these:
-    // await Promise.all([loadDashboard(), loadPayments()]);
-
-    // For now, show empty dashboard
-    renderDashboardLeads([]);
-    renderPaymentsTable([]);
+    await Promise.all([loadDashboard(), loadPayments()]);
   }
 
   // ── DASHBOARD ────────────────────────────────────────
