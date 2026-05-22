@@ -1686,8 +1686,14 @@
                     throw new Error(result.error || 'Server error. Please try again.');
                 }
 
-                // Open Stripe Payment Element with the client secret
-                openPaymentModal(result.client_secret);
+                // If Stripe is ready - open payment modal
+                // If not yet - show success screen directly
+                if (result.client_secret) {
+                    openPaymentModal(result.client_secret);
+                } else {
+                    // Stripe not connected yet - show success screen
+                    showPaymentSuccess();
+                }
 
             } catch (err) {
                 console.error('submitApplication error:', err);
