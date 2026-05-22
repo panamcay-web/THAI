@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thailand Pass — TDAC Application</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: #1a1f36;
+            background: #fff;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a { text-decoration: none; color: inherit; }
+
+        /* ---- Header ---- */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 48px;
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            z-index: 10;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 20px;
+            color: #1a1f36;
+        }
+
+        .logo svg { width: 38px; height: 38px; }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 36px;
+        }
+
+        .nav a {
+            font-size: 15px;
+            font-weight: 500;
+            color: #4a5068;
+            transition: color .2s;
+        }
+
+        .nav a:hover { color: #1a1f36; }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .lang-selector {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 15px;
+            font-weight: 500;
+            color: #4a5068;
+            cursor: pointer;
+        }
+
+        .lang-selector svg { width: 20px; height: 20px; }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #1a1f36;
+            color: #fff;
+            font-size: 15px;
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            transition: background .2s;
+        }
+
+        .btn-primary:hover { background: #2d3350; }
+
+        .btn-primary svg { width: 18px; height: 18px; }
+
+        .faq-cta {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 48px 0 0;
+            padding: 0 48px;
+        }
+
+        @media (min-width: 768px) {
+            .faq-cta {
+                padding: 0;
+            }
+        }
+
+        /* ---- Hero ---- */
+        .hero {
+            position: relative;
+            min-height: 720px;
+            display: flex;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            flex: 0 0 55%;
+            padding: 160px 48px 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #f0f1f5;
+            padding: 8px 18px;
+            border-radius: 999px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #4a5068;
+            width: fit-content;
+            margin-bottom: 32px;
+        }
+
+        .hero-badge svg { width: 18px; height: 18px; color: #1a1f36; }
+
+        .hero h1 {
+            font-size: 52px;
+            font-weight: 800;
+            line-height: 1.12;
+            color: #1a1f36;
+            max-width: 580px;
+            margin-bottom: 24px;
+            letter-spacing: -0.5px;
+        }
+
+        .hero-sub {
+            font-size: 17px;
+            line-height: 1.65;
+            color: #6b7190;
+            max-width: 460px;
+            margin-bottom: 40px;
+        }
+
+        .hero-image {
+            position: absolute;
+            top: 0; right: 0;
+            width: 55%;
+            height: 100%;
+            z-index: 1;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .hero-image::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 200px;
+            height: 100%;
+            background: linear-gradient(to right, #fff, transparent);
+            z-index: 5;
+        }
+
+        /* ---- Hero inline features ---- */
+        .hero-features {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px 0;
+            margin-top: 32px;
+        }
+
+        .hero-feature {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0 16px;
+            flex: 0 0 auto;
+        }
+
+        .hero-feature:first-child { padding-left: 0; }
+
+        .hero-feature svg { width: 24px; height: 24px; color: #6b7190; flex-shrink: 0; }
+
+        .hero-feature span {
+            font-size: 14px;
+            font-weight: 500;
+            color: #4a5068;
+            line-height: 1.3;
+        }
+
+        /* ---- Features strip ---- */
+        .features-strip {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            padding: 40px 48px 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0 32px;
+            border-right: 1px solid #e0e2ea;
+        }
+
+        .feature-item:first-child { padding-left: 0; }
+        .feature-item:last-child { border-right: none; }
+
+        .feature-item svg { width: 24px; height: 24px; color: #6b7190; flex-shrink: 0; }
+
+        .feature-item span {
+            font-size: 14px;
+            font-weight: 500;
+            color: #4a5068;
+            line-height: 1.3;
+        }
+
+        /* ---- How it works section ---- */
+        .how-works-section {
+            padding: 80px 48px 60px;
+            background: #f8f9fb;
+        }
+
+        .how-works-section h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a1f36;
+            text-align: center;
+            margin-bottom: 56px;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .step-card {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .step-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            background: #1a1f36;
+            color: #fff;
+            font-size: 20px;
+            font-weight: 700;
+            border-radius: 12px;
+        }
+
+        .step-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1f36;
+        }
+
+        .step-card p {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #6b7190;
+        }
+
+        /* ---- Countries section ---- */
+        .countries-section {
+            padding: 80px 48px 60px;
+        }
+
+        .countries-section h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a1f36;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .countries-description {
+            max-width: 700px;
+            margin: 0 auto 48px;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #6b7190;
+            text-align: center;
+        }
+
+        .faq-section {
+            padding: 80px 48px 60px;
+            background: #f8f9fb;
+        }
+
+        .faq-section h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a1f36;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .faq-description {
+            max-width: 700px;
+            margin: 0 auto 48px;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #6b7190;
+            text-align: center;
+        }
+
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .faq-item {
+            background: #fff;
+            border: 1px solid #e0e2ea;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 20px;
+            background: #fff;
+            border: none;
+            text-align: left;
+            font-size: 15px;
+            font-weight: 600;
+            color: #1a1f36;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: #f8f9fb;
+            color: #4a90e2;
+        }
+
+        .faq-icon {
+            flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            font-size: 20px;
+            color: #4a90e2;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-question.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            padding: 0 20px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #6b7190;
+            background: #f8f9fb;
+            transition: all 0.3s ease;
+        }
+
+        .faq-answer.show {
+            max-height: 500px;
+            padding: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .faq-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .search-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin: 24px auto 32px;
+        }
+
+        .search-wrapper::before {
+            content: '';
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239a9fb5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .country-search {
+            display: block;
+            width: 100%;
+            padding: 12px 16px 12px 42px;
+            font-size: 15px;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            border: 1px solid #d0d5e0;
+            border-radius: 8px;
+            background: #fff;
+            color: #1a1f36;
+            transition: all 0.2s ease;
+        }
+
+        .country-search::placeholder {
+            color: #9a9fb5;
+        }
+
+        .country-search:focus {
+            outline: none;
+            border-color: #4a90e2;
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+        }
+
+        .countries-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            max-width: 1000px;
+            margin: 0 auto 32px;
+        }
+
+        .country-item {
+            padding: 12px 16px;
+            background: #f8f9fb;
+            border-radius: 8px;
+            font-size: 13px;
+            color: #4a5068;
+            text-align: center;
+            border: 1px solid #e0e2ea;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .country-item:hover {
+            background: #e8f1ff;
+            border-color: #4a90e2;
+            box-shadow: 0 4px 12px rgba(74, 144, 226, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .country-flag {
+            width: 48px;
+            height: 32px;
+            object-fit: cover;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(26, 31, 54, 0.12);
+            transition: all 0.3s ease;
+        }
+
+        .country-item:hover .country-flag {
+            box-shadow: 0 4px 12px rgba(26, 31, 54, 0.18);
+            transform: scale(1.05);
+        }
+
+        .country-name {
+            font-weight: 500;
+            color: #4a5068;
+        }
+
+        .country-required {
+            font-size: 12px;
+            font-weight: 600;
+            color: #4a90e2;
+            background: rgba(74, 144, 226, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .countries-hidden {
+            display: none;
+        }
+
+        .show-all-btn {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 32px;
+        }
+
+        .show-all-btn button {
+            background: #1a1f36;
+            color: #fff;
+            font-size: 15px;
+            font-weight: 600;
+            padding: 12px 32px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            transition: background .2s;
+        }
+
+        .show-all-btn button:hover {
+            background: #2d3350;
+        }
+
+        /* ---- Trust section ---- */
+        .trust-section {
+            text-align: center;
+            padding: 80px 48px 60px;
+        }
+
+        .trust-section h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a1f36;
+            margin-bottom: 12px;
+        }
+
+        .trust-section .trust-sub {
+            font-size: 16px;
+            color: #6b7190;
+            margin-bottom: 48px;
+        }
+
+        .stats-grid {
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        .stat-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 24px 32px;
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            background: #f0f1f5;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+        }
+
+        .stat-icon svg { width: 22px; height: 22px; color: #6b7190; }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a1f36;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #6b7190;
+        }
+
+        /* ---- Mobile hamburger ---- */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .mobile-menu-btn svg { width: 24px; height: 24px; }
+
+        /* ---- Tablet ---- */
+        @media (max-width: 1024px) {
+            .hero h1 { font-size: 38px; }
+            .hero-content { flex: 0 0 58%; padding: 140px 32px 60px; }
+            .hero-image { width: 50%; }
+
+            .how-works-section,
+            .countries-section,
+            .faq-section { padding: 64px 32px 48px; }
+
+            .steps-grid { gap: 28px; }
+
+            .countries-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        /* ---- Mobile ---- */
+        @media (max-width: 768px) {
+            .header { padding: 16px 20px; }
+            .header .logo img { height: 64px !important; }
+            .nav { display: none; }
+            .lang-selector { display: none; }
+            .mobile-menu-btn { display: block; }
+
+            .hero { flex-direction: column; min-height: auto; }
+            .hero-content { flex: none; padding: 110px 20px 40px; }
+            .hero h1 { font-size: 32px; }
+            .hero-sub { font-size: 16px; margin-bottom: 32px; }
+            .hero-image { position: relative; width: 100%; height: 260px; }
+            .hero-image::before { display: none; }
+
+            /* Hero inline features -> 2x2 grid */
+            .hero-features { gap: 20px 0; margin-top: 28px; }
+            .hero-feature { flex: 0 0 50%; padding: 0; }
+
+            .features-strip {
+                flex-wrap: wrap;
+                gap: 16px;
+                padding: 32px 20px;
+            }
+            .feature-item { border-right: none; padding: 0; }
+
+            .stats-grid { flex-wrap: wrap; }
+            .stat-item { flex: 0 0 50%; }
+
+            .trust-section { padding: 48px 20px; }
+            .trust-section h2 { font-size: 24px; }
+
+            .how-works-section,
+            .countries-section,
+            .faq-section { padding: 48px 20px; }
+            .how-works-section h2,
+            .countries-section h2,
+            .faq-section h2 { font-size: 24px; margin-bottom: 32px; }
+
+            /* Steps -> single column, centered */
+            .steps-grid { grid-template-columns: 1fr; gap: 32px; }
+            .step-card { align-items: center; text-align: center; }
+
+            /* Countries -> 2 columns */
+            .countries-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        }
+
+        /* ---- Small phones ---- */
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 27px; }
+            .hero-badge { font-size: 13px; padding: 7px 14px; }
+            .hero-feature span { font-size: 13px; }
+            .country-item { padding: 10px 8px; font-size: 12px; }
+            .country-flag { width: 40px; height: 27px; }
+        }
+
+        /* Footer styles */
+        .footer {
+            background: #1a1f36;
+            color: #fff;
+            padding: 60px 48px;
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 60px;
+            max-width: 1400px;
+            margin: 0 auto 60px;
+        }
+
+        .footer-section h3,
+        .footer-section h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .footer-logo-img {
+            height: 50px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .footer-about p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #a0a5b8;
+        }
+
+        .footer-links ul,
+        .footer-legal ul {
+            list-style: none;
+        }
+
+        .footer-links li,
+        .footer-legal li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a,
+        .footer-legal a {
+            font-size: 14px;
+            color: #a0a5b8;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover,
+        .footer-legal a:hover {
+            color: #4a90e2;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            border-top: 1px solid #2d3350;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-bottom p {
+            font-size: 13px;
+            color: #a0a5b8;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .footer-bottom-links a {
+            font-size: 13px;
+            color: #a0a5b8;
+            transition: color 0.3s ease;
+        }
+
+        .footer-bottom-links a:hover {
+            color: #4a90e2;
+        }
+
+        /* ---- Responsive footer (declared after base styles so it wins the cascade) ---- */
+        @media (max-width: 1024px) {
+            .footer { padding: 60px 32px; }
+            .footer-content { gap: 40px; }
+        }
+
+        @media (max-width: 768px) {
+            .footer { padding: 48px 28px; }
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 32px;
+                text-align: center;
+                margin-bottom: 40px;
+            }
+            .footer-logo { flex-direction: column; justify-content: center; gap: 12px; }
+            .footer-links ul,
+            .footer-legal ul { padding: 0; }
+            .footer-bottom {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+    <a href="#" class="logo">
+        <img src="logo.png" alt="Thailand Arrival Logo" style="height: 100px; object-fit: contain;">
+    </a>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+    <div class="hero-content">
+        <div class="hero-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+            Thailand Digital Arrival Card (TDAC) Assistance
+        </div>
+
+        <h1>Get your Thailand Digital Arrival Card in minutes</h1>
+
+        <p class="hero-sub">Complete your Thailand Digital Arrival Card online before your trip. Simple process, secure submission, and dedicated traveler support.</p>
+
+        <a href="apply.html" class="btn-primary" style="width:fit-content;padding:16px 32px;font-size:16px;border-radius:12px;">
+            Start application
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+
+        <!-- Features inline -->
+        <div class="hero-features">
+            <div class="hero-feature">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+                <span>Secure online<br>submission</span>
+            </div>
+            <div class="hero-feature">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>
+                </svg>
+                <span>Traveler<br>support</span>
+            </div>
+            <div class="hero-feature">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                </svg>
+                <span>Fast<br>processing</span>
+            </div>
+            <div class="hero-feature">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/>
+                </svg>
+                <span>Approval Rate<br>99,9%</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="hero-image">
+        <img src="airport.webp" alt="Traveler at airport terminal" />
+    </div>
+</section>
+
+<!-- Features strip -->
+<div class="features-strip" style="display: none;">
+    <div class="feature-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+        <span>Secure online<br>submission</span>
+    </div>
+    <div class="feature-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>
+        </svg>
+        <span>Traveler<br>support</span>
+    </div>
+    <div class="feature-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+        </svg>
+        <span>Fast<br>processing</span>
+    </div>
+    <div class="feature-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/>
+        </svg>
+        <span>Approval Rate<br>99,9%</span>
+    </div>
+</div>
+
+<!-- About TDAC section -->
+<section class="trust-section">
+    <h2>About the Thailand Arrival Card?</h2>
+    <p class="trust-sub" style="max-width: 700px; margin-left: auto; margin-right: auto; font-size: 18px; line-height: 1.6; color: #6b7190;">The TDAC is a mandatory entry requirement for all travelers entering Thailand. Think of it as your digital pass: it needs to be completed before your flight. By using our service, you ensure your application is submitted correctly and on time, allowing you to breeze through immigration and start your holiday without any paperwork stress.</p>
+</section>
+
+<!-- How It Works section -->
+<section class="how-works-section" id="how-it-works">
+    <h2>How It Works?</h2>
+    <div class="steps-grid">
+        <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Fill in your personal details</h3>
+            <p>Start by providing your basic information. We've simplified our form to ensure you only enter exactly what is required for your arrival, making the process quick and error-free.</p>
+        </div>
+        <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>Provide your travel & stay info</h3>
+            <p>Enter your flight details and accommodation address. Having these ready helps ensure your application is processed correctly and accepted by immigration authorities without delays.</p>
+        </div>
+        <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>Pay and receive by email</h3>
+            <p>Complete your secure payment, and we will handle the rest. Your Thailand Digital Arrival Card will be sent directly to your email address, ready to be shown at immigration.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Countries section -->
+<section class="countries-section" id="countries">
+    <h2>Countries requiring Thailand Digital Arrival Card</h2>
+    <p class="countries-description">All international passengers traveling to Thailand must complete the Thailand Digital Arrival Card entry form before arrival.</p>
+    <div class="search-wrapper">
+        <input type="text" id="countrySearch" class="country-search" placeholder="Search your country">
+    </div>
+    <div class="countries-grid" id="countriesGrid">
+        <div class="country-item"><img src="https://flagcdn.com/h40/af.png" class="country-flag" alt="af" loading="lazy"><div class="country-name">Afghanistan</div><div class="country-required">required</div></div>
+        <div class="country-item"><img src="https://flagcdn.com/h40/al.png" class="country-flag" alt="al" loading="lazy"><div class="country-name">Albania</div><div class="country-required">required</div></div>
+        <div class="country-item"><img src="https://flagcdn.com/h40/dz.png" class="country-flag" alt="dz" loading="lazy"><div class="country-name">Algeria</div><div class="country-required">required</div></div>
+        <div class="country-item"><img src="https://flagcdn.com/h40/ad.png" class="country-flag" alt="ad" loading="lazy"><div class="country-name">Andorra</div><div class="country-required">required</div></div>
+        <div class="country-item"><img src="https://flagcdn.com/h40/ao.png" class="country-flag" alt="ao" loading="lazy"><div class="country-name">Angola</div><div class="country-required">required</div></div>
+        <div class="country-item"><img src="https://flagcdn.com/h40/ar.png" class="country-flag" alt="ar" loading="lazy"><div class="country-name">Argentina</div><div class="country-required">required</div></div>
+        <div class="country-item"><img src="https://flagcdn.com/h40/am.png" class="country-flag" alt="am" loading="lazy"><div class="country-name">Armenia</div><div class="country-required">required</div></div>
+        <div class="country-item"><img src="https://flagcdn.com/h40/au.png" class="country-flag" alt="au" loading="lazy"><div class="country-name">Australia</div><div class="country-required">required</div></div>
+        <div class="country-item"><img src="https://flagcdn.com/h40/at.png" class="country-flag" alt="at" loading="lazy"><div class="country-name">Austria</div><div class="country-required">required</div></div>
+        <div class="country-item"><img src="https://flagcdn.com/h40/az.png" class="country-flag" alt="az" loading="lazy"><div class="country-name">Azerbaijan</div><div class="country-required">required</div></div>
+        <div class="country-item"><img src="https://flagcdn.com/h40/bs.png" class="country-flag" alt="bs" loading="lazy"><div class="country-name">Bahamas</div><div class="country-required">required</div></div>
+        <div class="country-item"><img src="https://flagcdn.com/h40/bh.png" class="country-flag" alt="bh" loading="lazy"><div class="country-name">Bahrain</div><div class="country-required">required</div></div>
+        <div class="country-item"><img src="https://flagcdn.com/h40/bd.png" class="country-flag" alt="bd" loading="lazy"><div class="country-name">Bangladesh</div><div class="country-required">required</div></div>
+        <div class="country-item"><img src="https://flagcdn.com/h40/bb.png" class="country-flag" alt="bb" loading="lazy"><div class="country-name">Barbados</div><div class="country-required">required</div></div>
+        <div class="country-item"><img src="https://flagcdn.com/h40/by.png" class="country-flag" alt="by" loading="lazy"><div class="country-name">Belarus</div><div class="country-required">required</div></div>
+        <div class="country-item"><img src="https://flagcdn.com/h40/be.png" class="country-flag" alt="be" loading="lazy"><div class="country-name">Belgium</div><div class="country-required">required</div></div>
+        <div class="country-item"><img src="https://flagcdn.com/h40/bz.png" class="country-flag" alt="bz" loading="lazy"><div class="country-name">Belize</div><div class="country-required">required</div></div>
+        <div class="country-item"><img src="https://flagcdn.com/h40/bj.png" class="country-flag" alt="bj" loading="lazy"><div class="country-name">Benin</div><div class="country-required">required</div></div>
+        <div class="country-item"><img src="https://flagcdn.com/h40/bt.png" class="country-flag" alt="bt" loading="lazy"><div class="country-name">Bhutan</div><div class="country-required">required</div></div>
+        <div class="country-item"><img src="https://flagcdn.com/h40/bo.png" class="country-flag" alt="bo" loading="lazy"><div class="country-name">Bolivia</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/ba.png" class="country-flag" alt="ba" loading="lazy"><div class="country-name">Bosnia and Herzegovina</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/bw.png" class="country-flag" alt="bw" loading="lazy"><div class="country-name">Botswana</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/br.png" class="country-flag" alt="br" loading="lazy"><div class="country-name">Brazil</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/bn.png" class="country-flag" alt="bn" loading="lazy"><div class="country-name">Brunei</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/bg.png" class="country-flag" alt="bg" loading="lazy"><div class="country-name">Bulgaria</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/bf.png" class="country-flag" alt="bf" loading="lazy"><div class="country-name">Burkina Faso</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/bi.png" class="country-flag" alt="bi" loading="lazy"><div class="country-name">Burundi</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/kh.png" class="country-flag" alt="kh" loading="lazy"><div class="country-name">Cambodia</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/cm.png" class="country-flag" alt="cm" loading="lazy"><div class="country-name">Cameroon</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/ca.png" class="country-flag" alt="ca" loading="lazy"><div class="country-name">Canada</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/cv.png" class="country-flag" alt="cv" loading="lazy"><div class="country-name">Cape Verde</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/cf.png" class="country-flag" alt="cf" loading="lazy"><div class="country-name">Central African Republic</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/td.png" class="country-flag" alt="td" loading="lazy"><div class="country-name">Chad</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/cl.png" class="country-flag" alt="cl" loading="lazy"><div class="country-name">Chile</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/cn.png" class="country-flag" alt="cn" loading="lazy"><div class="country-name">China</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/co.png" class="country-flag" alt="co" loading="lazy"><div class="country-name">Colombia</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/km.png" class="country-flag" alt="km" loading="lazy"><div class="country-name">Comoros</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/cg.png" class="country-flag" alt="cg" loading="lazy"><div class="country-name">Congo</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/cr.png" class="country-flag" alt="cr" loading="lazy"><div class="country-name">Costa Rica</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/hr.png" class="country-flag" alt="hr" loading="lazy"><div class="country-name">Croatia</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/cu.png" class="country-flag" alt="cu" loading="lazy"><div class="country-name">Cuba</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/cy.png" class="country-flag" alt="cy" loading="lazy"><div class="country-name">Cyprus</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/cz.png" class="country-flag" alt="cz" loading="lazy"><div class="country-name">Czech Republic</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/dk.png" class="country-flag" alt="dk" loading="lazy"><div class="country-name">Denmark</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/dj.png" class="country-flag" alt="dj" loading="lazy"><div class="country-name">Djibouti</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/dm.png" class="country-flag" alt="dm" loading="lazy"><div class="country-name">Dominica</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/do.png" class="country-flag" alt="do" loading="lazy"><div class="country-name">Dominican Republic</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/tl.png" class="country-flag" alt="tl" loading="lazy"><div class="country-name">East Timor</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/ec.png" class="country-flag" alt="ec" loading="lazy"><div class="country-name">Ecuador</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/eg.png" class="country-flag" alt="eg" loading="lazy"><div class="country-name">Egypt</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/sv.png" class="country-flag" alt="sv" loading="lazy"><div class="country-name">El Salvador</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/gq.png" class="country-flag" alt="gq" loading="lazy"><div class="country-name">Equatorial Guinea</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/er.png" class="country-flag" alt="er" loading="lazy"><div class="country-name">Eritrea</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/ee.png" class="country-flag" alt="ee" loading="lazy"><div class="country-name">Estonia</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/et.png" class="country-flag" alt="et" loading="lazy"><div class="country-name">Ethiopia</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/fj.png" class="country-flag" alt="fj" loading="lazy"><div class="country-name">Fiji</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/fi.png" class="country-flag" alt="fi" loading="lazy"><div class="country-name">Finland</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/fr.png" class="country-flag" alt="fr" loading="lazy"><div class="country-name">France</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/ga.png" class="country-flag" alt="ga" loading="lazy"><div class="country-name">Gabon</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/gm.png" class="country-flag" alt="gm" loading="lazy"><div class="country-name">Gambia</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/ge.png" class="country-flag" alt="ge" loading="lazy"><div class="country-name">Georgia</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/de.png" class="country-flag" alt="de" loading="lazy"><div class="country-name">Germany</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/gh.png" class="country-flag" alt="gh" loading="lazy"><div class="country-name">Ghana</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/gr.png" class="country-flag" alt="gr" loading="lazy"><div class="country-name">Greece</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/gd.png" class="country-flag" alt="gd" loading="lazy"><div class="country-name">Grenada</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/gt.png" class="country-flag" alt="gt" loading="lazy"><div class="country-name">Guatemala</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/gn.png" class="country-flag" alt="gn" loading="lazy"><div class="country-name">Guinea</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/gw.png" class="country-flag" alt="gw" loading="lazy"><div class="country-name">Guinea-Bissau</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/gy.png" class="country-flag" alt="gy" loading="lazy"><div class="country-name">Guyana</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/ht.png" class="country-flag" alt="ht" loading="lazy"><div class="country-name">Haiti</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/hn.png" class="country-flag" alt="hn" loading="lazy"><div class="country-name">Honduras</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/hu.png" class="country-flag" alt="hu" loading="lazy"><div class="country-name">Hungary</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/is.png" class="country-flag" alt="is" loading="lazy"><div class="country-name">Iceland</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/in.png" class="country-flag" alt="in" loading="lazy"><div class="country-name">India</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/id.png" class="country-flag" alt="id" loading="lazy"><div class="country-name">Indonesia</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/ir.png" class="country-flag" alt="ir" loading="lazy"><div class="country-name">Iran</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/iq.png" class="country-flag" alt="iq" loading="lazy"><div class="country-name">Iraq</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/ie.png" class="country-flag" alt="ie" loading="lazy"><div class="country-name">Ireland</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/il.png" class="country-flag" alt="il" loading="lazy"><div class="country-name">Israel</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/it.png" class="country-flag" alt="it" loading="lazy"><div class="country-name">Italy</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/ci.png" class="country-flag" alt="ci" loading="lazy"><div class="country-name">Ivory Coast</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/jm.png" class="country-flag" alt="jm" loading="lazy"><div class="country-name">Jamaica</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/jp.png" class="country-flag" alt="jp" loading="lazy"><div class="country-name">Japan</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/jo.png" class="country-flag" alt="jo" loading="lazy"><div class="country-name">Jordan</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/kz.png" class="country-flag" alt="kz" loading="lazy"><div class="country-name">Kazakhstan</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/ke.png" class="country-flag" alt="ke" loading="lazy"><div class="country-name">Kenya</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/ki.png" class="country-flag" alt="ki" loading="lazy"><div class="country-name">Kiribati</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><div class="country-flag">🇽🇰</div><div class="country-name">Kosovo</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/kw.png" class="country-flag" alt="kw" loading="lazy"><div class="country-name">Kuwait</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/kg.png" class="country-flag" alt="kg" loading="lazy"><div class="country-name">Kyrgyzstan</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/la.png" class="country-flag" alt="la" loading="lazy"><div class="country-name">Laos</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/lv.png" class="country-flag" alt="lv" loading="lazy"><div class="country-name">Latvia</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/lb.png" class="country-flag" alt="lb" loading="lazy"><div class="country-name">Lebanon</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/ls.png" class="country-flag" alt="ls" loading="lazy"><div class="country-name">Lesotho</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/lr.png" class="country-flag" alt="lr" loading="lazy"><div class="country-name">Liberia</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/ly.png" class="country-flag" alt="ly" loading="lazy"><div class="country-name">Libya</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/li.png" class="country-flag" alt="li" loading="lazy"><div class="country-name">Liechtenstein</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/lt.png" class="country-flag" alt="lt" loading="lazy"><div class="country-name">Lithuania</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/lu.png" class="country-flag" alt="lu" loading="lazy"><div class="country-name">Luxembourg</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/mg.png" class="country-flag" alt="mg" loading="lazy"><div class="country-name">Madagascar</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/mw.png" class="country-flag" alt="mw" loading="lazy"><div class="country-name">Malawi</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/my.png" class="country-flag" alt="my" loading="lazy"><div class="country-name">Malaysia</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/mv.png" class="country-flag" alt="mv" loading="lazy"><div class="country-name">Maldives</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/ml.png" class="country-flag" alt="ml" loading="lazy"><div class="country-name">Mali</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/mt.png" class="country-flag" alt="mt" loading="lazy"><div class="country-name">Malta</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/mh.png" class="country-flag" alt="mh" loading="lazy"><div class="country-name">Marshall Islands</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/mr.png" class="country-flag" alt="mr" loading="lazy"><div class="country-name">Mauritania</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/mu.png" class="country-flag" alt="mu" loading="lazy"><div class="country-name">Mauritius</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/mx.png" class="country-flag" alt="mx" loading="lazy"><div class="country-name">Mexico</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/fm.png" class="country-flag" alt="fm" loading="lazy"><div class="country-name">Micronesia</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/md.png" class="country-flag" alt="md" loading="lazy"><div class="country-name">Moldova</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/mc.png" class="country-flag" alt="mc" loading="lazy"><div class="country-name">Monaco</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/mn.png" class="country-flag" alt="mn" loading="lazy"><div class="country-name">Mongolia</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/me.png" class="country-flag" alt="me" loading="lazy"><div class="country-name">Montenegro</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/ma.png" class="country-flag" alt="ma" loading="lazy"><div class="country-name">Morocco</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/mz.png" class="country-flag" alt="mz" loading="lazy"><div class="country-name">Mozambique</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/mm.png" class="country-flag" alt="mm" loading="lazy"><div class="country-name">Myanmar</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/na.png" class="country-flag" alt="na" loading="lazy"><div class="country-name">Namibia</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/nr.png" class="country-flag" alt="nr" loading="lazy"><div class="country-name">Nauru</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/np.png" class="country-flag" alt="np" loading="lazy"><div class="country-name">Nepal</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/nl.png" class="country-flag" alt="nl" loading="lazy"><div class="country-name">Netherlands</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/nz.png" class="country-flag" alt="nz" loading="lazy"><div class="country-name">New Zealand</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/ni.png" class="country-flag" alt="ni" loading="lazy"><div class="country-name">Nicaragua</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/ne.png" class="country-flag" alt="ne" loading="lazy"><div class="country-name">Niger</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/ng.png" class="country-flag" alt="ng" loading="lazy"><div class="country-name">Nigeria</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/kp.png" class="country-flag" alt="kp" loading="lazy"><div class="country-name">North Korea</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><div class="country-flag">🇲🇰</div><div class="country-name">North Macedonia</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/no.png" class="country-flag" alt="no" loading="lazy"><div class="country-name">Norway</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/om.png" class="country-flag" alt="om" loading="lazy"><div class="country-name">Oman</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/pk.png" class="country-flag" alt="pk" loading="lazy"><div class="country-name">Pakistan</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/pw.png" class="country-flag" alt="pw" loading="lazy"><div class="country-name">Palau</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><div class="country-flag">🇵🇸</div><div class="country-name">Palestine</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/pa.png" class="country-flag" alt="pa" loading="lazy"><div class="country-name">Panama</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/pg.png" class="country-flag" alt="pg" loading="lazy"><div class="country-name">Papua New Guinea</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/py.png" class="country-flag" alt="py" loading="lazy"><div class="country-name">Paraguay</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/pe.png" class="country-flag" alt="pe" loading="lazy"><div class="country-name">Peru</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/ph.png" class="country-flag" alt="ph" loading="lazy"><div class="country-name">Philippines</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/pl.png" class="country-flag" alt="pl" loading="lazy"><div class="country-name">Poland</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/pt.png" class="country-flag" alt="pt" loading="lazy"><div class="country-name">Portugal</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/qa.png" class="country-flag" alt="qa" loading="lazy"><div class="country-name">Qatar</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/ro.png" class="country-flag" alt="ro" loading="lazy"><div class="country-name">Romania</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/ru.png" class="country-flag" alt="ru" loading="lazy"><div class="country-name">Russia</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/rw.png" class="country-flag" alt="rw" loading="lazy"><div class="country-name">Rwanda</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/kn.png" class="country-flag" alt="kn" loading="lazy"><div class="country-name">Saint Kitts and Nevis</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/lc.png" class="country-flag" alt="lc" loading="lazy"><div class="country-name">Saint Lucia</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/vc.png" class="country-flag" alt="vc" loading="lazy"><div class="country-name">Saint Vincent and the Grenadines</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/ws.png" class="country-flag" alt="ws" loading="lazy"><div class="country-name">Samoa</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/sm.png" class="country-flag" alt="sm" loading="lazy"><div class="country-name">San Marino</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/st.png" class="country-flag" alt="st" loading="lazy"><div class="country-name">Sao Tome and Principe</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/sa.png" class="country-flag" alt="sa" loading="lazy"><div class="country-name">Saudi Arabia</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/sn.png" class="country-flag" alt="sn" loading="lazy"><div class="country-name">Senegal</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/rs.png" class="country-flag" alt="rs" loading="lazy"><div class="country-name">Serbia</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/sc.png" class="country-flag" alt="sc" loading="lazy"><div class="country-name">Seychelles</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/sl.png" class="country-flag" alt="sl" loading="lazy"><div class="country-name">Sierra Leone</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/sg.png" class="country-flag" alt="sg" loading="lazy"><div class="country-name">Singapore</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/sk.png" class="country-flag" alt="sk" loading="lazy"><div class="country-name">Slovakia</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/si.png" class="country-flag" alt="si" loading="lazy"><div class="country-name">Slovenia</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><div class="country-flag">🇸🇧</div><div class="country-name">Solomon Islands</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><div class="country-flag">🇸🇴</div><div class="country-name">Somalia</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><div class="country-flag">🇿🇦</div><div class="country-name">South Africa</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/kr.png" class="country-flag" alt="kr" loading="lazy"><div class="country-name">South Korea</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><div class="country-flag">🇸🇸</div><div class="country-name">South Sudan</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/es.png" class="country-flag" alt="es" loading="lazy"><div class="country-name">Spain</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/lk.png" class="country-flag" alt="lk" loading="lazy"><div class="country-name">Sri Lanka</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/sd.png" class="country-flag" alt="sd" loading="lazy"><div class="country-name">Sudan</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/sr.png" class="country-flag" alt="sr" loading="lazy"><div class="country-name">Suriname</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/se.png" class="country-flag" alt="se" loading="lazy"><div class="country-name">Sweden</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/ch.png" class="country-flag" alt="ch" loading="lazy"><div class="country-name">Switzerland</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/sy.png" class="country-flag" alt="sy" loading="lazy"><div class="country-name">Syria</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/tw.png" class="country-flag" alt="tw" loading="lazy"><div class="country-name">Taiwan</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/tj.png" class="country-flag" alt="tj" loading="lazy"><div class="country-name">Tajikistan</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/tz.png" class="country-flag" alt="tz" loading="lazy"><div class="country-name">Tanzania</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/tl.png" class="country-flag" alt="tl" loading="lazy"><div class="country-name">Timor-Leste</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/tg.png" class="country-flag" alt="tg" loading="lazy"><div class="country-name">Togo</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/to.png" class="country-flag" alt="to" loading="lazy"><div class="country-name">Tonga</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/tt.png" class="country-flag" alt="tt" loading="lazy"><div class="country-name">Trinidad and Tobago</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/tn.png" class="country-flag" alt="tn" loading="lazy"><div class="country-name">Tunisia</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/tr.png" class="country-flag" alt="tr" loading="lazy"><div class="country-name">Turkey</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/tm.png" class="country-flag" alt="tm" loading="lazy"><div class="country-name">Turkmenistan</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/tv.png" class="country-flag" alt="tv" loading="lazy"><div class="country-name">Tuvalu</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/ug.png" class="country-flag" alt="ug" loading="lazy"><div class="country-name">Uganda</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/ua.png" class="country-flag" alt="ua" loading="lazy"><div class="country-name">Ukraine</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/ae.png" class="country-flag" alt="ae" loading="lazy"><div class="country-name">United Arab Emirates</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/gb.png" class="country-flag" alt="gb" loading="lazy"><div class="country-name">United Kingdom</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/us.png" class="country-flag" alt="us" loading="lazy"><div class="country-name">United States</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/uy.png" class="country-flag" alt="uy" loading="lazy"><div class="country-name">Uruguay</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/uz.png" class="country-flag" alt="uz" loading="lazy"><div class="country-name">Uzbekistan</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/vu.png" class="country-flag" alt="vu" loading="lazy"><div class="country-name">Vanuatu</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/va.png" class="country-flag" alt="va" loading="lazy"><div class="country-name">Vatican City</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/ve.png" class="country-flag" alt="ve" loading="lazy"><div class="country-name">Venezuela</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/vn.png" class="country-flag" alt="vn" loading="lazy"><div class="country-name">Vietnam</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/ye.png" class="country-flag" alt="ye" loading="lazy"><div class="country-name">Yemen</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/zm.png" class="country-flag" alt="zm" loading="lazy"><div class="country-name">Zambia</div><div class="country-required">required</div></div>
+        <div class="country-item countries-hidden"><img src="https://flagcdn.com/h40/zw.png" class="country-flag" alt="zw" loading="lazy"><div class="country-name">Zimbabwe</div><div class="country-required">required</div></div>
+    </div>
+    <div class="show-all-btn">
+        <button onclick="toggleCountries()">Show all countries</button>
+    </div>
+</section>
+
+<!-- FAQ section -->
+<section class="faq-section" id="faq">
+    <h2>Frequently Asked Questions</h2>
+    <p class="faq-description">Find answers about Thailand TDAC applications, processing times, costs, and how we keep your information secure throughout the process.</p>
+    <div class="faq-container">
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFAQ(this)">
+                <span>Can I submit my application on my travel day?</span>
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+                Yes, applications are accepted on the same day and are often approved within a few minutes. To minimize risks associated with last-minute submissions, we recommend submitting your application as early as possible.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFAQ(this)">
+                <span>What documents do I need?</span>
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+                You'll need a valid passport, flight details, and accommodation information for your stay in Thailand. Some nationalities may require additional documents.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFAQ(this)">
+                <span>What's your application approval rate?</span>
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+                We maintain a high approval rate of over 99% for complete and accurately filled applications. Applications are reviewed quickly, and most are approved within minutes of submission.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFAQ(this)">
+                <span>How long does processing take?</span>
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+                Most applications are processed and approved within a few minutes. Once approved, your Thailand Digital Arrival Card is sent to your email immediately and is ready to present at immigration.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFAQ(this)">
+                <span>What are the fees for online travel document application services?</span>
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+                Our service fee is competitive and transparent. The cost includes end-to-end assistance with your application, verification of your information, and professional support for all applicants. You will see the exact total price during the application process before making any payment.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFAQ(this)">
+                <span>How do I track my application status?</span>
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+                After submission, you'll receive a reference number via email. You can use this number to track your application status on our portal. Most applications show real-time updates.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFAQ(this)">
+                <span>How will I receive my Thailand TDAC?</span>
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+                Your approved Thailand Digital Arrival Card is sent directly to your email address in PDF format. You can download it, print it, or present it digitally on your mobile device at immigration.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFAQ(this)">
+                <span>How secure is my personal information?</span>
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+                We use industry-standard SSL encryption for all data transmission. Your information is processed securely and is never shared with third parties without your consent. We comply with international data protection standards.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFAQ(this)">
+                <span>Is customer support available?</span>
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+                Yes, our dedicated support team is available to assist you 24/7. You can reach us via email for any questions about your application or the Thailand TDAC process.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFAQ(this)">
+                <span>Are you affiliated with any government?</span>
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+                We are an independent service provider authorized to help travelers complete the Thailand Digital Arrival Card application. We are not affiliated with any government but work in compliance with Thai immigration regulations.
+            </div>
+        </div>
+    </div>
+
+    <div class="faq-cta">
+        <a href="apply.html" class="btn-primary" style="padding:16px 32px;font-size:16px;border-radius:12px;">
+            Start application
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+    </div>
+</section>
+
+<script>
+function toggleCountries() {
+    const allCountries = document.querySelectorAll('.country-item');
+    const btn = event.target;
+    const isShowingAll = btn.textContent === 'Show less';
+
+    if (isShowingAll) {
+        // Hide countries after the 20th
+        for (let i = 20; i < allCountries.length; i++) {
+            allCountries[i].classList.add('countries-hidden');
+        }
+        btn.textContent = 'Show all countries';
+    } else {
+        // Show all countries
+        allCountries.forEach(country => {
+            country.classList.remove('countries-hidden');
+        });
+        btn.textContent = 'Show less';
+    }
+}
+
+function toggleFAQ(button) {
+    const faqItem = button.parentElement;
+    const faqAnswer = button.nextElementSibling;
+
+    // Close other open FAQs
+    const allFAQAnswers = document.querySelectorAll('.faq-answer');
+    const allFAQQuestions = document.querySelectorAll('.faq-question');
+
+    allFAQAnswers.forEach(answer => {
+        if (answer !== faqAnswer) {
+            answer.classList.remove('show');
+        }
+    });
+
+    allFAQQuestions.forEach(q => {
+        if (q !== button) {
+            q.classList.remove('active');
+        }
+    });
+
+    // Toggle current FAQ
+    faqAnswer.classList.toggle('show');
+    button.classList.toggle('active');
+}
+
+function filterCountries() {
+    const searchInput = document.getElementById('countrySearch');
+    const searchTerm = searchInput.value.toLowerCase().trim();
+    const allCountries = document.querySelectorAll('.country-item');
+    let visibleCount = 0;
+
+    allCountries.forEach((country, index) => {
+        const countryName = country.querySelector('.country-name').textContent.toLowerCase();
+
+        if (searchTerm === '' || countryName.includes(searchTerm)) {
+            country.style.display = 'flex';
+            country.classList.remove('countries-hidden');
+            visibleCount++;
+        } else {
+            country.style.display = 'none';
+        }
+    });
+}
+
+// Initialize search listener
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('countrySearch');
+    if (searchInput) {
+        searchInput.addEventListener('input', filterCountries);
+    }
+
+    // Add click handler to country items
+    const countryItems = document.querySelectorAll('.country-item');
+    countryItems.forEach(item => {
+        item.addEventListener('click', function() {
+            window.location.href = 'apply.html';
+        });
+    });
+});
+</script>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-section footer-about">
+            <div class="footer-logo">
+                <img src="logo.png" alt="Thailand Digital Arrival Card (TDAC) Assistance Logo" class="footer-logo-img">
+                <h3>Thailand Digital Arrival Card (TDAC) Assistance</h3>
+            </div>
+            <p>An independent online service that helps travelers prepare and submit their Thailand Digital Arrival Card (TDAC) application. We are not a government agency and are not affiliated with the Thai Immigration Bureau or any official Thai government body. Our service includes expert review and assistance to ensure your application is submitted correctly. A service fee is included in the displayed price.</p>
+        </div>
+
+        <div class="footer-section footer-links">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#countries">Countries requiring TDAC</a></li>
+                <li><a href="#faq">FAQ</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section footer-legal">
+            <h4>Legal</h4>
+            <ul>
+                <li><a href="terms.html">Terms of Service</a></li>
+                <li><a href="privacy.html">Privacy Policy</a></li>
+                <li><a href="refund.html">Refund Policy</a></li>
+                <li><a href="cookies.html">Cookies Policy</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>&copy; 2026 Thailand Digital Arrival Card (TDAC) Assistance. All rights reserved.</p>
+        <p style="font-size: 12px; color: #6b7190; margin-top: 8px;">TechnoDucks Inc, 5348 Vegas Drive # 1485, Las Vegas, NV 89108</p>
+    </div>
+</footer>
+
+</body>
+</html>

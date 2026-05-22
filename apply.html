@@ -1,0 +1,2603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thailand TDAC Application Form</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: #1a1f36;
+            background: #f8f9fb;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* ---- Header ---- */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 48px;
+            background: #fff;
+            border-bottom: 1px solid #f0f1f6;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 20px;
+            color: #1a1f36;
+        }
+
+        .logo img {
+            height: 50px;
+            object-fit: contain;
+        }
+
+        .back-link {
+            font-size: 15px;
+            font-weight: 500;
+            color: #4a90e2;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: #1a1f36;
+        }
+
+        /* ---- Main Content ---- */
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 48px 24px;
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .form-header h1 {
+            font-size: 32px;
+            font-weight: 800;
+            color: #1a1f36;
+            margin-bottom: 16px;
+        }
+
+        .form-header p {
+            font-size: 16px;
+            color: #6b7190;
+            margin-bottom: 32px;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-bottom: 48px;
+        }
+
+        .progress-bar {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .progress-step {
+            flex: 1;
+            height: 6px;
+            background: #e0e4ec;
+            border-radius: 3px;
+            transition: background 0.3s;
+        }
+
+        .progress-step.active {
+            background: #1a1f36;
+        }
+
+        .progress-text {
+            font-size: 13px;
+            color: #6b7190;
+            text-align: center;
+        }
+
+        /* Form Completion Percentage */
+        .form-completion {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 24px;
+            padding: 16px;
+            background: #f8f9fb;
+            border-radius: 8px;
+        }
+
+        .completion-label {
+            font-size: 13px;
+            color: #6b7190;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .completion-bar-container {
+            flex: 1;
+            height: 24px !important;
+            min-height: 24px !important;
+            background: #e0e4ec;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .completion-bar-fill {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            background: #4a90e2;
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 600;
+            color: #fff;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            min-width: 30px;
+            box-sizing: border-box;
+        }
+
+        .completion-percentage {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a1f36;
+            min-width: 45px;
+            text-align: right;
+        }
+
+        @media (max-width: 768px) {
+            .form-completion {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .completion-bar-container {
+                width: 100%;
+                height: 24px;
+            }
+
+            .completion-percentage {
+                text-align: center;
+                min-width: auto;
+            }
+        }
+
+        /* Form Container */
+        .form-wrapper {
+            background: #fff;
+            border-radius: 12px;
+            padding: 48px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-step {
+            display: none;
+        }
+
+        .form-step.active {
+            display: block;
+        }
+
+        .step-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a1f36;
+            margin-bottom: 32px;
+        }
+
+        .form-group {
+            margin-bottom: 28px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #6b7190;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 14px 16px;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 15px;
+            color: #1a1f36;
+            background: #fff;
+            border: 1px solid #e0e4ec;
+            border-radius: 8px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            box-sizing: border-box;
+        }
+
+        .form-group select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 20px;
+            padding-right: 36px;
+            cursor: pointer;
+        }
+
+        .form-group input::placeholder,
+        .form-group select::placeholder,
+        .form-group textarea::placeholder {
+            color: #a0a5b8;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #4a90e2;
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+        }
+
+        .form-group input.error-field,
+        .form-group select.error-field,
+        .form-group textarea.error-field {
+            border-color: #e74c3c !important;
+            background-color: #fff5f5 !important;
+        }
+
+        .form-group input.error-field:focus,
+        .form-group select.error-field:focus,
+        .form-group textarea.error-field:focus {
+            border-color: #e74c3c;
+            box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+        }
+
+        .validation-error-container {
+            background-color: #fff5f5;
+            border: 1px solid #e74c3c;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 24px;
+            display: none;
+        }
+
+        .validation-error-container.show {
+            display: block;
+        }
+
+        .validation-error-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #e74c3c;
+            margin-bottom: 12px;
+        }
+
+        .validation-error-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .validation-error-list li {
+            font-size: 13px;
+            color: #c0392b;
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .validation-error-list li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-hint {
+            font-size: 13px;
+            color: #6b7190;
+            margin-top: 8px;
+        }
+
+        /* Review Section */
+        .review-box {
+            background: #f8f9fb;
+            border: 1px solid #e0e4ec;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .review-section {
+            margin-bottom: 20px;
+        }
+
+        .review-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .review-label {
+            font-size: 12px;
+            color: #6b7190;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .review-value {
+            font-size: 15px;
+            color: #1a1f36;
+            font-weight: 500;
+        }
+
+        .review-divider {
+            height: 1px;
+            background: #e0e4ec;
+            margin: 16px 0;
+        }
+
+        .price-box {
+            background: #f0f8ff;
+            border: 1px solid #b3d9ff;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 24px;
+        }
+
+        .price-label {
+            font-size: 12px;
+            color: #6b7190;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .price-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a1f36;
+        }
+
+        .price-note {
+            font-size: 12px;
+            color: #6b7190;
+            margin-top: 8px;
+        }
+
+        /* Terms */
+        .terms-checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 32px;
+        }
+
+        .terms-checkbox input {
+            width: auto;
+            margin-top: 2px;
+            cursor: pointer;
+        }
+
+        .terms-checkbox label {
+            font-size: 14px;
+            color: #4a5068;
+            margin: 0;
+            text-transform: none;
+            letter-spacing: normal;
+            cursor: pointer;
+        }
+
+        .terms-checkbox a {
+            color: #4a90e2;
+            text-decoration: underline;
+        }
+
+        /* Buttons */
+        .form-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 14px 24px;
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary {
+            background: #fff;
+            color: #1a1f36;
+            border: 1px solid #e0e4ec;
+        }
+
+        .btn-secondary:hover {
+            border-color: #1a1f36;
+            background: #f8f9fb;
+        }
+
+        .btn-secondary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            background: #1a1f36;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: #2d3350;
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .applicant-block {
+            position: relative;
+        }
+
+        .applicant-block + .applicant-block {
+            margin-top: 32px;
+            padding-top: 32px;
+            border-top: 2px dashed #e0e4ec;
+        }
+
+        .applicant-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .applicant-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: #1a1f36;
+        }
+
+        .remove-applicant-btn {
+            background: none;
+            border: none;
+            color: #e74c3c;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        .remove-applicant-btn:hover {
+            background: #fff5f5;
+        }
+
+        .add-applicant-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #fff;
+            color: #4a90e2;
+            border: 1px dashed #4a90e2;
+            font-size: 15px;
+            font-weight: 600;
+            padding: 14px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 28px;
+            margin-bottom: 32px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .add-applicant-btn:hover {
+            background: #f0f4ff;
+            border-color: #1a1f36;
+            color: #1a1f36;
+        }
+
+        /* ---- Footer ---- */
+        .footer {
+            background: #1a1f36;
+            color: #fff;
+            padding: 60px 48px;
+            margin-top: 80px;
+            border-top: 1px solid #f0f1f6;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #a0a5b8;
+            margin-bottom: 16px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            font-size: 14px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #a0a5b8;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: #fff;
+        }
+
+        .footer-bottom {
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid #2d3350;
+            font-size: 13px;
+            color: #6b7190;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .header {
+                padding: 16px 24px;
+            }
+
+            .container {
+                padding: 24px 16px;
+            }
+
+            .form-wrapper {
+                padding: 32px 24px;
+            }
+
+            .form-header h1 {
+                font-size: 24px;
+            }
+
+            .step-title {
+                font-size: 20px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .footer {
+                padding: 40px 24px;
+            }
+
+            .footer-links {
+                gap: 16px;
+                font-size: 13px;
+            }
+        }
+
+        /* Small phones */
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px 12px;
+            }
+
+            .form-wrapper {
+                padding: 24px 16px;
+            }
+
+            .form-header h1 {
+                font-size: 22px;
+            }
+
+            .form-header p {
+                font-size: 15px;
+            }
+
+            .step-title {
+                font-size: 18px;
+            }
+
+            .form-group {
+                margin-bottom: 22px;
+            }
+        }
+
+        /* Nationality searchable select */
+        .nationality-select-wrapper {
+            position: relative;
+        }
+        .nationality-dropdown {
+            display: none;
+            position: absolute;
+            z-index: 200;
+            width: 100%;
+            max-height: 220px;
+            overflow-y: auto;
+            background: #fff;
+            border: 1px solid #4a90e2;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+        }
+        .nationality-dropdown-item {
+            padding: 10px 16px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #1a1f36;
+        }
+        .nationality-dropdown-item:hover,
+        .nationality-dropdown-item.highlighted {
+            background: #f0f4ff;
+            color: #4a90e2;
+        }
+        .nationality-dropdown-empty {
+            padding: 10px 16px;
+            font-size: 14px;
+            color: #a0a5b8;
+        }
+
+        .country-select-wrapper {
+            position: relative;
+        }
+
+        .country-dropdown {
+            display: none;
+            position: absolute;
+            z-index: 200;
+            width: 100%;
+            max-height: 220px;
+            overflow-y: auto;
+            background: #fff;
+            border: 1px solid #4a90e2;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+        }
+
+        .country-dropdown-item {
+            padding: 10px 16px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #1a1f36;
+        }
+
+        .country-dropdown-item:hover,
+        .country-dropdown-item.highlighted {
+            background: #f0f4ff;
+            color: #4a90e2;
+        }
+
+        .country-dropdown-empty {
+            padding: 10px 16px;
+            font-size: 14px;
+            color: #a0a5b8;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <a href="index.html" class="logo">
+            <img src="logo.png" alt="Thailand Arrival Logo" style="height: 50px; object-fit: contain;">
+        </a>
+        <a href="index.html" class="back-link">← Back to Home</a>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="form-header">
+            <h1>Thailand TDAC Application</h1>
+            <p>Complete your application step by step. It takes just 5 minutes.</p>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-step active" id="step-1-progress"></div>
+                <div class="progress-step" id="step-2-progress"></div>
+                <div class="progress-step" id="step-3-progress"></div>
+                <div class="progress-step" id="step-4-progress"></div>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+                <button type="button" id="backBtnSmall" onclick="previousStep()" style="background: none; border: none; color: #4a90e2; font-size: 14px; font-weight: 500; cursor: pointer; padding: 0; transition: color 0.2s; display: none;">← Back</button>
+                <div class="progress-text">
+                    Step <span id="current-step">1</span> of <span id="total-steps">4</span>
+                </div>
+                <button type="button" id="nextBtnSmall" onclick="nextStep()" style="background: none; border: none; color: #4a90e2; font-size: 14px; font-weight: 500; cursor: pointer; padding: 0; transition: color 0.2s; display: none;">Next →</button>
+            </div>
+        </div>
+
+        <div class="form-completion">
+            <span class="completion-label">Form Completion:</span>
+            <div class="completion-bar-container">
+                <div class="completion-bar-fill" id="completion-bar-fill" style="width: 0%;">
+                    <span id="completion-bar-text"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-wrapper">
+            <div class="validation-error-container" id="validationErrorContainer">
+                <div class="validation-error-title">Please fill in the required fields:</div>
+                <ul class="validation-error-list" id="validationErrorList"></ul>
+            </div>
+
+            <form id="applicationForm">
+                <!-- Step 1: Personal Information -->
+                <div class="form-step active" id="step-1">
+                    <h2 class="step-title">Personal Information</h2>
+
+                    <div id="applicants-container">
+                        <div class="applicant-block" data-applicant="1">
+                            <div class="applicant-header">
+                                <div class="applicant-title">Applicant 1</div>
+                            </div>
+
+                            <h3 style="font-size: 16px; font-weight: 600; color: #1a1f36; margin-bottom: 20px; margin-top: 0;">From Passport</h3>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Family Name *</label>
+                                    <input type="text" name="familyName" placeholder="Last name" required>
+                                    <div class="form-hint">Only letters A-Z</div>
+                                </div>
+                                <div class="form-group">
+                                    <label>First Name *</label>
+                                    <input type="text" name="firstName" placeholder="First name" required>
+                                    <div class="form-hint">Only letters A-Z</div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Middle Name</label>
+                                    <input type="text" name="middleName" placeholder="Middle name">
+                                    <div class="form-hint">Only letters A-Z</div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Passport Number *</label>
+                                    <input type="text" name="passportNumber" placeholder="Passport Number *" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Nationality/Citizenship *</label>
+                                <div class="nationality-select-wrapper" id="nationality-wrapper">
+                                    <input type="text" id="nationality-display" class="form-input nationality-display"
+                                           placeholder="Select your nationality" autocomplete="off">
+                                    <input type="hidden" name="nationality" id="nationality-hidden" class="nationality-hidden" required>
+                                    <div class="nationality-dropdown" id="nationality-dropdown"></div>
+                                </div>
+                            </div>
+
+                            <h3 style="font-size: 16px; font-weight: 600; color: #1a1f36; margin-bottom: 20px; margin-top: 32px;">Personal Details</h3>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Date of Birth *</label>
+                                    <input type="text" name="dateOfBirth" placeholder="dd.mm.yyyy" inputmode="numeric" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Occupation *</label>
+                                    <input type="text" name="occupation" placeholder="Your occupation" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Gender *</label>
+                                <div style="margin-top: 10px;">
+                                    <label style="display: inline-block; margin-right: 40px; margin-bottom: 12px; font-size: 14px; font-weight: normal; text-transform: none;">
+                                        <input type="radio" name="gender" value="female" required style="margin-right: 12px; vertical-align: middle; width: 18px; height: 18px;">
+                                        <span style="vertical-align: middle;">Female</span>
+                                    </label>
+                                    <label style="display: inline-block; margin-right: 40px; margin-bottom: 12px; font-size: 14px; font-weight: normal; text-transform: none;">
+                                        <input type="radio" name="gender" value="male" required style="margin-right: 12px; vertical-align: middle; width: 18px; height: 18px;">
+                                        <span style="vertical-align: middle;">Male</span>
+                                    </label>
+                                    <label style="display: inline-block; margin-right: 40px; margin-bottom: 12px; font-size: 14px; font-weight: normal; text-transform: none;">
+                                        <input type="radio" name="gender" value="undefined" required style="margin-right: 12px; vertical-align: middle; width: 18px; height: 18px;">
+                                        <span style="vertical-align: middle;">Undefined</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Country/Territory of Residence *</label>
+                                <div class="country-select-wrapper" id="country-wrapper">
+                                <input type="text" id="country-display" class="form-input country-display"
+                                       placeholder="Select country" autocomplete="off">
+                                <input type="hidden" name="countryOfResidence" id="country-hidden" class="country-hidden" required>
+                                <div class="country-dropdown" id="country-dropdown"></div>
+                            </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>City/State of Residence *</label>
+                                    <input type="text" name="cityOfResidence" placeholder="City or State" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Phone Number *</label>
+                                    <input type="tel" name="phoneNumber" placeholder="+1 (123) 456-7890" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" class="add-applicant-btn" onclick="addApplicant()">+ Add Applicant</button>
+                </div>
+
+                <!-- Step 2: Travel Information -->
+                <div class="form-step" id="step-2">
+                    <h2 class="step-title">Trip Information</h2>
+
+                    <h3 style="font-size: 16px; font-weight: 600; color: #1a1f36; margin-bottom: 20px; margin-top: 0;">Arrival Information</h3>
+
+                    <div class="form-group">
+                        <label>Date of Arrival *</label>
+                        <input type="text" name="arrivalDate" placeholder="dd.mm.yyyy" inputmode="numeric" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Purpose of Travel *</label>
+                        <select name="purposeOfTravel" id="purposeOfTravel" required>
+                            <option value="">Select purpose</option>
+                            <option value="holiday">HOLIDAY</option>
+                            <option value="meeting">MEETING</option>
+                            <option value="sports">SPORTS</option>
+                            <option value="business">BUSINESS</option>
+                            <option value="incentive">INCENTIVE</option>
+                            <option value="medical-wellness">MEDICAL & WELLNESS</option>
+                            <option value="education">EDUCATION</option>
+                            <option value="convention">CONVENTION</option>
+                            <option value="employment">EMPLOYMENT</option>
+                            <option value="exhibition">EXHIBITION</option>
+                            <option value="others">OTHERS (PLEASE SPECIFY)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="othersPurposeGroup" style="display: none;">
+                        <label>Please Specify Your Purpose *</label>
+                        <input type="text" name="othersPurpose" id="othersPurpose" placeholder="Enter your purpose of travel" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Mode of Transport *</label>
+                        <select name="modeOfTransport" id="modeOfTransport" required>
+                            <option value="">Select transport type</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="othersTransportGroup" style="display: none;">
+                        <label>Please Specify Transport Type *</label>
+                        <input type="text" name="othersTransport" id="othersTransport" placeholder="Enter transport type" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Arrival Flight No./Vehicle No. *</label>
+                        <input type="text" name="flightNumber" placeholder="SIA308" required>
+                    </div>
+
+                    <h3 style="font-size: 16px; font-weight: 600; color: #1a1f36; margin-bottom: 20px; margin-top: 32px;">Departure Information</h3>
+
+                    <div class="form-group">
+                        <label>Date of Departure *</label>
+                        <input type="text" name="departureDate" placeholder="dd.mm.yyyy" inputmode="numeric" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Mode of Transport (Departure) *</label>
+                        <select name="modeOfTransportDeparture" id="modeOfTransportDeparture" required>
+                            <option value="">Select transport type</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="othersTransportDepartureGroup" style="display: none;">
+                        <label>Please Specify Transport Type (Departure) *</label>
+                        <input type="text" name="othersTransportDeparture" id="othersTransportDeparture" placeholder="Enter transport type" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Departure Flight No./Vehicle No. *</label>
+                        <input type="text" name="flightNumberDeparture" placeholder="SIA308" required>
+                    </div>
+
+                    <h3 style="font-size: 16px; font-weight: 600; color: #1a1f36; margin-bottom: 20px; margin-top: 32px;">Accommodation Information</h3>
+
+                    <div class="form-group">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <input type="checkbox" id="transitPassenger" name="transitPassenger" value="yes" style="width: 18px; height: 18px; margin: 0; cursor: pointer;">
+                            <label for="transitPassenger" style="font-weight: normal; text-transform: none; margin: 0; cursor: pointer; font-size: 15px;">
+                                I am a transit passenger, I don't stay in Thailand.
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Type of Accommodation in Thailand *</label>
+                        <select name="accommodationType" id="accommodationType" required>
+                            <option value="">Select type</option>
+                            <option value="hotel">HOTEL</option>
+                            <option value="youth-hostel">YOUTH HOSTEL</option>
+                            <option value="guest-house">GUEST HOUSE</option>
+                            <option value="friends-house">FRIEND'S HOUSE</option>
+                            <option value="apartment">APARTMENT</option>
+                            <option value="others">OTHERS (PLEASE SPECIFY)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="othersAccommodationGroup" style="display: none;">
+                        <label>Please Specify Accommodation Type *</label>
+                        <input type="text" name="othersAccommodation" id="othersAccommodation" placeholder="Enter accommodation type" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Hotel name and address</label>
+                        <textarea name="accommodationAddress" placeholder="Hotel name and address" style="width: 100%; resize: none; height: 72px; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 15px; padding: 14px 16px; border: 1px solid #e0e4ec; border-radius: 8px; color: #1a1f36; box-sizing: border-box;" required></textarea>
+                    </div>
+                </div>
+
+                <!-- Step 3: Email for TDAC -->
+                <div class="form-step" id="step-3">
+                    <h2 class="step-title">Email for TDAC</h2>
+
+                    <div style="background: #f0f4ff; border-left: 4px solid #4a90e2; padding: 16px; border-radius: 4px; margin-bottom: 32px;">
+                        <p style="font-size: 14px; color: #1a1f36; line-height: 1.6; margin: 0;">
+                            Please enter a valid email address. Your Thailand Digital Arrival Card (TDAC) will be sent to this email address.
+                        </p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email Address *</label>
+                        <input type="email" name="tdacEmail" placeholder="your.email@example.com" required>
+                    </div>
+                </div>
+
+                <!-- Step 4: Review & Payment -->
+                <div class="form-step" id="step-4">
+                    <h2 class="step-title">Review Your Information</h2>
+
+                    <div class="review-box">
+                        <div id="review-applicants"></div>
+
+                        <div class="review-divider"></div>
+
+                        <div class="review-section">
+                            <div class="review-label">Travel Dates</div>
+                            <div class="review-value">Arrival: <span id="review-arrivalDate">-</span></div>
+                            <div style="font-size: 13px; color: #6b7190; margin-top: 4px;">Departure: <span id="review-departureDate">-</span></div>
+                        </div>
+
+                        <div class="review-divider"></div>
+
+                        <div class="review-section">
+                            <div class="review-label">Trip Details</div>
+                            <div style="font-size: 13px; color: #6b7190;">Purpose: <span id="review-purposeOfTravel">-</span></div>
+                            <div style="font-size: 13px; color: #6b7190; margin-top: 4px;">Transport: <span id="review-modeOfTransport">-</span></div>
+                            <div style="font-size: 13px; color: #6b7190; margin-top: 4px;">Flight/Vehicle: <span id="review-flightNumber">-</span></div>
+                            <div style="font-size: 13px; color: #6b7190; margin-top: 4px;">Departure Transport: <span id="review-modeOfTransportDeparture">-</span></div>
+                            <div style="font-size: 13px; color: #6b7190; margin-top: 4px;">Departure Flight/Vehicle: <span id="review-flightNumberDeparture">-</span></div>
+                        </div>
+
+                        <div class="review-divider"></div>
+
+                        <div class="review-section">
+                            <div class="review-label">Accommodation</div>
+                            <div class="review-value"><span id="review-accommodationType">-</span></div>
+                            <div style="font-size: 13px; color: #6b7190; margin-top: 4px;"><span id="review-accommodationAddress">-</span></div>
+                        </div>
+
+                        <div class="review-divider"></div>
+
+                        <div class="review-section">
+                            <div class="review-label">Email for TDAC</div>
+                            <div class="review-value"><span id="review-tdacEmail">-</span></div>
+                        </div>
+                    </div>
+
+                    <div class="price-box">
+                        <div class="price-label">Total Cost</div>
+                        <div class="price-value" id="price-total">$49.99</div>
+                        <div class="price-breakdown" id="price-breakdown" style="display:none; font-size:14px; color:#4a5068; margin-top:6px; font-weight:500;"></div>
+                        <div class="price-note">This includes professional review and assistance with your TDAC application.</div>
+                    </div>
+
+                    <div class="terms-checkbox">
+                        <input type="checkbox" id="agreeTerms" name="agreeTerms" required checked>
+                        <label for="agreeTerms">
+                            I agree to the <a href="terms.html" target="_blank">Terms of Service</a> and <a href="privacy.html" target="_blank">Privacy Policy</a>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="previousStep()" id="prevBtn" style="display: none;">
+                        ← Back
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="clearForm()" id="clearBtn" style="background: #f0f1f6; color: #6b7190;">
+                        Clear
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="nextStep()" id="nextBtn">
+                        Continue →
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="footer-text">An independent online service that helps travelers prepare and submit their Thailand Digital Arrival Card (TDAC) application.</p>
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="index.html#faq">FAQ</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="refund.html">Refund Policy</a>
+                <a href="contact.html">Contact Us</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="cookies.html">Cookies Policy</a>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Thailand Digital Arrival Card (TDAC) Assistance. All rights reserved.</p>
+                <p style="font-size: 12px; color: #6b7190; margin-top: 8px;">TechnoDucks Inc, 5348 Vegas Drive # 1485, Las Vegas, NV 89108</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let currentStep = 1;
+        const totalSteps = 4;
+
+        function showStep(step) {
+            currentStep = step;
+
+            for (let i = 1; i <= totalSteps; i++) {
+                const stepEl = document.getElementById('step-' + i);
+                const progressEl = document.getElementById('step-' + i + '-progress');
+
+                if (i === step) {
+                    stepEl.classList.add('active');
+                    progressEl.classList.add('active');
+                } else {
+                    stepEl.classList.remove('active');
+                    if (i < step) {
+                        progressEl.classList.add('active');
+                    } else {
+                        progressEl.classList.remove('active');
+                    }
+                }
+            }
+
+            document.getElementById('current-step').textContent = step;
+
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+
+            if (step === 1) {
+                prevBtn.style.display = 'none';
+                nextBtn.textContent = 'Continue →';
+            } else if (step === totalSteps) {
+                prevBtn.style.display = 'block';
+                nextBtn.textContent = 'Pay and Submit Application';
+            } else {
+                prevBtn.style.display = 'block';
+                nextBtn.textContent = 'Continue →';
+            }
+
+            updateButtonsVisibility();
+
+            if (step === totalSteps) {
+                updateReviewSection();
+            }
+
+            calculateFormCompletion();
+            window.scrollTo(0, 0);
+        }
+
+        function clearValidationErrors() {
+            // Remove error highlighting from all fields
+            document.querySelectorAll('.error-field').forEach(field => {
+                field.classList.remove('error-field');
+            });
+
+            // Hide error message container
+            const errorContainer = document.getElementById('validationErrorContainer');
+            errorContainer.classList.remove('show');
+        }
+
+        function getFieldLabel(input) {
+            // Try to get label from associated label element
+            if (input.id) {
+                const label = document.querySelector(`label[for="${input.id}"]`);
+                if (label) return label.textContent.trim();
+            }
+
+            // Try to get label from parent form-group
+            const formGroup = input.closest('.form-group');
+            if (formGroup) {
+                const label = formGroup.querySelector('label');
+                if (label) {
+                    // Remove asterisk and trim
+                    return label.textContent.replace('*', '').trim();
+                }
+            }
+
+            // Fallback to placeholder or name
+            return input.placeholder || input.name || 'Required field';
+        }
+
+        function validateStep(step) {
+            clearValidationErrors();
+
+            const stepElement = document.getElementById('step-' + step);
+            const requiredFields = stepElement.querySelectorAll('input[required], select[required], textarea[required]');
+            const emptyFields = [];
+            const invalidFields = [];
+
+            // Collect all empty required fields
+            for (let input of requiredFields) {
+                if (!input.value || (input.type === 'checkbox' && !input.checked) || (input.type === 'radio' && !document.querySelector(`input[name="${input.name}"]:checked`))) {
+                    emptyFields.push(input);
+                    input.classList.add('error-field');
+                }
+            }
+
+            // Validate email fields - check for @ symbol and dot after @
+            const emailFields = stepElement.querySelectorAll('input[type="email"]');
+            emailFields.forEach(field => {
+                if (field.value) {
+                    const email = field.value;
+                    const hasAt = email.includes('@');
+                    const afterAtIndex = email.indexOf('@');
+                    const hasDotAfterAt = hasAt && email.substring(afterAtIndex + 1).includes('.');
+
+                    if (!hasAt || !hasDotAfterAt) {
+                        invalidFields.push(field);
+                        field.classList.add('error-field');
+                    }
+                }
+            });
+
+            // If there are empty or invalid fields, show error message and return false
+            if (emptyFields.length > 0 || invalidFields.length > 0) {
+                const errorList = document.getElementById('validationErrorList');
+                errorList.innerHTML = '';
+
+                // Create list items for each missing field
+                const uniqueLabels = new Set();
+                emptyFields.forEach(field => {
+                    const label = getFieldLabel(field);
+                    if (!uniqueLabels.has(label)) {
+                        uniqueLabels.add(label);
+                        const li = document.createElement('li');
+                        li.textContent = label;
+                        errorList.appendChild(li);
+                    }
+                });
+
+                // Create list items for invalid email fields
+                invalidFields.forEach(field => {
+                    const label = getFieldLabel(field);
+                    if (!uniqueLabels.has(label)) {
+                        uniqueLabels.add(label);
+                        const li = document.createElement('li');
+                        li.textContent = label + ' (must contain @ and . after @)';
+                        errorList.appendChild(li);
+                    }
+                });
+
+                // Show error container
+                const errorContainer = document.getElementById('validationErrorContainer');
+                errorContainer.classList.add('show');
+
+                // Scroll to error message
+                errorContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+                // Focus on first empty/invalid field after a short delay
+                const fieldsToFocus = emptyFields.length > 0 ? emptyFields : invalidFields;
+                setTimeout(() => {
+                    fieldsToFocus[0].focus();
+                }, 500);
+
+                return false;
+            }
+
+            return true;
+        }
+
+        function isStepStarted(step) {
+            const stepElement = document.getElementById('step-' + step);
+            if (!stepElement) return false;
+
+            const inputs = stepElement.querySelectorAll('input, select, textarea');
+            for (let input of inputs) {
+                if (input.type === 'checkbox' || input.type === 'radio') {
+                    if (input.checked) return true;
+                } else if (input.value) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function updateButtonsVisibility() {
+            const backBtnSmall = document.getElementById('backBtnSmall');
+            const nextBtnSmall = document.getElementById('nextBtnSmall');
+
+            if (!backBtnSmall || !nextBtnSmall) return;
+
+            // Проверяем localStorage для следующего шага если он не отображается в DOM
+            let nextStepStarted = false;
+            if (currentStep < totalSteps) {
+                nextStepStarted = isStepStarted(currentStep + 1);
+                if (!nextStepStarted) {
+                    // Если Step не отображается, проверяем localStorage
+                    const savedState = localStorage.getItem('tdacFormState');
+                    if (savedState) {
+                        try {
+                            const data = JSON.parse(savedState);
+                            // Проверяем есть ли какие-то данные для следующего шага
+                            for (let key in data) {
+                                if (data[key]) {
+                                    nextStepStarted = true;
+                                    break;
+                                }
+                            }
+                        } catch (e) {}
+                    }
+                }
+            }
+
+            if (currentStep === 1) {
+                backBtnSmall.style.display = 'none';
+                nextBtnSmall.style.display = nextStepStarted ? 'block' : 'none';
+            } else if (currentStep === totalSteps) {
+                backBtnSmall.style.display = 'block';
+                nextBtnSmall.style.display = 'none';
+            } else {
+                backBtnSmall.style.display = 'block';
+                nextBtnSmall.style.display = nextStepStarted ? 'block' : 'none';
+            }
+        }
+
+        function nextStep() {
+            if (!validateStep(currentStep)) {
+                return;
+            }
+
+            if (currentStep === totalSteps) {
+                submitApplication();
+            } else {
+                currentStep++;
+                showStep(currentStep);
+                saveFormState();
+            }
+        }
+
+        function previousStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                showStep(currentStep);
+                saveFormState();
+                clearValidationErrors();
+            }
+        }
+
+        function clearForm() {
+            if (confirm('Are you sure you want to clear all fields?')) {
+                const form = document.getElementById('applicationForm');
+                form.reset();
+                localStorage.clear();
+                currentStep = 1;
+                showStep(currentStep);
+            }
+        }
+
+        function updatePriceDisplay() {
+            const PRICE_PER_PERSON = 49.99;
+            const count = document.querySelectorAll('#applicants-container .applicant-block').length;
+            const total = (PRICE_PER_PERSON * count).toFixed(2);
+            const totalEl = document.getElementById('price-total');
+            const breakdownEl = document.getElementById('price-breakdown');
+
+            totalEl.textContent = '$' + total;
+
+            if (count > 1) {
+                breakdownEl.textContent = '$' + PRICE_PER_PERSON.toFixed(2) + ' × ' + count + ' = $' + total;
+                breakdownEl.style.display = 'block';
+            } else {
+                breakdownEl.style.display = 'none';
+            }
+        }
+
+        function updateReviewSection() {
+            const form = document.getElementById('applicationForm');
+            const formData = new FormData(form);
+
+            const setText = (id, value) => {
+                document.getElementById(id).textContent = value || '-';
+            };
+
+            // For selects: show the selected option's label. If an "others"
+            // option is selected, show the value typed into the specify field.
+            const getSelectDisplay = (name, othersName) => {
+                const el = form.querySelector(`[name="${name}"]`);
+                if (!el || !el.value) return '';
+                if (el.value.startsWith('others') && othersName) {
+                    return formData.get(othersName) || '';
+                }
+                return el.options[el.selectedIndex].text;
+            };
+
+            buildApplicantsReview();
+            updatePriceDisplay();
+
+            setText('review-arrivalDate', formData.get('arrivalDate'));
+            setText('review-departureDate', formData.get('departureDate'));
+            setText('review-purposeOfTravel', getSelectDisplay('purposeOfTravel', 'othersPurpose'));
+            setText('review-modeOfTransport', getSelectDisplay('modeOfTransport', 'othersTransport'));
+            setText('review-flightNumber', formData.get('flightNumber'));
+            setText('review-modeOfTransportDeparture', getSelectDisplay('modeOfTransportDeparture', 'othersTransportDeparture'));
+            setText('review-flightNumberDeparture', formData.get('flightNumberDeparture'));
+
+            if (form.querySelector('[name="transitPassenger"]')?.checked) {
+                setText('review-accommodationType', 'Transit passenger — no accommodation');
+                document.getElementById('review-accommodationAddress').textContent = '';
+            } else {
+                setText('review-accommodationType', getSelectDisplay('accommodationType', 'othersAccommodation'));
+                setText('review-accommodationAddress', formData.get('accommodationAddress'));
+            }
+
+            setText('review-tdacEmail', formData.get('tdacEmail'));
+        }
+
+        function buildApplicantsReview() {
+            const reviewContainer = document.getElementById('review-applicants');
+            reviewContainer.innerHTML = '';
+            const blocks = document.querySelectorAll('#applicants-container .applicant-block');
+            const multiple = blocks.length > 1;
+
+            const makeSection = (label, primaryText, subLines) => {
+                const section = document.createElement('div');
+                section.className = 'review-section';
+                const l = document.createElement('div');
+                l.className = 'review-label';
+                l.textContent = label;
+                section.appendChild(l);
+                if (primaryText != null) {
+                    const pv = document.createElement('div');
+                    pv.className = 'review-value';
+                    pv.textContent = primaryText;
+                    section.appendChild(pv);
+                }
+                (subLines || []).forEach((t, i) => {
+                    const d = document.createElement('div');
+                    d.style.cssText = (primaryText == null && i === 0)
+                        ? 'font-size: 13px; color: #6b7190;'
+                        : 'font-size: 13px; color: #6b7190; margin-top: 4px;';
+                    d.textContent = t;
+                    section.appendChild(d);
+                });
+                return section;
+            };
+
+            blocks.forEach((block, idx) => {
+                const fieldValue = (base) => {
+                    for (const el of block.querySelectorAll('input, select, textarea')) {
+                        if (el.name && el.name.replace(/_\d+$/, '') === base) return el.value;
+                    }
+                    return '';
+                };
+                const genderEl = [...block.querySelectorAll('input[type="radio"]')]
+                    .find(r => r.name.replace(/_\d+$/, '') === 'gender' && r.checked);
+                const fullName = [fieldValue('firstName'), fieldValue('middleName'), fieldValue('familyName')]
+                    .filter(Boolean).join(' ');
+                const prefix = multiple ? `Applicant ${idx + 1} — ` : '';
+
+                reviewContainer.appendChild(makeSection(prefix + 'Full Name', fullName || '-', null));
+                reviewContainer.appendChild(makeSection('Passport Information',
+                    'Passport: ' + (fieldValue('passportNumber') || '-'),
+                    ['Nationality: ' + (block.querySelector('.nationality-display')?.value || '-')]));
+                reviewContainer.appendChild(makeSection('Personal Details', null,
+                    ['Date of Birth: ' + (fieldValue('dateOfBirth') || '-'),
+                     'Occupation: ' + (fieldValue('occupation') || '-'),
+                     'Gender: ' + (genderEl ? capitalize(genderEl.value) : '-')]));
+                reviewContainer.appendChild(makeSection('Residence Information', null,
+                    ['Country: ' + (block.querySelector('.country-display')?.value || '-'),
+                     'City: ' + (fieldValue('cityOfResidence') || '-'),
+                     'Phone: ' + (fieldValue('phoneNumber') || '-')]));
+
+                if (idx < blocks.length - 1) {
+                    const div = document.createElement('div');
+                    div.className = 'review-divider';
+                    reviewContainer.appendChild(div);
+                }
+            });
+        }
+
+        function capitalize(str) {
+            if (!str) return '';
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return '';
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+        }
+
+        function submitApplication() {
+            const form = document.getElementById('applicationForm');
+
+            if (!form.agreeTerms.checked) {
+                alert('Please agree to the terms and conditions');
+                return;
+            }
+
+            const formData = new FormData(form);
+            const applicationId = 'TDAC-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+
+            const data = {
+                applicationId: applicationId,
+                familyName: formData.get('familyName'),
+                firstName: formData.get('firstName'),
+                middleName: formData.get('middleName'),
+                passportNumber: formData.get('passportNumber'),
+                nationality: formData.get('nationality'),
+                dateOfBirth: formData.get('dateOfBirth'),
+                occupation: formData.get('occupation'),
+                gender: formData.get('gender'),
+                visaNo: formData.get('visaNo'),
+                countryOfResidence: formData.get('countryOfResidence'),
+                cityOfResidence: formData.get('cityOfResidence'),
+                phoneNumber: formData.get('phoneNumber'),
+                dateOfArrival: formData.get('dateOfArrival'),
+                dateOfDeparture: formData.get('dateOfDeparture'),
+                boardingCountry: formData.get('boardingCountry'),
+                purposeOfTravel: formData.get('purposeOfTravel'),
+                modeOfTravel: formData.get('modeOfTravel'),
+                modeOfTransport: formData.get('modeOfTransport'),
+                flightNumber: formData.get('flightNumber'),
+                modeOfTravelDeparture: formData.get('modeOfTravelDeparture'),
+                modeOfTransportDeparture: formData.get('modeOfTransportDeparture'),
+                flightNumberDeparture: formData.get('flightNumberDeparture'),
+                accommodationName: formData.get('accommodationName'),
+                address: formData.get('address'),
+                city: formData.get('city'),
+                postalCode: formData.get('postalCode'),
+                accommodationPhone: formData.get('phone'),
+                submitDate: new Date().toISOString()
+            };
+
+            console.log('Application submitted:', data);
+
+            alert('Thank you for your application!\n\nApplication ID: ' + applicationId + '\n\nYour TDAC will be processed and sent to your email within 24 hours.');
+
+            form.reset();
+            localStorage.removeItem('tdacFormState');
+            localStorage.removeItem('tdacCurrentStep');
+            currentStep = 1;
+            showStep(1);
+        }
+
+        function saveFormState() {
+            const form = document.getElementById('applicationForm');
+            const formData = new FormData(form);
+            const formStateData = {};
+
+            for (let [key, value] of formData.entries()) {
+                formStateData[key] = value;
+            }
+
+            localStorage.setItem('tdacFormState', JSON.stringify(formStateData));
+            // Save currentStep for all steps (1, 2, 3, 4)
+            localStorage.setItem('tdacCurrentStep', currentStep.toString());
+        }
+
+        function restoreFormState() {
+            const savedFormState = localStorage.getItem('tdacFormState');
+            const savedCurrentStep = localStorage.getItem('tdacCurrentStep');
+
+            if (savedFormState) {
+                try {
+                    const formStateData = JSON.parse(savedFormState);
+
+                    // Step 1: Detect which applicants exist by checking for suffixed field names
+                    const applicantNumbers = new Set([1]); // Always have applicant 1
+                    for (let key of Object.keys(formStateData)) {
+                        const match = key.match(/_(\d+)$/);
+                        if (match) {
+                            applicantNumbers.add(parseInt(match[1], 10));
+                        }
+                    }
+
+                    // Step 2: Create missing applicant blocks
+                    const maxApplicantNum = Math.max(...applicantNumbers);
+                    for (let i = 2; i <= maxApplicantNum; i++) {
+                        if (applicantNumbers.has(i)) {
+                            applicantCount = i - 1; // Set to i-1 so addApplicant increments it to i
+                            addApplicant();
+                        }
+                    }
+
+                    // Step 3: Restore all field values
+                    const form = document.getElementById('applicationForm');
+                    for (let [key, value] of Object.entries(formStateData)) {
+                        const input = form.elements[key];
+                        if (input) {
+                            if (input.type === 'checkbox' || input.type === 'radio') {
+                                if (input.value === value) {
+                                    input.checked = true;
+                                }
+                            } else {
+                                input.value = value;
+                            }
+                        }
+                    }
+
+                    // Step 4: Restore display values for nationality and country for each applicant
+                    for (let n of applicantNumbers) {
+                        const nationalityKey = n === 1 ? 'nationality' : `nationality_${n}`;
+                        const countryKey = n === 1 ? 'countryOfResidence' : `countryOfResidence_${n}`;
+                        const nationalityDisplayId = n === 1 ? 'nationality-display' : `nationality-display_${n}`;
+                        const countryDisplayId = n === 1 ? 'country-display' : `country-display_${n}`;
+
+                        // Restore nationality display value
+                        if (formStateData[nationalityKey]) {
+                            const nationalityOption = NATIONALITY_OPTIONS.find(o => o.code === formStateData[nationalityKey]);
+                            if (nationalityOption) {
+                                const displayElement = document.getElementById(nationalityDisplayId);
+                                if (displayElement) {
+                                    displayElement.value = nationalityOption.label;
+                                }
+                            }
+                        }
+
+                        // Restore country display value
+                        if (formStateData[countryKey]) {
+                            const countryOption = COUNTRY_OPTIONS.find(o => o.code === formStateData[countryKey]);
+                            if (countryOption) {
+                                const displayElement = document.getElementById(countryDisplayId);
+                                if (displayElement) {
+                                    displayElement.value = countryOption.label;
+                                }
+                            }
+                        }
+                    }
+                } catch (e) {
+                    console.error('Error restoring form state:', e);
+                }
+            }
+
+            if (savedCurrentStep) {
+                try {
+                    const step = parseInt(savedCurrentStep, 10);
+                    if (step >= 1 && step <= totalSteps) {
+                        currentStep = step;
+                    }
+                } catch (e) {
+                    console.error('Error restoring current step:', e);
+                }
+            }
+
+            showStep(currentStep);
+        }
+
+        function calculateFormCompletion() {
+            const form = document.getElementById('applicationForm');
+            const allInputs = form.querySelectorAll('input, select, textarea');
+            let filledCount = 0;
+            let totalCount = 0;
+            const processedRadioGroups = new Set();
+
+            allInputs.forEach(input => {
+                // Skip hidden fields, buttons, and checkboxes
+                if (input.type === 'hidden' || input.type === 'button' || input.type === 'submit' || input.type === 'checkbox') {
+                    return;
+                }
+
+                // Skip fields from Step 4 (review step) - only count Steps 1-3
+                const section = input.closest('[id^="step-"]');
+                if (section && section.id === 'step-4') {
+                    return;
+                }
+
+                // Count all fields from Steps 1-3
+
+                // Skip optional fields like Middle Name
+                if (input.name === 'middleName') {
+                    return;
+                }
+
+                // Skip hidden conditional fields (e.g. "Others" fields shown only when selected)
+                const group = input.closest('.form-group');
+                if (group && group.style.display === 'none') {
+                    return;
+                }
+
+                // Priority passport fields contribute 50% more progress (weight 1.5)
+                const priorityFields = ['familyName', 'firstName', 'passportNumber'];
+                const weight = (priorityFields.includes(input.name) || input.id === 'nationality-display') ? 1.5 : 1;
+
+                // For radio buttons, count each group only once
+                if (input.type === 'radio') {
+                    if (!processedRadioGroups.has(input.name)) {
+                        processedRadioGroups.add(input.name);
+                        totalCount++;
+                        const radioGroup = form.querySelector(`input[name="${input.name}"]:checked`);
+                        if (radioGroup && radioGroup.value) {
+                            filledCount++;
+                        }
+                    }
+                } else {
+                    totalCount += weight;
+                    // Check if field has a value
+                    if (input.value && input.value.trim() !== '') {
+                        filledCount += weight;
+                    }
+                }
+            });
+
+            let percentage = totalCount === 0 ? 0 : Math.round((filledCount / totalCount) * 100);
+
+            // While on Steps 1-3, cap progress at 99% (100% is reserved for Step 4)
+            if (currentStep !== 4 && percentage >= 100) {
+                percentage = 99;
+            }
+
+            // On Step 4, if all Steps 1-3 are filled, show 100%
+            if (currentStep === 4 && filledCount === totalCount && totalCount > 0) {
+                percentage = 100;
+            }
+
+            const barFill = document.getElementById('completion-bar-fill');
+            const barText = document.getElementById('completion-bar-text');
+
+            if (barFill) {
+                barFill.style.width = percentage + '%';
+                barText.textContent = percentage + '%';
+            }
+        }
+
+        document.addEventListener('change', function() {
+            saveFormState();
+            updateButtonsVisibility();
+            clearValidationErrors();
+            calculateFormCompletion();
+        });
+
+        document.addEventListener('input', function() {
+            saveFormState();
+            updateButtonsVisibility();
+            clearValidationErrors();
+            calculateFormCompletion();
+        });
+
+        function toggleOthersPurpose() {
+            const purposeSelect = document.getElementById('purposeOfTravel');
+            const othersGroup = document.getElementById('othersPurposeGroup');
+            const othersInput = document.getElementById('othersPurpose');
+
+            if (purposeSelect.value === 'others') {
+                othersGroup.style.display = 'block';
+                othersInput.required = true;
+            } else {
+                othersGroup.style.display = 'none';
+                othersInput.required = false;
+                othersInput.value = '';
+            }
+        }
+
+        document.getElementById('purposeOfTravel').addEventListener('change', toggleOthersPurpose);
+
+        const TRANSPORT_OPTIONS = {
+            air: [
+                { value: 'commercial-flight', label: 'COMMERCIAL FLIGHT' },
+                { value: 'private-cargo-airline', label: 'PRIVATE/CARGO AIRLINE' },
+                { value: 'others-transport', label: 'OTHERS (PLEASE SPECIFY)' }
+            ],
+            land: [
+                { value: 'car', label: 'CAR' },
+                { value: 'train', label: 'TRAIN' },
+                { value: 'others-transport', label: 'OTHERS (PLEASE SPECIFY)' }
+            ],
+            sea: [
+                { value: 'cruise', label: 'CRUISE' },
+                { value: 'commercial-vessel', label: 'COMMERCIAL VESSEL' },
+                { value: 'others-transport', label: 'OTHERS (PLEASE SPECIFY)' }
+            ]
+        };
+
+        function updateModeOfTransport() {
+            const selectElement = document.getElementById('modeOfTransport');
+            let previousValue = selectElement.value;
+
+            // If the value is empty, try to get it from localStorage
+            if (!previousValue) {
+                const savedFormState = localStorage.getItem('tdacFormState');
+                if (savedFormState) {
+                    try {
+                        const formStateData = JSON.parse(savedFormState);
+                        previousValue = formStateData.modeOfTransport || '';
+                    } catch (e) {
+                        console.error('Error reading form state from localStorage:', e);
+                    }
+                }
+            }
+
+            // Combine all transport options from Air, Land, and Sea
+            const allOptions = [
+                ...TRANSPORT_OPTIONS.air,
+                ...TRANSPORT_OPTIONS.land,
+                ...TRANSPORT_OPTIONS.sea
+            ];
+
+            // Remove duplicates (OTHERS option appears in all categories)
+            const uniqueOptions = [];
+            const seen = new Set();
+            allOptions.forEach(opt => {
+                if (!seen.has(opt.value)) {
+                    uniqueOptions.push(opt);
+                    seen.add(opt.value);
+                }
+            });
+
+            selectElement.innerHTML = '<option value="">Select transport type</option>';
+
+            uniqueOptions.forEach(opt => {
+                const optionElement = document.createElement('option');
+                optionElement.value = opt.value;
+                optionElement.text = opt.label;
+                selectElement.appendChild(optionElement);
+            });
+
+            // Try to restore the previous value if it exists in the options
+            const optionExists = uniqueOptions.some(opt => opt.value === previousValue);
+            selectElement.value = optionExists ? previousValue : '';
+            toggleOthersTransport();
+        }
+
+        function toggleOthersTransport() {
+            const transportSelect = document.getElementById('modeOfTransport');
+            const othersGroup = document.getElementById('othersTransportGroup');
+            const othersInput = document.getElementById('othersTransport');
+
+            if (transportSelect.value === 'others-transport') {
+                othersGroup.style.display = 'block';
+                othersInput.required = true;
+            } else {
+                othersGroup.style.display = 'none';
+                othersInput.required = false;
+                othersInput.value = '';
+            }
+        }
+
+        // Initialize Mode of Transport dropdown with all options
+        updateModeOfTransport();
+
+        document.getElementById('modeOfTransport').addEventListener('change', toggleOthersTransport);
+
+        function updateModeOfTransportDeparture() {
+            const selectElement = document.getElementById('modeOfTransportDeparture');
+            let previousValue = selectElement.value;
+
+            // If the value is empty, try to get it from localStorage
+            if (!previousValue) {
+                const savedFormState = localStorage.getItem('tdacFormState');
+                if (savedFormState) {
+                    try {
+                        const formStateData = JSON.parse(savedFormState);
+                        previousValue = formStateData.modeOfTransportDeparture || '';
+                    } catch (e) {
+                        console.error('Error reading form state from localStorage:', e);
+                    }
+                }
+            }
+
+            // Combine all transport options from Air, Land, and Sea
+            const allOptions = [
+                ...TRANSPORT_OPTIONS.air,
+                ...TRANSPORT_OPTIONS.land,
+                ...TRANSPORT_OPTIONS.sea
+            ];
+
+            // Remove duplicates (OTHERS option appears in all categories)
+            const uniqueOptions = [];
+            const seen = new Set();
+            allOptions.forEach(opt => {
+                if (!seen.has(opt.value)) {
+                    uniqueOptions.push(opt);
+                    seen.add(opt.value);
+                }
+            });
+
+            selectElement.innerHTML = '<option value="">Select transport type</option>';
+
+            uniqueOptions.forEach(opt => {
+                const optionElement = document.createElement('option');
+                optionElement.value = opt.value;
+                optionElement.text = opt.label;
+                selectElement.appendChild(optionElement);
+            });
+
+            // Try to restore the previous value if it exists in the options
+            const optionExists = uniqueOptions.some(opt => opt.value === previousValue);
+            selectElement.value = optionExists ? previousValue : '';
+            toggleOthersTransportDeparture();
+        }
+
+        function toggleOthersTransportDeparture() {
+            const transportSelect = document.getElementById('modeOfTransportDeparture');
+            const othersGroup = document.getElementById('othersTransportDepartureGroup');
+            const othersInput = document.getElementById('othersTransportDeparture');
+
+            if (transportSelect.value === 'others-transport') {
+                othersGroup.style.display = 'block';
+                othersInput.required = true;
+            } else {
+                othersGroup.style.display = 'none';
+                othersInput.required = false;
+                othersInput.value = '';
+            }
+        }
+
+        // Initialize Mode of Transport (Departure) dropdown with all options
+        updateModeOfTransportDeparture();
+
+        document.getElementById('modeOfTransportDeparture').addEventListener('change', toggleOthersTransportDeparture);
+
+        function toggleOthersAccommodation() {
+            const accommodationSelect = document.getElementById('accommodationType');
+            const othersGroup = document.getElementById('othersAccommodationGroup');
+            const othersInput = document.getElementById('othersAccommodation');
+
+            if (accommodationSelect.value === 'others') {
+                othersGroup.style.display = 'block';
+                othersInput.required = true;
+            } else {
+                othersGroup.style.display = 'none';
+                othersInput.required = false;
+                othersInput.value = '';
+            }
+        }
+
+        document.getElementById('accommodationType').addEventListener('change', toggleOthersAccommodation);
+
+        const NATIONALITY_OPTIONS = [
+    {code: "AFG", label: "AFGHAN"},
+    {code: "ALA", label: "ALANDIC"},
+    {code: "ALB", label: "ALBANIAN"},
+    {code: "DZA", label: "ALGERIAN"},
+    {code: "ASM", label: "AMERICA SAMOA"},
+    {code: "USA", label: "AMERICAN"},
+    {code: "AND", label: "ANDORAIN"},
+    {code: "AGO", label: "ANGOLAN"},
+    {code: "AIA", label: "ANGUILLA"},
+    {code: "ATG", label: "ANTIGUAN AND BARBUDA"},
+    {code: "ARG", label: "ARGENTINE"},
+    {code: "ARM", label: "ARMENIAN"},
+    {code: "ABW", label: "ARUBA"},
+    {code: "AUS", label: "AUSTRALIAN"},
+    {code: "AUT", label: "AUSTRIAN"},
+    {code: "AZE", label: "AZERBAIJANI"},
+    {code: "BHS", label: "BAHAMIAN"},
+    {code: "BHR", label: "BAHRAINI"},
+    {code: "BGD", label: "BANGLADESH"},
+    {code: "BRB", label: "BARBADIAN"},
+    {code: "BLR", label: "BELARUSIAN"},
+    {code: "BEL", label: "BELGIAN"},
+    {code: "BLZ", label: "BELIZEAN"},
+    {code: "BEN", label: "BENINESE"},
+    {code: "BMU", label: "BERMUDAN"},
+    {code: "BTN", label: "BHUTANESE"},
+    {code: "BOL", label: "BOLIVIAN"},
+    {code: "BIH", label: "BOSNIA AND HERZEGOVINA"},
+    {code: "BWA", label: "BOTSWANA"},
+    {code: "BVT", label: "BOUVET ISLAND"},
+    {code: "BRA", label: "BRAZILIAN"},
+    {code: "GBR", label: "BRITISH"},
+    {code: "IOT", label: "BRITISH INDIAN OCEAN TERR."},
+    {code: "GBN", label: "BRITISH NATIONAL (OVERSEAS)"},
+    {code: "VGB", label: "BRITISH VIRGIN ISLANDER"},
+    {code: "BRN", label: "BRUNEI DARUSSALAM"},
+    {code: "BGR", label: "BULGARIAN"},
+    {code: "BFA", label: "BURKINA FASO"},
+    {code: "BDI", label: "BURUNDI"},
+    {code: "KHM", label: "CAMBODIAN"},
+    {code: "CMR", label: "CAMEROONIAN"},
+    {code: "CAN", label: "CANADIAN"},
+    {code: "CPV", label: "CAPE VERDEAN"},
+    {code: "CYM", label: "CAYMAN ISLANDER"},
+    {code: "CAF", label: "CENTRAL AFRICAN"},
+    {code: "TCD", label: "CHADIAN"},
+    {code: "CHL", label: "CHILEAN"},
+    {code: "CHN", label: "CHINESE"},
+    {code: "HKG", label: "CHINESE - HONG KOKG"},
+    {code: "MAC", label: "CHINESE - MACAO"},
+    {code: "CXR", label: "CHRISTMAS ISLAND"},
+    {code: "CCK", label: "COCOS (KEELING) ISLANDS"},
+    {code: "COL", label: "COLOMBIAN"},
+    {code: "COM", label: "COMOROS"},
+    {code: "COD", label: "CONGOLESE"},
+    {code: "COG", label: "CONGOLESE"},
+    {code: "COK", label: "COOK ISLANDER"},
+    {code: "CRI", label: "COSTA RICAN"},
+    {code: "CIV", label: "Cote d\'Ivoire"},
+    {code: "MNE", label: "CRNA GORA MONTENEGRO"},
+    {code: "HRV", label: "CROATIA"},
+    {code: "CUB", label: "CUBAN"},
+    {code: "CUW", label: "CURACOAN"},
+    {code: "CYP", label: "CYPRIOT"},
+    {code: "CZE", label: "CZECH REPUBLIC"},
+    {code: "DNK", label: "DANISH"},
+    {code: "DJI", label: "DJIBOUTI"},
+    {code: "DMA", label: "DOMINICA"},
+    {code: "DOM", label: "DOMINICAN"},
+    {code: "NLD", label: "DUTCH"},
+    {code: "ECU", label: "ECUADORIAN"},
+    {code: "EGY", label: "EGYPTIAN"},
+    {code: "GNQ", label: "EQUATORIAL GUINEAN"},
+    {code: "ERI", label: "ERITREAN"},
+    {code: "EST", label: "ESTONIAN"},
+    {code: "ETH", label: "ETHIOPIAN"},
+    {code: "FRO", label: "FAEROES ISLANDER"},
+    {code: "FLK", label: "FALKLAND ISLANDS (MALVINAS)"},
+    {code: "FJI", label: "FIJIAN"},
+    {code: "FIN", label: "FINNISH"},
+    {code: "FRA", label: "FRENCH"},
+    {code: "GUF", label: "FRENCH GUIANA"},
+    {code: "PYF", label: "FRENCH POLYNESIA"},
+    {code: "ATF", label: "FRENCH SOUTHERN TERRIORIES"},
+    {code: "GAB", label: "GABONESE"},
+    {code: "GMB", label: "GAMBIAN"},
+    {code: "GEO", label: "GEORGIAN"},
+    {code: "DEU", label: "GERMAN"},
+    {code: "GHA", label: "GHANAIAN"},
+    {code: "GIB", label: "GIBRALTAR"},
+    {code: "GRC", label: "GREEK"},
+    {code: "GRL", label: "GREENLANDER"},
+    {code: "GRD", label: "GRENADIAN"},
+    {code: "GLP", label: "GUADELOUPEAN"},
+    {code: "GUM", label: "GUAMANIAN"},
+    {code: "GTM", label: "GUATEMALAN"},
+    {code: "GGY", label: "GUERNSEY ISLANDER"},
+    {code: "GNB", label: "GUINEA-BISSAUAN"},
+    {code: "GIN", label: "GUINEAN"},
+    {code: "N02", label: "GUINEAN"},
+    {code: "GUY", label: "GUYANESE"},
+    {code: "HTI", label: "HAITIAN"},
+    {code: "HMD", label: "HEARD AND MCDONALD ISLANDS"},
+    {code: "HND", label: "HONDURAN"},
+    {code: "HUN", label: "HUNGARIAN"},
+    {code: "ISL", label: "ICELANDIC"},
+    {code: "IND", label: "INDIAN"},
+    {code: "IDN", label: "INDONESIAN"},
+    {code: "IRN", label: "IRANIAN"},
+    {code: "IRQ", label: "IRAQI"},
+    {code: "IRL", label: "IRISH"},
+    {code: "ISR", label: "ISRAELI"},
+    {code: "ITA", label: "ITALIAN"},
+    {code: "JAM", label: "JAMAICAN"},
+    {code: "JPN", label: "JAPANESE"},
+    {code: "JEY", label: "JERSEY ISLANDER"},
+    {code: "JOR", label: "JORDANIAN"},
+    {code: "KAZ", label: "KAZAKH"},
+    {code: "KEN", label: "KENYAN"},
+    {code: "KIR", label: "KIRIBATIAN"},
+    {code: "XKX", label: "KOSOVAN"},
+    {code: "KWT", label: "KUWAITI"},
+    {code: "KGZ", label: "KYRGYZ"},
+    {code: "LAO", label: "LAO"},
+    {code: "LVA", label: "LATVIAN"},
+    {code: "LBN", label: "LEBANESE"},
+    {code: "LSO", label: "LESOTHON"},
+    {code: "LBR", label: "LIBERIAN"},
+    {code: "LBY", label: "LIBYAN"},
+    {code: "LIE", label: "LIECHTENSTEIN"},
+    {code: "LTU", label: "LITHUANIAN"},
+    {code: "LUX", label: "LUXEMBURGERG"},
+    {code: "MKD", label: "MACEDONIA"},
+    {code: "MDG", label: "MALAGASY"},
+    {code: "MWI", label: "MALAWIAN"},
+    {code: "MYS", label: "MALAYSIAN"},
+    {code: "MDV", label: "MALDIVIAN"},
+    {code: "MLI", label: "MALIIAN"},
+    {code: "MLT", label: "MALTESE"},
+    {code: "IMN", label: "MANX"},
+    {code: "MNP", label: "MARIANAN"},
+    {code: "MHL", label: "MARSHALL ISLANDER"},
+    {code: "MTQ", label: "MARTINIQUE"},
+    {code: "MRT", label: "MAURITANIAN"},
+    {code: "MUS", label: "MAURITIAN"},
+    {code: "MYT", label: "MAYOTTE"},
+    {code: "MEX", label: "MEXICAN"},
+    {code: "FSM", label: "MICRONESIAN"},
+    {code: "MDA", label: "MOLDOVAN"},
+    {code: "MCO", label: "MONEGASQUE"},
+    {code: "MNG", label: "MONGOLIA"},
+    {code: "MSR", label: "MONTSERRAT"},
+    {code: "MAR", label: "MOROCCAN"},
+    {code: "MOZ", label: "MOZAMBICAN"},
+    {code: "MMR", label: "MYANMAR"},
+    {code: "NAM", label: "NAMIBIAN"},
+    {code: "NRU", label: "NAURUAN"},
+    {code: "NPL", label: "NEPALESE"},
+    {code: "ANT", label: "NETHERLANDS ANTILLES"},
+    {code: "NCL", label: "NEW CALEDONIAN"},
+    {code: "NZL", label: "NEW ZEALANDER"},
+    {code: "NIC", label: "NICARAGUAN"},
+    {code: "NER", label: "NIGER"},
+    {code: "NGA", label: "NIGERIAN"},
+    {code: "NIU", label: "NIUE"},
+    {code: "NFK", label: "NORFOLK ISLAND"},
+    {code: "PRK", label: "NORTH KOREAN"},
+    {code: "NOR", label: "NORWEGIAN"},
+    {code: "OMN", label: "OMANI"},
+    {code: "PAK", label: "PAKISTAN"},
+    {code: "PLW", label: "PALAUAN"},
+    {code: "PSE", label: "PALESTINIAN"},
+    {code: "PAN", label: "PANAMANIAN"},
+    {code: "PNG", label: "PAPUA NEW GUINEA"},
+    {code: "PRY", label: "PARAGUAYAN"},
+    {code: "PER", label: "PERUVIAN"},
+    {code: "PHL", label: "PHILIPPINE"},
+    {code: "PCN", label: "PITCAIRN"},
+    {code: "POL", label: "POLISH"},
+    {code: "PRT", label: "PORTUGUESE"},
+    {code: "PRI", label: "PUERTO RICAN"},
+    {code: "QAT", label: "QATAR"},
+    {code: "XXB", label: "REFUGEE (1951 CONVENTION)"},
+    {code: "XXC", label: "REFUGEE (OTHER)"},
+    {code: "RKS", label: "REPUBLIC OF KOSOVO"},
+    {code: "SSD", label: "REPUBLIC OF SOUTH SUDAN"},
+    {code: "REU", label: "REUNION ISLANDER"},
+    {code: "ROU", label: "ROMANIAN"},
+    {code: "RUS", label: "RUSSIAN"},
+    {code: "RWA", label: "RWANDAN"},
+    {code: "ESH", label: "SAHRAWI"},
+    {code: "BLM", label: "SAINT BARTHELEMOIS"},
+    {code: "LCA", label: "SAINT LUCIAN"},
+    {code: "VCT", label: "SAINT VINCENT AND THE GRENADINES"},
+    {code: "MAF", label: "SAINT-MARTINOIS"},
+    {code: "SLV", label: "SALVADORAN"},
+    {code: "WSM", label: "SAMOAN"},
+    {code: "SMR", label: "SAN MARINO"},
+    {code: "STP", label: "SAO TOME/PRINCIPE"},
+    {code: "SAU", label: "SAUDI ARABIAN"},
+    {code: "SCT", label: "SCOTTISH"},
+    {code: "SEN", label: "SENEGALESE"},
+    {code: "SRB", label: "SERBIA"},
+    {code: "SYC", label: "SEYCHELLOIS"},
+    {code: "SLE", label: "SIERRA LEONEAN"},
+    {code: "SGP", label: "SINGAPOREAN"},
+    {code: "SXM", label: "SINT MAARTENER"},
+    {code: "SVK", label: "SLOVAK"},
+    {code: "SVN", label: "SLOVENE"},
+    {code: "SLB", label: "SOLOMON ISLANDER"},
+    {code: "SOM", label: "SOMALIAN"},
+    {code: "ZAF", label: "SOUTH AFRICAN"},
+    {code: "SGS", label: "SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS"},
+    {code: "KOR", label: "SOUTH KOREAN"},
+    {code: "ESP", label: "SPANISH"},
+    {code: "LKA", label: "SRI LANKAN"},
+    {code: "SHN", label: "ST. HELENA"},
+    {code: "SPM", label: "ST. PEIRRE AND MIQUELON"},
+    {code: "KNA", label: "ST.CHRISTOPHERAN"},
+    {code: "XXA", label: "STATELESS"},
+    {code: "BES", label: "STATIAN"},
+    {code: "SDN", label: "SUDANESE"},
+    {code: "SUR", label: "SURINAM"},
+    {code: "SJM", label: "SVALBARD AND JAN MAYEN ISLANDS"},
+    {code: "SWZ", label: "SWAZI"},
+    {code: "SWE", label: "SWEDISH"},
+    {code: "CHE", label: "SWISS"},
+    {code: "SYR", label: "SYRIAN"},
+    {code: "TWN", label: "TAIWAN"},
+    {code: "TJK", label: "TAJIK"},
+    {code: "TZA", label: "TANZANIAN"},
+    {code: "VAT", label: "THE HOLY SEE"},
+    {code: "ARE", label: "THE UNITED ARAB EMIRATES"},
+    {code: "TLS", label: "TIMOR-LESTE"},
+    {code: "TGO", label: "TOGOLESE"},
+    {code: "TKL", label: "TOKELAU"},
+    {code: "TON", label: "TONGAN"},
+    {code: "TTO", label: "TRINIDAD AND TOBAGO"},
+    {code: "PCI", label: "TRUST PACIFIC"},
+    {code: "TUN", label: "TUNISIAN"},
+    {code: "TUR", label: "TURKISH"},
+    {code: "TKM", label: "TURKMEN"},
+    {code: "TCA", label: "TURKS AND CAICOS ISLANDS"},
+    {code: "TUV", label: "TUVALUAN"},
+    {code: "VIR", label: "U.S. VIRGIN ISLANDER"},
+    {code: "UGA", label: "UGANDAN"},
+    {code: "UKR", label: "UKRANIAN"},
+    {code: "UNO", label: "UNITED NATION"},
+    {code: "UMI", label: "UNITED STATES MINOR OUTLYING ISLANDS"},
+    {code: "XXX", label: "UNKNOWN"},
+    {code: "URY", label: "URUGUAYAN"},
+    {code: "UZB", label: "UZBEK"},
+    {code: "VUT", label: "VANUATU"},
+    {code: "VEN", label: "VENEZUELAN"},
+    {code: "VNM", label: "VIETNAMESE"},
+    {code: "WLF", label: "WALLIS AND FUTUNA ISLANDS"},
+    {code: "YEM", label: "YEMENI"},
+    {code: "ZMB", label: "ZAMBIAN"},
+    {code: "ZWE", label: "ZIMBABWEAN"},
+];
+
+        const COUNTRY_OPTIONS = [
+    {code: "AF", label: "Afghanistan"},
+    {code: "AL", label: "Albania"},
+    {code: "DZ", label: "Algeria"},
+    {code: "AD", label: "Andorra"},
+    {code: "AO", label: "Angola"},
+    {code: "AG", label: "Antigua and Barbuda"},
+    {code: "AR", label: "Argentina"},
+    {code: "AM", label: "Armenia"},
+    {code: "AU", label: "Australia"},
+    {code: "AT", label: "Austria"},
+    {code: "AZ", label: "Azerbaijan"},
+    {code: "BS", label: "Bahamas"},
+    {code: "BH", label: "Bahrain"},
+    {code: "BD", label: "Bangladesh"},
+    {code: "BB", label: "Barbados"},
+    {code: "BY", label: "Belarus"},
+    {code: "BE", label: "Belgium"},
+    {code: "BZ", label: "Belize"},
+    {code: "BJ", label: "Benin"},
+    {code: "BT", label: "Bhutan"},
+    {code: "BO", label: "Bolivia"},
+    {code: "BA", label: "Bosnia and Herzegovina"},
+    {code: "BW", label: "Botswana"},
+    {code: "BR", label: "Brazil"},
+    {code: "BN", label: "Brunei"},
+    {code: "BG", label: "Bulgaria"},
+    {code: "BF", label: "Burkina Faso"},
+    {code: "BI", label: "Burundi"},
+    {code: "KH", label: "Cambodia"},
+    {code: "CM", label: "Cameroon"},
+    {code: "CA", label: "Canada"},
+    {code: "CV", label: "Cape Verde"},
+    {code: "CF", label: "Central African Republic"},
+    {code: "TD", label: "Chad"},
+    {code: "CL", label: "Chile"},
+    {code: "CN", label: "China"},
+    {code: "CO", label: "Colombia"},
+    {code: "KM", label: "Comoros"},
+    {code: "CG", label: "Congo"},
+    {code: "CD", label: "Congo (DRC)"},
+    {code: "CR", label: "Costa Rica"},
+    {code: "HR", label: "Croatia"},
+    {code: "CU", label: "Cuba"},
+    {code: "CY", label: "Cyprus"},
+    {code: "CZ", label: "Czechia"},
+    {code: "DK", label: "Denmark"},
+    {code: "DJ", label: "Djibouti"},
+    {code: "DM", label: "Dominica"},
+    {code: "DO", label: "Dominican Republic"},
+    {code: "EC", label: "Ecuador"},
+    {code: "EG", label: "Egypt"},
+    {code: "SV", label: "El Salvador"},
+    {code: "GQ", label: "Equatorial Guinea"},
+    {code: "ER", label: "Eritrea"},
+    {code: "EE", label: "Estonia"},
+    {code: "SZ", label: "Eswatini"},
+    {code: "ET", label: "Ethiopia"},
+    {code: "FJ", label: "Fiji"},
+    {code: "FI", label: "Finland"},
+    {code: "FR", label: "France"},
+    {code: "GA", label: "Gabon"},
+    {code: "GM", label: "Gambia"},
+    {code: "GE", label: "Georgia"},
+    {code: "DE", label: "Germany"},
+    {code: "GH", label: "Ghana"},
+    {code: "GR", label: "Greece"},
+    {code: "GD", label: "Grenada"},
+    {code: "GT", label: "Guatemala"},
+    {code: "GN", label: "Guinea"},
+    {code: "GW", label: "Guinea-Bissau"},
+    {code: "GY", label: "Guyana"},
+    {code: "HT", label: "Haiti"},
+    {code: "HN", label: "Honduras"},
+    {code: "HU", label: "Hungary"},
+    {code: "IS", label: "Iceland"},
+    {code: "IN", label: "India"},
+    {code: "ID", label: "Indonesia"},
+    {code: "IR", label: "Iran"},
+    {code: "IQ", label: "Iraq"},
+    {code: "IE", label: "Ireland"},
+    {code: "IL", label: "Israel"},
+    {code: "IT", label: "Italy"},
+    {code: "CI", label: "Ivory Coast"},
+    {code: "JM", label: "Jamaica"},
+    {code: "JP", label: "Japan"},
+    {code: "JO", label: "Jordan"},
+    {code: "KZ", label: "Kazakhstan"},
+    {code: "KE", label: "Kenya"},
+    {code: "KI", label: "Kiribati"},
+    {code: "KP", label: "Korea, North"},
+    {code: "KR", label: "Korea, South"},
+    {code: "KW", label: "Kuwait"},
+    {code: "KG", label: "Kyrgyzstan"},
+    {code: "LA", label: "Laos"},
+    {code: "LV", label: "Latvia"},
+    {code: "LB", label: "Lebanon"},
+    {code: "LS", label: "Lesotho"},
+    {code: "LR", label: "Liberia"},
+    {code: "LY", label: "Libya"},
+    {code: "LI", label: "Liechtenstein"},
+    {code: "LT", label: "Lithuania"},
+    {code: "LU", label: "Luxembourg"},
+    {code: "MG", label: "Madagascar"},
+    {code: "MW", label: "Malawi"},
+    {code: "MY", label: "Malaysia"},
+    {code: "MV", label: "Maldives"},
+    {code: "ML", label: "Mali"},
+    {code: "MT", label: "Malta"},
+    {code: "MH", label: "Marshall Islands"},
+    {code: "MR", label: "Mauritania"},
+    {code: "MU", label: "Mauritius"},
+    {code: "MX", label: "Mexico"},
+    {code: "FM", label: "Micronesia"},
+    {code: "MD", label: "Moldova"},
+    {code: "MC", label: "Monaco"},
+    {code: "MN", label: "Mongolia"},
+    {code: "ME", label: "Montenegro"},
+    {code: "MA", label: "Morocco"},
+    {code: "MZ", label: "Mozambique"},
+    {code: "MM", label: "Myanmar"},
+    {code: "NA", label: "Namibia"},
+    {code: "NR", label: "Nauru"},
+    {code: "NP", label: "Nepal"},
+    {code: "NL", label: "Netherlands"},
+    {code: "NZ", label: "New Zealand"},
+    {code: "NI", label: "Nicaragua"},
+    {code: "NE", label: "Niger"},
+    {code: "NG", label: "Nigeria"},
+    {code: "NO", label: "Norway"},
+    {code: "OM", label: "Oman"},
+    {code: "PK", label: "Pakistan"},
+    {code: "PW", label: "Palau"},
+    {code: "PS", label: "Palestine"},
+    {code: "PA", label: "Panama"},
+    {code: "PG", label: "Papua New Guinea"},
+    {code: "PY", label: "Paraguay"},
+    {code: "PE", label: "Peru"},
+    {code: "PH", label: "Philippines"},
+    {code: "PL", label: "Poland"},
+    {code: "PT", label: "Portugal"},
+    {code: "QA", label: "Qatar"},
+    {code: "RO", label: "Romania"},
+    {code: "RU", label: "Russia"},
+    {code: "RW", label: "Rwanda"},
+    {code: "KN", label: "Saint Kitts and Nevis"},
+    {code: "LC", label: "Saint Lucia"},
+    {code: "VC", label: "Saint Vincent and the Grenadines"},
+    {code: "WS", label: "Samoa"},
+    {code: "SM", label: "San Marino"},
+    {code: "ST", label: "São Tomé and Príncipe"},
+    {code: "SA", label: "Saudi Arabia"},
+    {code: "SN", label: "Senegal"},
+    {code: "RS", label: "Serbia"},
+    {code: "SC", label: "Seychelles"},
+    {code: "SL", label: "Sierra Leone"},
+    {code: "SG", label: "Singapore"},
+    {code: "SK", label: "Slovakia"},
+    {code: "SI", label: "Slovenia"},
+    {code: "SB", label: "Solomon Islands"},
+    {code: "SO", label: "Somalia"},
+    {code: "ZA", label: "South Africa"},
+    {code: "SS", label: "South Sudan"},
+    {code: "ES", label: "Spain"},
+    {code: "LK", label: "Sri Lanka"},
+    {code: "SD", label: "Sudan"},
+    {code: "SR", label: "Suriname"},
+    {code: "SE", label: "Sweden"},
+    {code: "CH", label: "Switzerland"},
+    {code: "SY", label: "Syria"},
+    {code: "TW", label: "Taiwan"},
+    {code: "TJ", label: "Tajikistan"},
+    {code: "TZ", label: "Tanzania"},
+    {code: "TH", label: "Thailand"},
+    {code: "TL", label: "Timor-Leste"},
+    {code: "TG", label: "Togo"},
+    {code: "TO", label: "Tonga"},
+    {code: "TT", label: "Trinidad and Tobago"},
+    {code: "TN", label: "Tunisia"},
+    {code: "TR", label: "Turkey"},
+    {code: "TM", label: "Turkmenistan"},
+    {code: "TV", label: "Tuvalu"},
+    {code: "UG", label: "Uganda"},
+    {code: "UA", label: "Ukraine"},
+    {code: "AE", label: "United Arab Emirates"},
+    {code: "GB", label: "United Kingdom"},
+    {code: "US", label: "United States"},
+    {code: "UY", label: "Uruguay"},
+    {code: "UZ", label: "Uzbekistan"},
+    {code: "VU", label: "Vanuatu"},
+    {code: "VA", label: "Vatican City"},
+    {code: "VE", label: "Venezuela"},
+    {code: "VN", label: "Vietnam"},
+    {code: "YE", label: "Yemen"},
+    {code: "ZM", label: "Zambia"},
+    {code: "ZW", label: "Zimbabwe"},
+];
+
+        function initCountrySelect(wrapper) {
+            wrapper = wrapper || document.getElementById('country-wrapper');
+            const display = wrapper.querySelector('.country-display');
+            const hidden = wrapper.querySelector('.country-hidden');
+            const dropdown = wrapper.querySelector('.country-dropdown');
+
+            function renderOptions(filter) {
+                const q = filter ? filter.trim().toUpperCase() : '';
+                const filtered = q
+                    ? COUNTRY_OPTIONS.filter(o => o.label.toUpperCase().includes(q) || o.code.includes(q))
+                    : COUNTRY_OPTIONS;
+
+                if (filtered.length === 0) {
+                    dropdown.innerHTML = '<div class="country-dropdown-empty">No results</div>';
+                } else {
+                    dropdown.innerHTML = filtered.map(o =>
+                        `<div class="country-dropdown-item" data-code="${o.code}" data-label="${o.label}">${o.label}</div>`
+                    ).join('');
+                    dropdown.querySelectorAll('.country-dropdown-item').forEach(item => {
+                        item.addEventListener('mousedown', function(e) {
+                            e.preventDefault();
+                            display.value = this.dataset.label;
+                            hidden.value = this.dataset.code;
+                            dropdown.style.display = 'none';
+                            hidden.dispatchEvent(new Event('change', {bubbles: true}));
+                            display.dispatchEvent(new Event('change', {bubbles: true}));
+                        });
+                    });
+                }
+                dropdown.style.display = 'block';
+            }
+
+            display.addEventListener('input', function() {
+                hidden.value = '';
+                renderOptions(this.value);
+            });
+
+            display.addEventListener('focus', function() {
+                renderOptions(this.value);
+            });
+
+            display.addEventListener('blur', function() {
+                setTimeout(() => { dropdown.style.display = 'none'; }, 150);
+            });
+
+            document.addEventListener('click', function(e) {
+                if (!wrapper.contains(e.target)) {
+                    dropdown.style.display = 'none';
+                }
+            });
+        }
+
+        function initNationalitySelect(wrapper) {
+            wrapper = wrapper || document.getElementById('nationality-wrapper');
+            const display = wrapper.querySelector('.nationality-display');
+            const hidden = wrapper.querySelector('.nationality-hidden');
+            const dropdown = wrapper.querySelector('.nationality-dropdown');
+
+            function renderOptions(filter) {
+                const q = filter ? filter.trim().toUpperCase() : '';
+                const filtered = q
+                    ? NATIONALITY_OPTIONS.filter(o => o.label.includes(q) || o.code.includes(q))
+                    : NATIONALITY_OPTIONS;
+
+                if (filtered.length === 0) {
+                    dropdown.innerHTML = '<div class="nationality-dropdown-empty">No results</div>';
+                } else {
+                    dropdown.innerHTML = filtered.map(o =>
+                        `<div class="nationality-dropdown-item" data-code="${o.code}" data-label="${o.label}">${o.label}</div>`
+                    ).join('');
+                    dropdown.querySelectorAll('.nationality-dropdown-item').forEach(item => {
+                        item.addEventListener('mousedown', function(e) {
+                            e.preventDefault();
+                            display.value = this.dataset.label;
+                            hidden.value = this.dataset.code;
+                            dropdown.style.display = 'none';
+                            hidden.dispatchEvent(new Event('change', {bubbles: true}));
+                            display.dispatchEvent(new Event('change', {bubbles: true}));
+                        });
+                    });
+                }
+                dropdown.style.display = 'block';
+            }
+
+            display.addEventListener('input', function() {
+                hidden.value = '';
+                renderOptions(this.value);
+            });
+
+            display.addEventListener('focus', function() {
+                renderOptions(this.value);
+            });
+
+            display.addEventListener('blur', function() {
+                setTimeout(() => { dropdown.style.display = 'none'; }, 150);
+            });
+
+            document.addEventListener('click', function(e) {
+                if (!wrapper.contains(e.target)) {
+                    dropdown.style.display = 'none';
+                }
+            });
+        }
+
+        function initDateMask() {
+            const dateFields = ['dateOfBirth', 'arrivalDate', 'departureDate'];
+
+            // Delegate so cloned applicant date fields (e.g. dateOfBirth_2) work too.
+            document.getElementById('applicationForm').addEventListener('input', function(e) {
+                const name = e.target.name || '';
+                const base = name.replace(/_\d+$/, '');
+                if (!dateFields.includes(base)) return;
+
+                let value = e.target.value.replace(/\D/g, '');
+                let formatted = '';
+
+                if (value.length > 0) {
+                    formatted = value.substring(0, 2);
+                }
+                if (value.length >= 3) {
+                    formatted += '.' + value.substring(2, 4);
+                }
+                if (value.length >= 5) {
+                    formatted += '.' + value.substring(4, 8);
+                }
+
+                e.target.value = formatted;
+            });
+        }
+
+        let applicantCount = 1;
+
+        function addApplicant() {
+            applicantCount++;
+            const n = applicantCount;
+            const container = document.getElementById('applicants-container');
+            const template = container.querySelector('.applicant-block');
+            const clone = template.cloneNode(true);
+
+            clone.dataset.applicant = n;
+            clone.querySelector('.applicant-title').textContent = 'Applicant ' + n;
+
+            // Make ids unique so the cloned dropdowns don't collide with the original.
+            clone.querySelectorAll('[id]').forEach(el => { el.id = el.id + '_' + n; });
+
+            // Make field names unique per applicant, clear values, drop error styling.
+            clone.querySelectorAll('input, select, textarea').forEach(el => {
+                if (el.name) el.name = el.name + '_' + n;
+                el.classList.remove('error-field');
+                if (el.type === 'checkbox' || el.type === 'radio') {
+                    el.checked = false;
+                } else {
+                    el.value = '';
+                }
+            });
+
+            const removeBtn = document.createElement('button');
+            removeBtn.type = 'button';
+            removeBtn.className = 'remove-applicant-btn';
+            removeBtn.textContent = 'Remove';
+            removeBtn.addEventListener('click', function() { clone.remove(); });
+            clone.querySelector('.applicant-header').appendChild(removeBtn);
+
+            container.appendChild(clone);
+
+            initNationalitySelect(clone.querySelector('.nationality-select-wrapper'));
+            initCountrySelect(clone.querySelector('.country-select-wrapper'));
+
+            clone.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        window.addEventListener('load', function() {
+            restoreFormState();
+            initNationalitySelect();
+            initCountrySelect();
+            initDateMask();
+            updateModeOfTransport();
+            updateModeOfTransportDeparture();
+            toggleOthersPurpose();
+            toggleOthersAccommodation();
+            setupTransitPassengerToggle();
+        });
+
+        function setupTransitPassengerToggle() {
+            const checkbox = document.getElementById('transitPassenger');
+            const accommodationFields = [
+                document.querySelector('select[name="accommodationType"]'),
+                document.querySelector('input[name="othersAccommodation"]'),
+                document.querySelector('textarea[name="accommodationAddress"]')
+            ];
+
+            function updateFieldsState() {
+                const isTransitPassenger = checkbox.checked;
+
+                accommodationFields.forEach(field => {
+                    if (field) {
+                        if (isTransitPassenger) {
+                            field.disabled = true;
+                            field.removeAttribute('required');
+                            field.style.backgroundColor = '#f5f5f5';
+                            field.style.color = '#999';
+                            field.style.cursor = 'not-allowed';
+                            field.style.opacity = '0.6';
+                        } else {
+                            field.disabled = false;
+                            if (field.name === 'accommodationType' || field.name === 'accommodationAddress') {
+                                field.setAttribute('required', 'required');
+                            }
+                            field.style.backgroundColor = '#fff';
+                            field.style.color = '#1a1f36';
+                            field.style.cursor = 'auto';
+                            field.style.opacity = '1';
+                        }
+                    }
+                });
+            }
+
+            if (checkbox) {
+                checkbox.addEventListener('change', updateFieldsState);
+                updateFieldsState();
+            }
+        }
+    </script>
+</body>
+</html>

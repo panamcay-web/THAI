@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us — Thailand Pass TDAC</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: #1a1f36;
+            background: #fff;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 48px;
+            background: #fff;
+            border-bottom: 1px solid #f0f1f6;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 20px;
+            color: #1a1f36;
+        }
+
+        .logo img {
+            height: 50px;
+            object-fit: contain;
+        }
+
+        .back-link {
+            font-size: 15px;
+            font-weight: 500;
+            color: #4a90e2;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: #1a1f36;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 80px 48px;
+        }
+
+        h1 {
+            font-size: 42px;
+            font-weight: 800;
+            color: #1a1f36;
+            margin-bottom: 32px;
+        }
+
+        .intro-text {
+            font-size: 15px;
+            line-height: 1.8;
+            color: #4a5068;
+            margin-bottom: 32px;
+        }
+
+        .intro-text a {
+            color: #4a90e2;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .intro-text a:hover {
+            color: #1a1f36;
+        }
+
+        .support-hours {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #6b7190;
+            margin-bottom: 48px;
+        }
+
+        /* Form */
+        .form-container {
+            background: #fafbfc;
+            border: 1px solid #f0f1f6;
+            border-radius: 12px;
+            padding: 48px;
+        }
+
+        .form-group {
+            margin-bottom: 28px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #6b7190;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 14px 16px;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 15px;
+            color: #1a1f36;
+            background: #fff;
+            border: 1px solid #e0e4ec;
+            border-radius: 8px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .form-input::placeholder,
+        .form-textarea::placeholder {
+            color: #a0a5b8;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: #4a90e2;
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 200px;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .form-hint {
+            font-size: 13px;
+            color: #6b7190;
+            margin-top: 8px;
+        }
+
+        .form-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #5a7ba8;
+            color: #fff;
+            font-size: 15px;
+            font-weight: 600;
+            padding: 14px 28px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .form-button:hover {
+            background: #4a6a95;
+        }
+
+        .form-button:active {
+            background: #3a5a85;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1a1f36;
+            color: #fff;
+            padding: 60px 48px;
+            margin-top: 80px;
+            border-top: 1px solid #f0f1f6;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #a0a5b8;
+            margin-bottom: 16px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            font-size: 14px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #a0a5b8;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: #fff;
+        }
+
+        .footer-links a.current {
+            color: #4a90e2;
+            font-weight: 600;
+        }
+
+        .footer-bottom {
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid #2d3350;
+            font-size: 13px;
+            color: #6b7190;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .header {
+                padding: 16px 24px;
+            }
+
+            .container {
+                padding: 48px 24px;
+            }
+
+            h1 {
+                font-size: 28px;
+                margin-bottom: 24px;
+            }
+
+            .form-container {
+                padding: 32px 24px;
+            }
+
+            .footer {
+                padding: 40px 24px;
+            }
+
+            .footer-links {
+                gap: 16px;
+                font-size: 13px;
+            }
+        }
+
+        /* Small phones */
+        @media (max-width: 480px) {
+            .container {
+                padding: 36px 18px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .form-container {
+                padding: 24px 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <a href="index.html" class="logo">
+            <img src="logo.png" alt="Thailand Arrival Logo" style="height: 50px; object-fit: contain;">
+        </a>
+        <a href="index.html" class="back-link">← Back to Home</a>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1>Contact us</h1>
+
+        <p class="intro-text">
+            Questions about a specific order, refund, or a technical issue? Write below.
+        </p>
+
+        <p class="support-hours">
+            Support hours: Monday–Friday, 09:00–18:00 (Central European Time). Outside these hours we usually reply within 24 hours.
+        </p>
+
+        <div class="form-container">
+            <form id="contactForm">
+                <div class="form-group">
+                    <label class="form-label">Your Name</label>
+                    <input type="text" class="form-input" placeholder="Full name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" placeholder="you@example.com" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Order Number (Optional)</label>
+                    <input type="text" class="form-input" placeholder="HW-000000" name="orderNumber">
+                    <div class="form-hint">If this is about an existing order. Fine to leave blank otherwise.</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Message</label>
+                    <textarea class="form-textarea" placeholder="What can we help with?" name="message" required></textarea>
+                </div>
+
+                <button type="submit" class="form-button">Send message</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="footer-text">An independent online service that helps travelers prepare and submit their Thailand Digital Arrival Card (TDAC) application.</p>
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="index.html#faq">FAQ</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="refund.html">Refund Policy</a>
+                <a href="contact.html" class="current">Contact Us</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="cookies.html">Cookies Policy</a>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Thailand Digital Arrival Card (TDAC) Assistance. All rights reserved.</p>
+                <p style="font-size: 12px; color: #6b7190; margin-top: 8px;">TechnoDucks Inc, 5348 Vegas Drive # 1485, Las Vegas, NV 89108</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.querySelector('input[name="name"]').value;
+            const email = document.querySelector('input[name="email"]').value;
+            alert('Thank you for your message, ' + name + '! We will get back to you shortly at ' + email + '.');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
