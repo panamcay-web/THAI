@@ -584,6 +584,15 @@
 
         /* Mobile Responsive */
         @media (max-width: 768px) {
+            /* Prevent iOS Safari auto-zoom on input focus (font-size must be >= 16px) */
+            .form-group input,
+            .form-group select,
+            .form-group textarea,
+            .form-input,
+            textarea[name="accommodationAddress"] {
+                font-size: 16px !important;
+            }
+
             .header {
                 padding: 16px 24px;
             }
