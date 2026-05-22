@@ -115,6 +115,80 @@
             text-align: center;
         }
 
+        /* Form Completion Percentage */
+        .form-completion {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 24px;
+            padding: 16px;
+            background: #f8f9fb;
+            border-radius: 8px;
+        }
+
+        .completion-label {
+            font-size: 13px;
+            color: #6b7190;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .completion-bar-container {
+            flex: 1;
+            height: 24px !important;
+            min-height: 24px !important;
+            background: #e0e4ec;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .completion-bar-fill {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            background: #4a90e2;
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 600;
+            color: #fff;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            min-width: 30px;
+            box-sizing: border-box;
+        }
+
+        .completion-percentage {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a1f36;
+            min-width: 45px;
+            text-align: right;
+        }
+
+        @media (max-width: 768px) {
+            .form-completion {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .completion-bar-container {
+                width: 100%;
+                height: 24px;
+            }
+
+            .completion-percentage {
+                text-align: center;
+                min-width: auto;
+            }
+        }
+
         /* Form Container */
         .form-wrapper {
             background: #fff;
@@ -153,8 +227,7 @@
         }
 
         .form-group input,
-        .form-group select,
-        .form-group textarea {
+        .form-group select {
             width: 100%;
             padding: 14px 16px;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -180,7 +253,8 @@
         }
 
         .form-group input::placeholder,
-        .form-group select::placeholder {
+        .form-group select::placeholder,
+        .form-group textarea::placeholder {
             color: #a0a5b8;
         }
 
@@ -397,6 +471,70 @@
             cursor: not-allowed;
         }
 
+        .applicant-block {
+            position: relative;
+        }
+
+        .applicant-block + .applicant-block {
+            margin-top: 32px;
+            padding-top: 32px;
+            border-top: 2px dashed #e0e4ec;
+        }
+
+        .applicant-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .applicant-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: #1a1f36;
+        }
+
+        .remove-applicant-btn {
+            background: none;
+            border: none;
+            color: #e74c3c;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        .remove-applicant-btn:hover {
+            background: #fff5f5;
+        }
+
+        .add-applicant-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #fff;
+            color: #4a90e2;
+            border: 1px dashed #4a90e2;
+            font-size: 15px;
+            font-weight: 600;
+            padding: 14px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 28px;
+            margin-bottom: 32px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .add-applicant-btn:hover {
+            background: #f0f4ff;
+            border-color: #1a1f36;
+            color: #1a1f36;
+        }
+
         /* ---- Footer ---- */
         .footer {
             background: #1a1f36;
@@ -485,6 +623,33 @@
             .footer-links {
                 gap: 16px;
                 font-size: 13px;
+            }
+        }
+
+        /* Small phones */
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px 12px;
+            }
+
+            .form-wrapper {
+                padding: 24px 16px;
+            }
+
+            .form-header h1 {
+                font-size: 22px;
+            }
+
+            .form-header p {
+                font-size: 15px;
+            }
+
+            .step-title {
+                font-size: 18px;
+            }
+
+            .form-group {
+                margin-bottom: 22px;
             }
         }
 
@@ -593,6 +758,15 @@
             </div>
         </div>
 
+        <div class="form-completion">
+            <span class="completion-label">Form Completion:</span>
+            <div class="completion-bar-container">
+                <div class="completion-bar-fill" id="completion-bar-fill" style="width: 0%;">
+                    <span id="completion-bar-text"></span>
+                </div>
+            </div>
+        </div>
+
         <div class="form-wrapper">
             <div class="validation-error-container" id="validationErrorContainer">
                 <div class="validation-error-title">Please fill in the required fields:</div>
@@ -604,94 +778,104 @@
                 <div class="form-step active" id="step-1">
                     <h2 class="step-title">Personal Information</h2>
 
-                    <h3 style="font-size: 16px; font-weight: 600; color: #1a1f36; margin-bottom: 20px; margin-top: 0;">From Passport</h3>
+                    <div id="applicants-container">
+                        <div class="applicant-block" data-applicant="1">
+                            <div class="applicant-header">
+                                <div class="applicant-title">Applicant 1</div>
+                            </div>
 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Family Name *</label>
-                            <input type="text" name="familyName" placeholder="Last name" required>
-                            <div class="form-hint">Only letters A-Z</div>
-                        </div>
-                        <div class="form-group">
-                            <label>First Name *</label>
-                            <input type="text" name="firstName" placeholder="First name" required>
-                            <div class="form-hint">Only letters A-Z</div>
+                            <h3 style="font-size: 16px; font-weight: 600; color: #1a1f36; margin-bottom: 20px; margin-top: 0;">From Passport</h3>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Family Name *</label>
+                                    <input type="text" name="familyName" placeholder="Last name" required>
+                                    <div class="form-hint">Only letters A-Z</div>
+                                </div>
+                                <div class="form-group">
+                                    <label>First Name *</label>
+                                    <input type="text" name="firstName" placeholder="First name" required>
+                                    <div class="form-hint">Only letters A-Z</div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Middle Name</label>
+                                    <input type="text" name="middleName" placeholder="Middle name">
+                                    <div class="form-hint">Only letters A-Z</div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Passport Number *</label>
+                                    <input type="text" name="passportNumber" placeholder="Passport Number *" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Nationality/Citizenship *</label>
+                                <div class="nationality-select-wrapper" id="nationality-wrapper">
+                                    <input type="text" id="nationality-display" class="form-input nationality-display"
+                                           placeholder="Select your nationality" autocomplete="off">
+                                    <input type="hidden" name="nationality" id="nationality-hidden" class="nationality-hidden" required>
+                                    <div class="nationality-dropdown" id="nationality-dropdown"></div>
+                                </div>
+                            </div>
+
+                            <h3 style="font-size: 16px; font-weight: 600; color: #1a1f36; margin-bottom: 20px; margin-top: 32px;">Personal Details</h3>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Date of Birth *</label>
+                                    <input type="text" name="dateOfBirth" placeholder="dd.mm.yyyy" inputmode="numeric" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Occupation *</label>
+                                    <input type="text" name="occupation" placeholder="Your occupation" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Gender *</label>
+                                <div style="margin-top: 10px;">
+                                    <label style="display: inline-block; margin-right: 40px; margin-bottom: 12px; font-size: 14px; font-weight: normal; text-transform: none;">
+                                        <input type="radio" name="gender" value="female" required style="margin-right: 12px; vertical-align: middle; width: 18px; height: 18px;">
+                                        <span style="vertical-align: middle;">Female</span>
+                                    </label>
+                                    <label style="display: inline-block; margin-right: 40px; margin-bottom: 12px; font-size: 14px; font-weight: normal; text-transform: none;">
+                                        <input type="radio" name="gender" value="male" required style="margin-right: 12px; vertical-align: middle; width: 18px; height: 18px;">
+                                        <span style="vertical-align: middle;">Male</span>
+                                    </label>
+                                    <label style="display: inline-block; margin-right: 40px; margin-bottom: 12px; font-size: 14px; font-weight: normal; text-transform: none;">
+                                        <input type="radio" name="gender" value="undefined" required style="margin-right: 12px; vertical-align: middle; width: 18px; height: 18px;">
+                                        <span style="vertical-align: middle;">Undefined</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Country/Territory of Residence *</label>
+                                <div class="country-select-wrapper" id="country-wrapper">
+                                <input type="text" id="country-display" class="form-input country-display"
+                                       placeholder="Select country" autocomplete="off">
+                                <input type="hidden" name="countryOfResidence" id="country-hidden" class="country-hidden" required>
+                                <div class="country-dropdown" id="country-dropdown"></div>
+                            </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>City/State of Residence *</label>
+                                    <input type="text" name="cityOfResidence" placeholder="City or State" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Phone Number *</label>
+                                    <input type="tel" name="phoneNumber" placeholder="+1 (123) 456-7890" required>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Middle Name</label>
-                            <input type="text" name="middleName" placeholder="Middle name">
-                            <div class="form-hint">Only letters A-Z</div>
-                        </div>
-                        <div class="form-group">
-                            <label>Passport Number *</label>
-                            <input type="text" name="passportNumber" placeholder="A1234567" required>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Nationality/Citizenship *</label>
-                        <div class="nationality-select-wrapper" id="nationality-wrapper">
-                            <input type="text" id="nationality-display" class="form-input"
-                                   placeholder="Select your nationality" autocomplete="off">
-                            <input type="hidden" name="nationality" id="nationality-hidden" required>
-                            <div class="nationality-dropdown" id="nationality-dropdown"></div>
-                        </div>
-                    </div>
-
-                    <h3 style="font-size: 16px; font-weight: 600; color: #1a1f36; margin-bottom: 20px; margin-top: 32px;">Personal Details</h3>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Date of Birth *</label>
-                            <input type="text" name="dateOfBirth" placeholder="dd.mm.yyyy" inputmode="numeric" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Occupation *</label>
-                            <input type="text" name="occupation" placeholder="Your occupation" required>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Gender *</label>
-                        <div style="margin-top: 10px;">
-                            <label style="display: inline-block; margin-right: 40px; margin-bottom: 12px; font-size: 14px; font-weight: normal; text-transform: none;">
-                                <input type="radio" name="gender" value="female" required style="margin-right: 12px; vertical-align: middle; width: 18px; height: 18px;">
-                                <span style="vertical-align: middle;">Female</span>
-                            </label>
-                            <label style="display: inline-block; margin-right: 40px; margin-bottom: 12px; font-size: 14px; font-weight: normal; text-transform: none;">
-                                <input type="radio" name="gender" value="male" required style="margin-right: 12px; vertical-align: middle; width: 18px; height: 18px;">
-                                <span style="vertical-align: middle;">Male</span>
-                            </label>
-                            <label style="display: inline-block; margin-right: 40px; margin-bottom: 12px; font-size: 14px; font-weight: normal; text-transform: none;">
-                                <input type="radio" name="gender" value="undefined" required style="margin-right: 12px; vertical-align: middle; width: 18px; height: 18px;">
-                                <span style="vertical-align: middle;">Undefined</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Country/Territory of Residence *</label>
-                        <div class="country-select-wrapper" id="country-wrapper">
-                        <input type="text" id="country-display" class="form-input"
-                               placeholder="Select country" autocomplete="off">
-                        <input type="hidden" name="countryOfResidence" id="country-hidden" required>
-                        <div class="country-dropdown" id="country-dropdown"></div>
-                    </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>City/State of Residence *</label>
-                            <input type="text" name="cityOfResidence" placeholder="City or State" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Phone Number *</label>
-                            <input type="tel" name="phoneNumber" placeholder="+1 (123) 456-7890" required>
-                        </div>
-                    </div>
+                    <button type="button" class="add-applicant-btn" onclick="addApplicant()">+ Add Applicant</button>
                 </div>
 
                 <!-- Step 2: Travel Information -->
@@ -741,8 +925,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Flight No./Vehicle No. *</label>
-                        <input type="text" name="flightNumber" placeholder="e.g., TH 101 or ABC 1234" required>
+                        <label>Arrival Flight No./Vehicle No. *</label>
+                        <input type="text" name="flightNumber" placeholder="SIA308" required>
                     </div>
 
                     <h3 style="font-size: 16px; font-weight: 600; color: #1a1f36; margin-bottom: 20px; margin-top: 32px;">Departure Information</h3>
@@ -765,8 +949,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Flight No./Vehicle No. (Departure) *</label>
-                        <input type="text" name="flightNumberDeparture" placeholder="e.g., TH 102 or ABC 5678" required>
+                        <label>Departure Flight No./Vehicle No. *</label>
+                        <input type="text" name="flightNumberDeparture" placeholder="SIA308" required>
                     </div>
 
                     <h3 style="font-size: 16px; font-weight: 600; color: #1a1f36; margin-bottom: 20px; margin-top: 32px;">Accommodation Information</h3>
@@ -799,8 +983,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Hotel/Accommodation name & address *</label>
-                        <textarea name="accommodationAddress" placeholder="e.g., ABC COMPLEX (BUILDING A , SOUTH ZONE), 120 MOO 3, CHAENG WATTANA ROAD" style="resize: none; height: 72px;" required></textarea>
+                        <label>Hotel name and address</label>
+                        <textarea name="accommodationAddress" placeholder="Hotel name and address" style="width: 100%; resize: none; height: 72px; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 15px; padding: 14px 16px; border: 1px solid #e0e4ec; border-radius: 8px; color: #1a1f36; box-sizing: border-box;" required></textarea>
                     </div>
                 </div>
 
@@ -825,30 +1009,7 @@
                     <h2 class="step-title">Review Your Information</h2>
 
                     <div class="review-box">
-                        <div class="review-section">
-                            <div class="review-label">Full Name</div>
-                            <div class="review-value"><span id="review-firstName">-</span> <span id="review-familyName">-</span></div>
-                        </div>
-
-                        <div class="review-section">
-                            <div class="review-label">Passport Information</div>
-                            <div class="review-value">Passport: <span id="review-passportNumber">-</span></div>
-                            <div style="font-size: 13px; color: #6b7190; margin-top: 4px;">Nationality: <span id="review-nationality">-</span></div>
-                        </div>
-
-                        <div class="review-section">
-                            <div class="review-label">Personal Details</div>
-                            <div style="font-size: 13px; color: #6b7190;">Date of Birth: <span id="review-dateOfBirth">-</span></div>
-                            <div style="font-size: 13px; color: #6b7190; margin-top: 4px;">Occupation: <span id="review-occupation">-</span></div>
-                            <div style="font-size: 13px; color: #6b7190; margin-top: 4px;">Gender: <span id="review-gender">-</span></div>
-                        </div>
-
-                        <div class="review-section">
-                            <div class="review-label">Residence Information</div>
-                            <div style="font-size: 13px; color: #6b7190;">Country: <span id="review-countryOfResidence">-</span></div>
-                            <div style="font-size: 13px; color: #6b7190; margin-top: 4px;">City: <span id="review-cityOfResidence">-</span></div>
-                            <div style="font-size: 13px; color: #6b7190; margin-top: 4px;">Phone: <span id="review-phoneNumber">-</span></div>
-                        </div>
+                        <div id="review-applicants"></div>
 
                         <div class="review-divider"></div>
 
@@ -862,12 +1023,9 @@
 
                         <div class="review-section">
                             <div class="review-label">Trip Details</div>
-                            <div style="font-size: 13px; color: #6b7190;">Boarding Country: <span id="review-boardingCountry">-</span></div>
-                            <div style="font-size: 13px; color: #6b7190; margin-top: 4px;">Purpose: <span id="review-purposeOfTravel">-</span></div>
-                            <div style="font-size: 13px; color: #6b7190; margin-top: 4px;">Arrival Mode: <span id="review-modeOfTravel">-</span></div>
+                            <div style="font-size: 13px; color: #6b7190;">Purpose: <span id="review-purposeOfTravel">-</span></div>
                             <div style="font-size: 13px; color: #6b7190; margin-top: 4px;">Transport: <span id="review-modeOfTransport">-</span></div>
                             <div style="font-size: 13px; color: #6b7190; margin-top: 4px;">Flight/Vehicle: <span id="review-flightNumber">-</span></div>
-                            <div style="font-size: 13px; color: #6b7190; margin-top: 4px;">Departure Mode: <span id="review-modeOfTravelDeparture">-</span></div>
                             <div style="font-size: 13px; color: #6b7190; margin-top: 4px;">Departure Transport: <span id="review-modeOfTransportDeparture">-</span></div>
                             <div style="font-size: 13px; color: #6b7190; margin-top: 4px;">Departure Flight/Vehicle: <span id="review-flightNumberDeparture">-</span></div>
                         </div>
@@ -876,20 +1034,27 @@
 
                         <div class="review-section">
                             <div class="review-label">Accommodation</div>
-                            <div class="review-value"><span id="review-accommodationName">-</span></div>
-                            <div style="font-size: 13px; color: #6b7190; margin-top: 4px;"><span id="review-address">-</span></div>
-                            <div style="font-size: 13px; color: #6b7190; margin-top: 4px;"><span id="review-city">-</span>, <span id="review-postalCode">-</span></div>
+                            <div class="review-value"><span id="review-accommodationType">-</span></div>
+                            <div style="font-size: 13px; color: #6b7190; margin-top: 4px;"><span id="review-accommodationAddress">-</span></div>
+                        </div>
+
+                        <div class="review-divider"></div>
+
+                        <div class="review-section">
+                            <div class="review-label">Email for TDAC</div>
+                            <div class="review-value"><span id="review-tdacEmail">-</span></div>
                         </div>
                     </div>
 
                     <div class="price-box">
                         <div class="price-label">Total Cost</div>
-                        <div class="price-value">$49.99</div>
+                        <div class="price-value" id="price-total">$49.99</div>
+                        <div class="price-breakdown" id="price-breakdown" style="display:none; font-size:14px; color:#4a5068; margin-top:6px; font-weight:500;"></div>
                         <div class="price-note">This includes professional review and assistance with your TDAC application.</div>
                     </div>
 
                     <div class="terms-checkbox">
-                        <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
+                        <input type="checkbox" id="agreeTerms" name="agreeTerms" required checked>
                         <label for="agreeTerms">
                             I agree to the <a href="terms.html" target="_blank">Terms of Service</a> and <a href="privacy.html" target="_blank">Privacy Policy</a>
                         </label>
@@ -966,7 +1131,7 @@
                 nextBtn.textContent = 'Continue →';
             } else if (step === totalSteps) {
                 prevBtn.style.display = 'block';
-                nextBtn.textContent = 'Submit Application';
+                nextBtn.textContent = 'Pay and Submit Application';
             } else {
                 prevBtn.style.display = 'block';
                 nextBtn.textContent = 'Continue →';
@@ -978,6 +1143,7 @@
                 updateReviewSection();
             }
 
+            calculateFormCompletion();
             window.scrollTo(0, 0);
         }
 
@@ -1019,6 +1185,7 @@
             const stepElement = document.getElementById('step-' + step);
             const requiredFields = stepElement.querySelectorAll('input[required], select[required], textarea[required]');
             const emptyFields = [];
+            const invalidFields = [];
 
             // Collect all empty required fields
             for (let input of requiredFields) {
@@ -1028,8 +1195,24 @@
                 }
             }
 
-            // If there are empty fields, show error message and return false
-            if (emptyFields.length > 0) {
+            // Validate email fields - check for @ symbol and dot after @
+            const emailFields = stepElement.querySelectorAll('input[type="email"]');
+            emailFields.forEach(field => {
+                if (field.value) {
+                    const email = field.value;
+                    const hasAt = email.includes('@');
+                    const afterAtIndex = email.indexOf('@');
+                    const hasDotAfterAt = hasAt && email.substring(afterAtIndex + 1).includes('.');
+
+                    if (!hasAt || !hasDotAfterAt) {
+                        invalidFields.push(field);
+                        field.classList.add('error-field');
+                    }
+                }
+            });
+
+            // If there are empty or invalid fields, show error message and return false
+            if (emptyFields.length > 0 || invalidFields.length > 0) {
                 const errorList = document.getElementById('validationErrorList');
                 errorList.innerHTML = '';
 
@@ -1045,6 +1228,17 @@
                     }
                 });
 
+                // Create list items for invalid email fields
+                invalidFields.forEach(field => {
+                    const label = getFieldLabel(field);
+                    if (!uniqueLabels.has(label)) {
+                        uniqueLabels.add(label);
+                        const li = document.createElement('li');
+                        li.textContent = label + ' (must contain @ and . after @)';
+                        errorList.appendChild(li);
+                    }
+                });
+
                 // Show error container
                 const errorContainer = document.getElementById('validationErrorContainer');
                 errorContainer.classList.add('show');
@@ -1052,9 +1246,10 @@
                 // Scroll to error message
                 errorContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-                // Focus on first empty field after a short delay
+                // Focus on first empty/invalid field after a short delay
+                const fieldsToFocus = emptyFields.length > 0 ? emptyFields : invalidFields;
                 setTimeout(() => {
-                    emptyFields[0].focus();
+                    fieldsToFocus[0].focus();
                 }, 500);
 
                 return false;
@@ -1151,34 +1346,126 @@
             }
         }
 
+        function updatePriceDisplay() {
+            const PRICE_PER_PERSON = 49.99;
+            const count = document.querySelectorAll('#applicants-container .applicant-block').length;
+            const total = (PRICE_PER_PERSON * count).toFixed(2);
+            const totalEl = document.getElementById('price-total');
+            const breakdownEl = document.getElementById('price-breakdown');
+
+            totalEl.textContent = '$' + total;
+
+            if (count > 1) {
+                breakdownEl.textContent = '$' + PRICE_PER_PERSON.toFixed(2) + ' × ' + count + ' = $' + total;
+                breakdownEl.style.display = 'block';
+            } else {
+                breakdownEl.style.display = 'none';
+            }
+        }
+
         function updateReviewSection() {
             const form = document.getElementById('applicationForm');
             const formData = new FormData(form);
 
-            document.getElementById('review-firstName').textContent = formData.get('firstName') || '-';
-            document.getElementById('review-familyName').textContent = formData.get('familyName') || '-';
-            document.getElementById('review-passportNumber').textContent = formData.get('passportNumber') || '-';
-            document.getElementById('review-nationality').textContent = formData.get('nationality') || '-';
-            document.getElementById('review-dateOfBirth').textContent = formatDate(formData.get('dateOfBirth')) || '-';
-            document.getElementById('review-occupation').textContent = formData.get('occupation') || '-';
-            document.getElementById('review-gender').textContent = capitalize(formData.get('gender')) || '-';
-            document.getElementById('review-countryOfResidence').textContent = formData.get('countryOfResidence') || '-';
-            document.getElementById('review-cityOfResidence').textContent = formData.get('cityOfResidence') || '-';
-            document.getElementById('review-phoneNumber').textContent = formData.get('phoneNumber') || '-';
-            document.getElementById('review-arrivalDate').textContent = formatDate(formData.get('dateOfArrival')) || '-';
-            document.getElementById('review-departureDate').textContent = formatDate(formData.get('dateOfDeparture')) || '-';
-            document.getElementById('review-boardingCountry').textContent = formData.get('boardingCountry') || '-';
-            document.getElementById('review-purposeOfTravel').textContent = formData.get('purposeOfTravel') || '-';
-            document.getElementById('review-modeOfTravel').textContent = capitalize(formData.get('modeOfTravel')) || '-';
-            document.getElementById('review-modeOfTransport').textContent = formData.get('modeOfTransport') || '-';
-            document.getElementById('review-flightNumber').textContent = formData.get('flightNumber') || '-';
-            document.getElementById('review-modeOfTravelDeparture').textContent = capitalize(formData.get('modeOfTravelDeparture')) || '-';
-            document.getElementById('review-modeOfTransportDeparture').textContent = formData.get('modeOfTransportDeparture') || '-';
-            document.getElementById('review-flightNumberDeparture').textContent = formData.get('flightNumberDeparture') || '-';
-            document.getElementById('review-accommodationName').textContent = formData.get('accommodationName') || '-';
-            document.getElementById('review-address').textContent = formData.get('address') || '-';
-            document.getElementById('review-city').textContent = formData.get('city') || '-';
-            document.getElementById('review-postalCode').textContent = formData.get('postalCode') || '-';
+            const setText = (id, value) => {
+                document.getElementById(id).textContent = value || '-';
+            };
+
+            // For selects: show the selected option's label. If an "others"
+            // option is selected, show the value typed into the specify field.
+            const getSelectDisplay = (name, othersName) => {
+                const el = form.querySelector(`[name="${name}"]`);
+                if (!el || !el.value) return '';
+                if (el.value.startsWith('others') && othersName) {
+                    return formData.get(othersName) || '';
+                }
+                return el.options[el.selectedIndex].text;
+            };
+
+            buildApplicantsReview();
+            updatePriceDisplay();
+
+            setText('review-arrivalDate', formData.get('arrivalDate'));
+            setText('review-departureDate', formData.get('departureDate'));
+            setText('review-purposeOfTravel', getSelectDisplay('purposeOfTravel', 'othersPurpose'));
+            setText('review-modeOfTransport', getSelectDisplay('modeOfTransport', 'othersTransport'));
+            setText('review-flightNumber', formData.get('flightNumber'));
+            setText('review-modeOfTransportDeparture', getSelectDisplay('modeOfTransportDeparture', 'othersTransportDeparture'));
+            setText('review-flightNumberDeparture', formData.get('flightNumberDeparture'));
+
+            if (form.querySelector('[name="transitPassenger"]')?.checked) {
+                setText('review-accommodationType', 'Transit passenger — no accommodation');
+                document.getElementById('review-accommodationAddress').textContent = '';
+            } else {
+                setText('review-accommodationType', getSelectDisplay('accommodationType', 'othersAccommodation'));
+                setText('review-accommodationAddress', formData.get('accommodationAddress'));
+            }
+
+            setText('review-tdacEmail', formData.get('tdacEmail'));
+        }
+
+        function buildApplicantsReview() {
+            const reviewContainer = document.getElementById('review-applicants');
+            reviewContainer.innerHTML = '';
+            const blocks = document.querySelectorAll('#applicants-container .applicant-block');
+            const multiple = blocks.length > 1;
+
+            const makeSection = (label, primaryText, subLines) => {
+                const section = document.createElement('div');
+                section.className = 'review-section';
+                const l = document.createElement('div');
+                l.className = 'review-label';
+                l.textContent = label;
+                section.appendChild(l);
+                if (primaryText != null) {
+                    const pv = document.createElement('div');
+                    pv.className = 'review-value';
+                    pv.textContent = primaryText;
+                    section.appendChild(pv);
+                }
+                (subLines || []).forEach((t, i) => {
+                    const d = document.createElement('div');
+                    d.style.cssText = (primaryText == null && i === 0)
+                        ? 'font-size: 13px; color: #6b7190;'
+                        : 'font-size: 13px; color: #6b7190; margin-top: 4px;';
+                    d.textContent = t;
+                    section.appendChild(d);
+                });
+                return section;
+            };
+
+            blocks.forEach((block, idx) => {
+                const fieldValue = (base) => {
+                    for (const el of block.querySelectorAll('input, select, textarea')) {
+                        if (el.name && el.name.replace(/_\d+$/, '') === base) return el.value;
+                    }
+                    return '';
+                };
+                const genderEl = [...block.querySelectorAll('input[type="radio"]')]
+                    .find(r => r.name.replace(/_\d+$/, '') === 'gender' && r.checked);
+                const fullName = [fieldValue('firstName'), fieldValue('middleName'), fieldValue('familyName')]
+                    .filter(Boolean).join(' ');
+                const prefix = multiple ? `Applicant ${idx + 1} — ` : '';
+
+                reviewContainer.appendChild(makeSection(prefix + 'Full Name', fullName || '-', null));
+                reviewContainer.appendChild(makeSection('Passport Information',
+                    'Passport: ' + (fieldValue('passportNumber') || '-'),
+                    ['Nationality: ' + (block.querySelector('.nationality-display')?.value || '-')]));
+                reviewContainer.appendChild(makeSection('Personal Details', null,
+                    ['Date of Birth: ' + (fieldValue('dateOfBirth') || '-'),
+                     'Occupation: ' + (fieldValue('occupation') || '-'),
+                     'Gender: ' + (genderEl ? capitalize(genderEl.value) : '-')]));
+                reviewContainer.appendChild(makeSection('Residence Information', null,
+                    ['Country: ' + (block.querySelector('.country-display')?.value || '-'),
+                     'City: ' + (fieldValue('cityOfResidence') || '-'),
+                     'Phone: ' + (fieldValue('phoneNumber') || '-')]));
+
+                if (idx < blocks.length - 1) {
+                    const div = document.createElement('div');
+                    div.className = 'review-divider';
+                    reviewContainer.appendChild(div);
+                }
+            });
         }
 
         function capitalize(str) {
@@ -1267,8 +1554,27 @@
             if (savedFormState) {
                 try {
                     const formStateData = JSON.parse(savedFormState);
-                    const form = document.getElementById('applicationForm');
 
+                    // Step 1: Detect which applicants exist by checking for suffixed field names
+                    const applicantNumbers = new Set([1]); // Always have applicant 1
+                    for (let key of Object.keys(formStateData)) {
+                        const match = key.match(/_(\d+)$/);
+                        if (match) {
+                            applicantNumbers.add(parseInt(match[1], 10));
+                        }
+                    }
+
+                    // Step 2: Create missing applicant blocks
+                    const maxApplicantNum = Math.max(...applicantNumbers);
+                    for (let i = 2; i <= maxApplicantNum; i++) {
+                        if (applicantNumbers.has(i)) {
+                            applicantCount = i - 1; // Set to i-1 so addApplicant increments it to i
+                            addApplicant();
+                        }
+                    }
+
+                    // Step 3: Restore all field values
+                    const form = document.getElementById('applicationForm');
                     for (let [key, value] of Object.entries(formStateData)) {
                         const input = form.elements[key];
                         if (input) {
@@ -1282,19 +1588,33 @@
                         }
                     }
 
-                    // Restore nationality display value
-                    if (formStateData.nationality) {
-                        const nationalityOption = NATIONALITY_OPTIONS.find(o => o.code === formStateData.nationality);
-                        if (nationalityOption && document.getElementById('nationality-display')) {
-                            document.getElementById('nationality-display').value = nationalityOption.label;
-                        }
-                    }
+                    // Step 4: Restore display values for nationality and country for each applicant
+                    for (let n of applicantNumbers) {
+                        const nationalityKey = n === 1 ? 'nationality' : `nationality_${n}`;
+                        const countryKey = n === 1 ? 'countryOfResidence' : `countryOfResidence_${n}`;
+                        const nationalityDisplayId = n === 1 ? 'nationality-display' : `nationality-display_${n}`;
+                        const countryDisplayId = n === 1 ? 'country-display' : `country-display_${n}`;
 
-                    // Restore country display value
-                    if (formStateData.countryOfResidence) {
-                        const countryOption = COUNTRY_OPTIONS.find(o => o.code === formStateData.countryOfResidence);
-                        if (countryOption && document.getElementById('country-display')) {
-                            document.getElementById('country-display').value = countryOption.label;
+                        // Restore nationality display value
+                        if (formStateData[nationalityKey]) {
+                            const nationalityOption = NATIONALITY_OPTIONS.find(o => o.code === formStateData[nationalityKey]);
+                            if (nationalityOption) {
+                                const displayElement = document.getElementById(nationalityDisplayId);
+                                if (displayElement) {
+                                    displayElement.value = nationalityOption.label;
+                                }
+                            }
+                        }
+
+                        // Restore country display value
+                        if (formStateData[countryKey]) {
+                            const countryOption = COUNTRY_OPTIONS.find(o => o.code === formStateData[countryKey]);
+                            if (countryOption) {
+                                const displayElement = document.getElementById(countryDisplayId);
+                                if (displayElement) {
+                                    displayElement.value = countryOption.label;
+                                }
+                            }
                         }
                     }
                 } catch (e) {
@@ -1316,16 +1636,94 @@
             showStep(currentStep);
         }
 
+        function calculateFormCompletion() {
+            const form = document.getElementById('applicationForm');
+            const allInputs = form.querySelectorAll('input, select, textarea');
+            let filledCount = 0;
+            let totalCount = 0;
+            const processedRadioGroups = new Set();
+
+            allInputs.forEach(input => {
+                // Skip hidden fields, buttons, and checkboxes
+                if (input.type === 'hidden' || input.type === 'button' || input.type === 'submit' || input.type === 'checkbox') {
+                    return;
+                }
+
+                // Skip fields from Step 4 (review step) - only count Steps 1-3
+                const section = input.closest('[id^="step-"]');
+                if (section && section.id === 'step-4') {
+                    return;
+                }
+
+                // Count all fields from Steps 1-3
+
+                // Skip optional fields like Middle Name
+                if (input.name === 'middleName') {
+                    return;
+                }
+
+                // Skip hidden conditional fields (e.g. "Others" fields shown only when selected)
+                const group = input.closest('.form-group');
+                if (group && group.style.display === 'none') {
+                    return;
+                }
+
+                // Priority passport fields contribute 50% more progress (weight 1.5)
+                const priorityFields = ['familyName', 'firstName', 'passportNumber'];
+                const weight = (priorityFields.includes(input.name) || input.id === 'nationality-display') ? 1.5 : 1;
+
+                // For radio buttons, count each group only once
+                if (input.type === 'radio') {
+                    if (!processedRadioGroups.has(input.name)) {
+                        processedRadioGroups.add(input.name);
+                        totalCount++;
+                        const radioGroup = form.querySelector(`input[name="${input.name}"]:checked`);
+                        if (radioGroup && radioGroup.value) {
+                            filledCount++;
+                        }
+                    }
+                } else {
+                    totalCount += weight;
+                    // Check if field has a value
+                    if (input.value && input.value.trim() !== '') {
+                        filledCount += weight;
+                    }
+                }
+            });
+
+            let percentage = totalCount === 0 ? 0 : Math.round((filledCount / totalCount) * 100);
+
+            // While on Steps 1-3, cap progress at 99% (100% is reserved for Step 4)
+            if (currentStep !== 4 && percentage >= 100) {
+                percentage = 99;
+            }
+
+            // On Step 4, if all Steps 1-3 are filled, show 100%
+            if (currentStep === 4 && filledCount === totalCount && totalCount > 0) {
+                percentage = 100;
+            }
+
+            const barFill = document.getElementById('completion-bar-fill');
+            const barText = document.getElementById('completion-bar-text');
+
+            if (barFill) {
+                barFill.style.width = percentage + '%';
+                barText.textContent = percentage + '%';
+            }
+        }
+
         document.addEventListener('change', function() {
             saveFormState();
             updateButtonsVisibility();
             clearValidationErrors();
+            calculateFormCompletion();
         });
 
         document.addEventListener('input', function() {
             saveFormState();
             updateButtonsVisibility();
             clearValidationErrors();
+            calculateFormCompletion();
         });
 
         function toggleOthersPurpose() {
@@ -1978,11 +2376,11 @@
     {code: "ZW", label: "Zimbabwe"},
 ];
 
-        function initCountrySelect() {
-            const wrapper = document.getElementById('country-wrapper');
-            const display = document.getElementById('country-display');
-            const hidden = document.getElementById('country-hidden');
-            const dropdown = document.getElementById('country-dropdown');
+        function initCountrySelect(wrapper) {
+            wrapper = wrapper || document.getElementById('country-wrapper');
+            const display = wrapper.querySelector('.country-display');
+            const hidden = wrapper.querySelector('.country-hidden');
+            const dropdown = wrapper.querySelector('.country-dropdown');
 
             function renderOptions(filter) {
                 const q = filter ? filter.trim().toUpperCase() : '';
@@ -2030,11 +2428,11 @@
             });
         }
 
-        function initNationalitySelect() {
-            const wrapper = document.getElementById('nationality-wrapper');
-            const display = document.getElementById('nationality-display');
-            const hidden = document.getElementById('nationality-hidden');
-            const dropdown = document.getElementById('nationality-dropdown');
+        function initNationalitySelect(wrapper) {
+            wrapper = wrapper || document.getElementById('nationality-wrapper');
+            const display = wrapper.querySelector('.nationality-display');
+            const hidden = wrapper.querySelector('.nationality-hidden');
+            const dropdown = wrapper.querySelector('.nationality-dropdown');
 
             function renderOptions(filter) {
                 const q = filter ? filter.trim().toUpperCase() : '';
@@ -2085,27 +2483,68 @@
         function initDateMask() {
             const dateFields = ['dateOfBirth', 'arrivalDate', 'departureDate'];
 
-            dateFields.forEach(fieldName => {
-                const dateInput = document.querySelector(`input[name="${fieldName}"]`);
-                if (!dateInput) return;
+            // Delegate so cloned applicant date fields (e.g. dateOfBirth_2) work too.
+            document.getElementById('applicationForm').addEventListener('input', function(e) {
+                const name = e.target.name || '';
+                const base = name.replace(/_\d+$/, '');
+                if (!dateFields.includes(base)) return;
 
-                dateInput.addEventListener('input', function(e) {
-                    let value = e.target.value.replace(/\D/g, '');
-                    let formatted = '';
+                let value = e.target.value.replace(/\D/g, '');
+                let formatted = '';
 
-                    if (value.length > 0) {
-                        formatted = value.substring(0, 2);
-                    }
-                    if (value.length >= 3) {
-                        formatted += '.' + value.substring(2, 4);
-                    }
-                    if (value.length >= 5) {
-                        formatted += '.' + value.substring(4, 8);
-                    }
+                if (value.length > 0) {
+                    formatted = value.substring(0, 2);
+                }
+                if (value.length >= 3) {
+                    formatted += '.' + value.substring(2, 4);
+                }
+                if (value.length >= 5) {
+                    formatted += '.' + value.substring(4, 8);
+                }
 
-                    e.target.value = formatted;
-                });
+                e.target.value = formatted;
             });
+        }
+
+        let applicantCount = 1;
+
+        function addApplicant() {
+            applicantCount++;
+            const n = applicantCount;
+            const container = document.getElementById('applicants-container');
+            const template = container.querySelector('.applicant-block');
+            const clone = template.cloneNode(true);
+
+            clone.dataset.applicant = n;
+            clone.querySelector('.applicant-title').textContent = 'Applicant ' + n;
+
+            // Make ids unique so the cloned dropdowns don't collide with the original.
+            clone.querySelectorAll('[id]').forEach(el => { el.id = el.id + '_' + n; });
+
+            // Make field names unique per applicant, clear values, drop error styling.
+            clone.querySelectorAll('input, select, textarea').forEach(el => {
+                if (el.name) el.name = el.name + '_' + n;
+                el.classList.remove('error-field');
+                if (el.type === 'checkbox' || el.type === 'radio') {
+                    el.checked = false;
+                } else {
+                    el.value = '';
+                }
+            });
+
+            const removeBtn = document.createElement('button');
+            removeBtn.type = 'button';
+            removeBtn.className = 'remove-applicant-btn';
+            removeBtn.textContent = 'Remove';
+            removeBtn.addEventListener('click', function() { clone.remove(); });
+            clone.querySelector('.applicant-header').appendChild(removeBtn);
+
+            container.appendChild(clone);
+
+            initNationalitySelect(clone.querySelector('.nationality-select-wrapper'));
+            initCountrySelect(clone.querySelector('.country-select-wrapper'));
+
+            clone.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
         window.addEventListener('load', function() {
