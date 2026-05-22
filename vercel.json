@@ -1,10 +1,10 @@
 {
   "outputDirectory": ".",
-  "public": true,
   "routes": [
     { "src": "/api/submit-application", "dest": "/api/submit-application.js" },
     { "src": "/api/get-leads", "dest": "/api/get-leads.js" },
     { "src": "/api/get-payments", "dest": "/api/get-payments.js" },
+    { "handle": "filesystem" },
     { "src": "/admin", "dest": "/admin/index.html" }
   ]
 }
