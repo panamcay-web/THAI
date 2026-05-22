@@ -1,10 +1,4 @@
 {
-  "outputDirectory": ".",
-  "rewrites": [
-    { "source": "/api/:path*", "destination": "/api/:path*.js" }
-  ]
-}
-{
   "buildCommand": "",
   "outputDirectory": ".",
   "public": true
