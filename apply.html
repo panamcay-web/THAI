@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thailand TDAC Application Form</title>
+    <script src="https://js.stripe.com/v3/"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -732,6 +733,144 @@
             font-size: 14px;
             color: #a0a5b8;
         }
+
+        /* ───── Payment Modal ───── */
+        .payment-modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 18, 40, 0.65);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            backdrop-filter: blur(2px);
+        }
+        .payment-modal-overlay.active {
+            display: flex;
+        }
+        .payment-modal {
+            background: #fff;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 480px;
+            box-shadow: 0 24px 80px rgba(0,0,0,0.22);
+            overflow: hidden;
+        }
+        .payment-modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 24px 28px 20px;
+            border-bottom: 1px solid #eef0f6;
+        }
+        .payment-modal-header h3 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1f36;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .payment-modal-header h3::before {
+            content: '🔒';
+            font-size: 16px;
+        }
+        .payment-modal-close {
+            background: #f4f5f9;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #6b7190;
+            padding: 0;
+            line-height: 1;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .payment-modal-close:hover { background: #e8eaf0; }
+        .payment-modal-body {
+            padding: 24px 28px 28px;
+        }
+        .payment-amount-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 18px;
+            background: #f0f7ff;
+            border-radius: 12px;
+            margin-bottom: 22px;
+            font-size: 15px;
+            color: #4a5068;
+            border: 1px solid #d4e6ff;
+        }
+        .payment-amount-row strong {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1a1f36;
+        }
+        #payment-error {
+            display: none;
+            color: #c0392b;
+            font-size: 14px;
+            margin-top: 14px;
+            padding: 11px 14px;
+            background: #fff5f5;
+            border-radius: 8px;
+            border: 1px solid #fcc;
+        }
+        #payBtn {
+            width: 100%;
+            margin-top: 20px;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 12px;
+        }
+        #payBtn:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+        }
+        /* Success overlay */
+        .payment-success-body {
+            padding: 44px 28px 40px;
+            text-align: center;
+        }
+        .payment-success-icon {
+            font-size: 56px;
+            margin-bottom: 18px;
+            line-height: 1;
+        }
+        .payment-success-body h3 {
+            margin: 0 0 10px;
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a1f36;
+        }
+        .payment-success-body p {
+            color: #6b7190;
+            margin: 0 0 6px;
+            font-size: 15px;
+        }
+        .payment-success-body .btn-home {
+            display: inline-flex;
+            align-items: center;
+            margin-top: 28px;
+            padding: 14px 36px;
+            background: #1e3a8a;
+            color: #fff;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 15px;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+        .payment-success-body .btn-home:hover { background: #1e40af; }
 
     </style>
 </head>
@@ -1488,7 +1627,7 @@
             return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
         }
 
-        function submitApplication() {
+        async function submitApplication() {
             const form = document.getElementById('applicationForm');
 
             if (!form.agreeTerms.checked) {
@@ -1497,49 +1636,66 @@
             }
 
             const formData = new FormData(form);
-            const applicationId = 'TDAC-' + Math.random().toString(36).substr(2, 9).toUpperCase();
 
+            // Build payload — field names match apply.html form + api/submit-application.js
             const data = {
-                applicationId: applicationId,
-                familyName: formData.get('familyName'),
-                firstName: formData.get('firstName'),
-                middleName: formData.get('middleName'),
-                passportNumber: formData.get('passportNumber'),
-                nationality: formData.get('nationality'),
-                dateOfBirth: formData.get('dateOfBirth'),
-                occupation: formData.get('occupation'),
-                gender: formData.get('gender'),
-                visaNo: formData.get('visaNo'),
-                countryOfResidence: formData.get('countryOfResidence'),
-                cityOfResidence: formData.get('cityOfResidence'),
-                phoneNumber: formData.get('phoneNumber'),
-                dateOfArrival: formData.get('dateOfArrival'),
-                dateOfDeparture: formData.get('dateOfDeparture'),
-                boardingCountry: formData.get('boardingCountry'),
-                purposeOfTravel: formData.get('purposeOfTravel'),
-                modeOfTravel: formData.get('modeOfTravel'),
-                modeOfTransport: formData.get('modeOfTransport'),
-                flightNumber: formData.get('flightNumber'),
-                modeOfTravelDeparture: formData.get('modeOfTravelDeparture'),
-                modeOfTransportDeparture: formData.get('modeOfTransportDeparture'),
-                flightNumberDeparture: formData.get('flightNumberDeparture'),
-                accommodationName: formData.get('accommodationName'),
-                address: formData.get('address'),
-                city: formData.get('city'),
-                postalCode: formData.get('postalCode'),
-                accommodationPhone: formData.get('phone'),
-                submitDate: new Date().toISOString()
+                familyName:                 formData.get('familyName'),
+                firstName:                  formData.get('firstName'),
+                middleName:                 formData.get('middleName') || null,
+                passportNumber:             formData.get('passportNumber'),
+                nationality:                formData.get('nationality'),
+                dateOfBirth:                formData.get('dateOfBirth'),
+                occupation:                 formData.get('occupation'),
+                gender:                     formData.get('gender'),
+                countryOfResidence:         formData.get('countryOfResidence'),
+                cityOfResidence:            formData.get('cityOfResidence'),
+                phoneNumber:                formData.get('phoneNumber'),
+                arrivalDate:                formData.get('arrivalDate'),
+                purposeOfTravel:            formData.get('purposeOfTravel'),
+                othersPurpose:              formData.get('othersPurpose') || null,
+                modeOfTransport:            formData.get('modeOfTransport'),
+                othersTransport:            formData.get('othersTransport') || null,
+                flightNumber:               formData.get('flightNumber') || null,
+                departureDate:              formData.get('departureDate'),
+                modeOfTransportDeparture:   formData.get('modeOfTransportDeparture'),
+                othersTransportDeparture:   formData.get('othersTransportDeparture') || null,
+                flightNumberDeparture:      formData.get('flightNumberDeparture') || null,
+                transitPassenger:           !!form.querySelector('[name="transitPassenger"]')?.checked,
+                accommodationType:          formData.get('accommodationType') || null,
+                othersAccommodation:        formData.get('othersAccommodation') || null,
+                accommodationAddress:       formData.get('accommodationAddress') || null,
+                tdacEmail:                  formData.get('tdacEmail')
             };
 
-            console.log('Application submitted:', data);
+            // Update button to loading state
+            const nextBtn = document.getElementById('nextBtn');
+            const origLabel = nextBtn.textContent;
+            nextBtn.disabled = true;
+            nextBtn.textContent = 'Submitting…';
 
-            alert('Thank you for your application!\n\nApplication ID: ' + applicationId + '\n\nYour TDAC will be processed and sent to your email within 24 hours.');
+            try {
+                const response = await fetch('/api/submit-application', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
 
-            form.reset();
-            localStorage.removeItem('tdacFormState');
-            localStorage.removeItem('tdacCurrentStep');
-            currentStep = 1;
-            showStep(1);
+                const result = await response.json();
+
+                if (!response.ok || !result.success) {
+                    throw new Error(result.error || 'Server error. Please try again.');
+                }
+
+                // Open Stripe Payment Element with the client secret
+                openPaymentModal(result.client_secret);
+
+            } catch (err) {
+                console.error('submitApplication error:', err);
+                alert('⚠️ Error: ' + err.message);
+            } finally {
+                nextBtn.disabled = false;
+                nextBtn.textContent = origLabel;
+            }
         }
 
         function saveFormState() {
@@ -2557,6 +2713,7 @@
         }
 
         window.addEventListener('load', function() {
+            checkPaymentStatusAfterRedirect();
             restoreFormState();
             initNationalitySelect();
             initCountrySelect();
@@ -2606,6 +2763,181 @@
                 checkbox.addEventListener('change', updateFieldsState);
                 updateFieldsState();
             }
+        }
+    </script>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="payment-modal-overlay" role="dialog" aria-modal="true" aria-label="Secure Payment">
+        <div class="payment-modal">
+            <div class="payment-modal-header">
+                <h3>Secure Payment</h3>
+                <button class="payment-modal-close" onclick="closePaymentModal()" aria-label="Close">×</button>
+            </div>
+            <div class="payment-modal-body">
+                <div class="payment-amount-row">
+                    <span>Total amount</span>
+                    <strong id="payment-modal-amount">$49.99</strong>
+                </div>
+                <div id="stripe-payment-element">
+                    <!-- Stripe Payment Element is mounted here -->
+                </div>
+                <div id="payment-error"></div>
+                <button id="payBtn" class="btn btn-primary" onclick="confirmPayment()">
+                    Pay Now
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Success Overlay -->
+    <div id="paymentSuccess" class="payment-modal-overlay" role="dialog" aria-modal="true">
+        <div class="payment-modal">
+            <div class="payment-success-body">
+                <div class="payment-success-icon">✅</div>
+                <h3>Payment Successful!</h3>
+                <p>Your TDAC application has been submitted.</p>
+                <p>We'll send your approval to <strong id="success-email"></strong><br>within 24 hours.</p>
+                <a href="index.html" class="btn-home">Return to Home</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ─── Stripe Configuration ────────────────────────────────────────────
+        // Replace with your real publishable key when you have it
+        const STRIPE_PUBLISHABLE_KEY = 'pk_test_YOUR_STRIPE_PUBLISHABLE_KEY';
+
+        let _stripe = null;
+        let _elements = null;
+        let _paymentElement = null;
+
+        // ─── Check payment status after 3D Secure redirect ──────────────────
+        async function checkPaymentStatusAfterRedirect() {
+            const params = new URLSearchParams(window.location.search);
+            const clientSecret = params.get('payment_intent_client_secret');
+
+            if (!clientSecret) return;
+
+            // Only check if we have Stripe initialized
+            if (!_stripe) {
+                _stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
+            }
+
+            try {
+                const { paymentIntent } = await _stripe.retrievePaymentIntent(clientSecret);
+
+                // Clear URL parameters
+                window.history.replaceState({}, document.title, window.location.pathname);
+
+                if (paymentIntent.status === 'succeeded') {
+                    // Payment succeeded after 3D Secure
+                    showPaymentSuccess();
+                    closePaymentModal();
+                } else if (paymentIntent.status === 'requires_action') {
+                    // Still requires action (shouldn't happen normally)
+                    console.warn('Payment still requires action');
+                } else if (paymentIntent.status === 'processing') {
+                    // Payment is being processed
+                    console.log('Payment is processing');
+                }
+            } catch (err) {
+                console.error('Error checking payment status:', err);
+            }
+        }
+
+        // ─── Open / Close payment modal ──────────────────────────────────────
+        function openPaymentModal(clientSecret) {
+            // Update amount display
+            const totalEl = document.getElementById('price-total');
+            const amountText = totalEl ? totalEl.textContent : '$49.99';
+            document.getElementById('payment-modal-amount').textContent = amountText;
+
+            // Init Stripe only once
+            if (!_stripe) {
+                _stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
+            }
+
+            _elements = _stripe.elements({
+                clientSecret: clientSecret,
+                appearance: {
+                    theme: 'stripe',
+                    variables: {
+                        colorPrimary: '#1e3a8a',
+                        colorBackground: '#ffffff',
+                        colorText: '#1a1f36',
+                        fontFamily: "'Inter', system-ui, sans-serif",
+                        borderRadius: '8px',
+                        fontSizeSm: '14px'
+                    }
+                }
+            });
+
+            _paymentElement = _elements.create('payment');
+            _paymentElement.mount('#stripe-payment-element');
+
+            document.getElementById('paymentModal').classList.add('active');
+            document.getElementById('payment-error').style.display = 'none';
+            document.getElementById('payment-error').textContent = '';
+        }
+
+        function closePaymentModal() {
+            document.getElementById('paymentModal').classList.remove('active');
+            // Unmount the element to avoid duplicate mounts on re-open
+            if (_paymentElement) {
+                _paymentElement.destroy();
+                _paymentElement = null;
+                _elements = null;
+            }
+        }
+
+        // ─── Confirm Payment ─────────────────────────────────────────────────
+        async function confirmPayment() {
+            const payBtn = document.getElementById('payBtn');
+            const errorDiv = document.getElementById('payment-error');
+
+            payBtn.disabled = true;
+            payBtn.textContent = 'Processing…';
+            errorDiv.style.display = 'none';
+
+            try {
+                const { error } = await _stripe.confirmPayment({
+                    elements: _elements,
+                    confirmParams: {
+                        return_url: window.location.origin + '/apply.html'
+                    },
+                    redirect: 'if_required'
+                });
+
+                if (error) {
+                    // Show error inside modal
+                    errorDiv.textContent = error.message;
+                    errorDiv.style.display = 'block';
+                    payBtn.disabled = false;
+                    payBtn.textContent = 'Pay Now';
+                } else {
+                    // Payment confirmed — no redirect needed
+                    closePaymentModal();
+                    showPaymentSuccess();
+                }
+            } catch (err) {
+                errorDiv.textContent = 'Unexpected error: ' + err.message;
+                errorDiv.style.display = 'block';
+                payBtn.disabled = false;
+                payBtn.textContent = 'Pay Now';
+            }
+        }
+
+        // ─── Success screen ──────────────────────────────────────────────────
+        function showPaymentSuccess() {
+            const form = document.getElementById('applicationForm');
+            const email = form.elements['tdacEmail']?.value || '';
+            document.getElementById('success-email').textContent = email;
+            document.getElementById('paymentSuccess').classList.add('active');
+
+            // Clear stored form state
+            form.reset();
+            localStorage.removeItem('tdacFormState');
+            localStorage.removeItem('tdacCurrentStep');
         }
     </script>
 </body>
