@@ -1,5 +1,6 @@
 {
   "outputDirectory": ".",
+  "public": true,
   "routes": [
     { "src": "/api/(.*)", "dest": "/api/$1.js" },
     { "src": "/admin", "dest": "/admin/index.html" },
