@@ -1,5 +1,14 @@
 {
-  "buildCommand": "",
   "outputDirectory": ".",
-  "public": true
+  "functions": {
+    "api/*.js": {
+      "runtime": "nodejs20.x"
+    }
+  },
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/api/$1.js" },
+    { "src": "/admin", "dest": "/admin/index.html" },
+    { "src": "/(.*)", "dest": "/$1" }
+  ]
 }
+
