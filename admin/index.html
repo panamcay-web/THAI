@@ -1075,10 +1075,10 @@
     }
 
     try {
-      const response = await fetch(`${API_BASE}/delete-lead`, {
+      const response = await fetch(`${API_BASE}/delete-lead?password=${encodeURIComponent(adminPassword)}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ leadId, password: adminPassword })
+        body: JSON.stringify({ leadId })
       });
 
       const result = await response.json();
