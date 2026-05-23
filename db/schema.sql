@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS leads (
 
   -- Status
   status TEXT DEFAULT 'pending' CHECK (status IN ('pending', 'paid', 'processing', 'completed', 'refunded', 'cancelled')),
-  processed BOOLEAN DEFAULT FALSE,
+  processed_status TEXT DEFAULT 'not_processed' CHECK (processed_status IN ('not_processed', 'processed', 'duplicate')),
 
   -- Step 1: Personal Info (From Passport)
   family_name TEXT NOT NULL,

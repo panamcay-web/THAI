@@ -26,14 +26,19 @@ module.exports = async (req, res) => {
       process.env.SUPABASE_SERVICE_KEY
     );
 
-    const { leadId, processed, status } = req.body;
+    const { leadId, processed_status, status } = req.body;
 
     if (!leadId) {
       return res.status(400).json({ error: 'Lead ID is required' });
     }
 
     const updateData = {};
-    if (processed !== undefined) updateData.processed = processed;
+    if (processed_status) {
+      if (!['not_processed', 'processed', 'duplicate'].includes(processed_status)) {
+        return res.status(400).json({ error: 'Invalid processed_status value' });
+      }
+      updateData.processed_status = processed_status;
+    }
     if (status) updateData.status = status;
 
     const { data: lead, error } = await supabase

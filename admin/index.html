@@ -794,6 +794,7 @@
           <th style="padding:10px 16px;text-align:left;font-size:11px;color:#6b7190;text-transform:uppercase;background:#f8f9fb;border-bottom:1px solid #e0e4ec;">Name</th>
           <th style="padding:10px 16px;text-align:left;font-size:11px;color:#6b7190;text-transform:uppercase;background:#f8f9fb;border-bottom:1px solid #e0e4ec;">Email</th>
           <th style="padding:10px 16px;text-align:left;font-size:11px;color:#6b7190;text-transform:uppercase;background:#f8f9fb;border-bottom:1px solid #e0e4ec;">Status</th>
+          <th style="padding:10px 16px;text-align:left;font-size:11px;color:#6b7190;text-transform:uppercase;background:#f8f9fb;border-bottom:1px solid #e0e4ec;">Processing</th>
           <th style="padding:10px 16px;text-align:left;font-size:11px;color:#6b7190;text-transform:uppercase;background:#f8f9fb;border-bottom:1px solid #e0e4ec;">Amount</th>
         </tr></thead>
         <tbody>
@@ -803,6 +804,7 @@
               <td style="padding:12px 16px;font-size:13px;font-weight:600;">${l.first_name} ${l.family_name}</td>
               <td style="padding:12px 16px;font-size:13px;color:#4a90e2;">${l.tdac_email}</td>
               <td style="padding:12px 16px;">${statusBadge(l.status)}</td>
+              <td style="padding:12px 16px;">${processedStatusBadge(l.processed_status)}</td>
               <td style="padding:12px 16px;font-size:13px;font-weight:600;color:${l.amount_paid ? '#38a169' : '#c0c4d4'};">${l.amount_paid ? '$' + (l.amount_paid/100).toFixed(2) : '—'}</td>
             </tr>
           `).join('')}
@@ -854,7 +856,11 @@
         <td class="td-email">${l.tdac_email}</td>
         <td>${l.arrival_date || '—'}</td>
         <td>${statusBadge(l.status)}</td>
-        <td><span class="status-badge ${l.processed ? 'status-succeeded' : 'status-failed'}" style="cursor:pointer;" onclick="event.stopPropagation(); toggleProcessed('${l.id}', ${l.processed})">${l.processed ? '✓ Yes' : '✗ No'}</span></td>
+        <td onclick="event.stopPropagation()"><select onchange="updateProcessedStatus('${l.id}', this.value)" style="padding: 4px 8px; border: 1px solid #e0e4ec; border-radius: 4px; font-size: 12px; cursor: pointer; background: #fff;">
+          <option value="not_processed" ${l.processed_status === 'not_processed' ? 'selected' : ''}>Не обработан</option>
+          <option value="processed" ${l.processed_status === 'processed' ? 'selected' : ''}>Обработан</option>
+          <option value="duplicate" ${l.processed_status === 'duplicate' ? 'selected' : ''}>Дубль</option>
+        </select></td>
         <td class="amount">${l.amount_paid ? '$' + (l.amount_paid/100).toFixed(2) : '—'}</td>
       </tr>
     `).join('');
@@ -921,9 +927,13 @@
         <h4>Status & Payment</h4>
         <div class="modal-grid">
           ${field('Payment Status', statusBadge(lead.status))}
-          ${field('Processed', `<button style="padding: 6px 12px; background: ${lead.processed ? '#d1fae5' : '#fee2e2'}; color: ${lead.processed ? '#065f46' : '#991b1b'}; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 13px;" onclick="toggleProcessed('${lead.id}', ${lead.processed})">
-            ${lead.processed ? '✓ Yes' : '✗ No'}
-          </button>`)}
+          ${field('Processing Status', `
+            <select onchange="updateProcessedStatus('${lead.id}', this.value)" style="padding: 6px 10px; border: 1.5px solid #e0e4ec; border-radius: 6px; font-size: 13px; font-weight: 500; cursor: pointer; background: #fff;">
+              <option value="not_processed" ${lead.processed_status === 'not_processed' ? 'selected' : ''}>Не обработан</option>
+              <option value="processed" ${lead.processed_status === 'processed' ? 'selected' : ''}>Обработан</option>
+              <option value="duplicate" ${lead.processed_status === 'duplicate' ? 'selected' : ''}>Дубль</option>
+            </select>
+          `)}
           ${field('Submitted', formatDate(lead.created_at))}
           ${field('Amount Paid', lead.amount_paid ? '$' + (lead.amount_paid/100).toFixed(2) + ' ' + (lead.currency||'').toUpperCase() : '—')}
           ${field('Paid At', lead.paid_at ? formatDate(lead.paid_at) : '—')}
@@ -1090,13 +1100,13 @@
     }
   }
 
-  // ── TOGGLE PROCESSED ─────────────────────────────────────────
-  async function toggleProcessed(leadId, currentValue) {
+  // ── UPDATE PROCESSED STATUS ──────────────────────────────────
+  async function updateProcessedStatus(leadId, newStatus) {
     try {
       const response = await fetch(`${API_BASE}/update-lead?password=${encodeURIComponent(adminPassword)}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ leadId, processed: !currentValue })
+        body: JSON.stringify({ leadId, processed_status: newStatus })
       });
 
       const result = await response.json();
@@ -1109,9 +1119,20 @@
       openLead(result.lead);
       loadLeads(leadsPage);
     } catch (err) {
-      console.error('toggleProcessed error:', err);
+      console.error('updateProcessedStatus error:', err);
       alert('⚠️ Error: ' + err.message);
     }
+  }
+
+  // ── PROCESSED STATUS BADGE ───────────────────────────────────
+  function processedStatusBadge(status) {
+    const map = {
+      'not_processed': { label: 'Не обработан', color: '#fee2e2', textColor: '#991b1b' },
+      'processed': { label: 'Обработан', color: '#d1fae5', textColor: '#065f46' },
+      'duplicate': { label: 'Дубль', color: '#fce7f3', textColor: '#9d174d' }
+    };
+    const config = map[status] || { label: status, color: '#f3f4f6', textColor: '#4b5563' };
+    return `<span style="background:${config.color}; color:${config.textColor}; padding:4px 10px; border-radius:20px; font-size:11px; font-weight:600;">${config.label}</span>`;
   }
 </script>
 </body>
