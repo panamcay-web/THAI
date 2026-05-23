@@ -804,7 +804,7 @@
               <td style="padding:12px 16px;font-size:13px;font-weight:600;">${l.first_name} ${l.family_name}</td>
               <td style="padding:12px 16px;font-size:13px;color:#4a90e2;">${l.tdac_email}</td>
               <td style="padding:12px 16px;">${statusBadge(l.status)}</td>
-              <td style="padding:12px 16px;">${processedStatusBadge(l.processed_status)}</td>
+              <td style="padding:12px 16px;">${processedStatusBadge(l.processed)}</td>
               <td style="padding:12px 16px;font-size:13px;font-weight:600;color:${l.amount_paid ? '#38a169' : '#c0c4d4'};">${l.amount_paid ? '$' + (l.amount_paid/100).toFixed(2) : '—'}</td>
             </tr>
           `).join('')}
@@ -857,9 +857,9 @@
         <td>${l.arrival_date || '—'}</td>
         <td>${statusBadge(l.status)}</td>
         <td onclick="event.stopPropagation()"><select onchange="updateProcessedStatus('${l.id}', this.value)" style="padding: 4px 8px; border: 1px solid #e0e4ec; border-radius: 4px; font-size: 12px; cursor: pointer; background: #fff;">
-          <option value="not_processed" ${l.processed_status === 'not_processed' ? 'selected' : ''}>Не обработан</option>
-          <option value="processed" ${l.processed_status === 'processed' ? 'selected' : ''}>Обработан</option>
-          <option value="duplicate" ${l.processed_status === 'duplicate' ? 'selected' : ''}>Дубль</option>
+          <option value="not_processed" ${l.processed === 'not_processed' ? 'selected' : ''}>Не обработан</option>
+          <option value="processed" ${l.processed === 'processed' ? 'selected' : ''}>Обработан</option>
+          <option value="duplicate" ${l.processed === 'duplicate' ? 'selected' : ''}>Дубль</option>
         </select></td>
         <td class="amount">${l.amount_paid ? '$' + (l.amount_paid/100).toFixed(2) : '—'}</td>
       </tr>
@@ -929,9 +929,9 @@
           ${field('Payment Status', statusBadge(lead.status))}
           ${field('Processing Status', `
             <select onchange="updateProcessedStatus('${lead.id}', this.value)" style="padding: 6px 10px; border: 1.5px solid #e0e4ec; border-radius: 6px; font-size: 13px; font-weight: 500; cursor: pointer; background: #fff;">
-              <option value="not_processed" ${lead.processed_status === 'not_processed' ? 'selected' : ''}>Не обработан</option>
-              <option value="processed" ${lead.processed_status === 'processed' ? 'selected' : ''}>Обработан</option>
-              <option value="duplicate" ${lead.processed_status === 'duplicate' ? 'selected' : ''}>Дубль</option>
+              <option value="not_processed" ${lead.processed === 'not_processed' ? 'selected' : ''}>Не обработан</option>
+              <option value="processed" ${lead.processed === 'processed' ? 'selected' : ''}>Обработан</option>
+              <option value="duplicate" ${lead.processed === 'duplicate' ? 'selected' : ''}>Дубль</option>
             </select>
           `)}
           ${field('Submitted', formatDate(lead.created_at))}
@@ -1106,7 +1106,7 @@
       const response = await fetch(`${API_BASE}/update-lead?password=${encodeURIComponent(adminPassword)}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ leadId, processed_status: newStatus })
+        body: JSON.stringify({ leadId, processed: newStatus })
       });
 
       const result = await response.json();

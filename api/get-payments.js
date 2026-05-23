@@ -28,7 +28,7 @@ module.exports = async (req, res) => {
 
     const { data: payments, error } = await supabase
       .from('payments')
-      .select(`*, leads (family_name, first_name, tdac_email, passport_number, nationality, arrival_date, processed_status)`)
+      .select(`*, leads (family_name, first_name, tdac_email, passport_number, nationality, arrival_date, processed)`)
       .order('created_at', { ascending: false })
       .limit(100);
 
