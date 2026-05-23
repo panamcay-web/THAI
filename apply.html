@@ -1668,11 +1668,11 @@
                     firstName:          firstNameField?.value,
                     middleName:         block.querySelector(`input[name="middleName${suffix === '1' ? '' : '_' + suffix}"]`)?.value || null,
                     passportNumber:     block.querySelector(`input[name="passportNumber${suffix === '1' ? '' : '_' + suffix}"]`)?.value,
-                    nationality:        block.querySelector(`input[name="nationality${suffix === '1' ? '' : '_' + suffix}"]`)?.value,
+                    nationality:        block.querySelector('.nationality-display')?.value,
                     dateOfBirth:        block.querySelector(`input[name="dateOfBirth${suffix === '1' ? '' : '_' + suffix}"]`)?.value,
                     occupation:         block.querySelector(`input[name="occupation${suffix === '1' ? '' : '_' + suffix}"]`)?.value,
                     gender:             block.querySelector(`input[name="gender${suffix === '1' ? '' : '_' + suffix}"]:checked`)?.value,
-                    countryOfResidence: block.querySelector(`input[name="countryOfResidence${suffix === '1' ? '' : '_' + suffix}"]`)?.value,
+                    countryOfResidence: block.querySelector('.country-display')?.value,
                     cityOfResidence:    block.querySelector(`input[name="cityOfResidence${suffix === '1' ? '' : '_' + suffix}"]`)?.value,
                     phoneNumber:        block.querySelector(`input[name="phoneNumber${suffix === '1' ? '' : '_' + suffix}"]`)?.value,
                     ...tripData

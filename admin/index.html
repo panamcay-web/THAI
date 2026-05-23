@@ -933,9 +933,9 @@
     document.getElementById('modal-body').innerHTML = `
 
       <div class="modal-section">
-        <h4>Статус и платеж</h4>
+        <h4>Status & Payment</h4>
         <div class="modal-grid">
-          ${field('Статус платежа', statusBadge(lead.status))}
+          ${field('Payment Status', statusBadge(lead.status))}
           ${field('Статус обработки', `
             <select onchange="updateProcessedStatus('${lead.id}', this.value)" style="padding: 6px 10px; border: 1.5px solid #e0e4ec; border-radius: 6px; font-size: 13px; font-weight: 500; cursor: pointer; background: #fff;">
               <option value="not_processed" ${lead.processed === 'not_processed' ? 'selected' : ''}>Не обработан</option>
@@ -943,62 +943,62 @@
               <option value="duplicate" ${lead.processed === 'duplicate' ? 'selected' : ''}>Дубль</option>
             </select>
           `)}
-          ${field('Отправлено', formatDate(lead.created_at))}
-          ${field('Сумма оплачена', lead.amount_paid ? '$' + (lead.amount_paid/100).toFixed(2) + ' ' + (lead.currency||'').toUpperCase() : '—')}
-          ${field('Оплачено', lead.paid_at ? formatDate(lead.paid_at) : '—')}
-          ${field('ID платежа Stripe', `<span style="font-family:monospace;font-size:12px;">${lead.stripe_payment_intent_id || '—'}</span>`)}
+          ${field('Submitted', formatDate(lead.created_at))}
+          ${field('Amount Paid', lead.amount_paid ? '$' + (lead.amount_paid/100).toFixed(2) + ' ' + (lead.currency||'').toUpperCase() : '—')}
+          ${field('Paid At', lead.paid_at ? formatDate(lead.paid_at) : '—')}
+          ${field('Stripe Payment ID', `<span style="font-family:monospace;font-size:12px;">${lead.stripe_payment_intent_id || '—'}</span>`)}
         </div>
       </div>
 
       <div class="modal-section">
-        <h4>Информация о паспорте</h4>
+        <h4>Passport Information</h4>
         <div class="modal-grid">
-          ${field('Фамилия', lead.family_name)}
-          ${field('Имя', lead.first_name)}
-          ${field('Отчество', lead.middle_name)}
-          ${field('Номер паспорта', `<span style="font-family:monospace;">${lead.passport_number}</span>`)}
-          ${field('Гражданство', lead.nationality)}
-          ${field('Дата рождения', lead.date_of_birth)}
+          ${field('Family Name', lead.family_name)}
+          ${field('First Name', lead.first_name)}
+          ${field('Middle Name', lead.middle_name)}
+          ${field('Passport Number', `<span style="font-family:monospace;">${lead.passport_number}</span>`)}
+          ${field('Nationality/Citizenship', lead.nationality)}
+          ${field('Date of Birth', lead.date_of_birth)}
         </div>
       </div>
 
       <div class="modal-section">
-        <h4>Личные данные</h4>
+        <h4>Personal Details</h4>
         <div class="modal-grid">
-          ${field('Пол', lead.gender)}
-          ${field('Род занятий', lead.occupation)}
-          ${field('Страна проживания', lead.country_of_residence)}
-          ${field('Город', lead.city_of_residence)}
-          ${field('Телефон', lead.phone_number)}
-          ${field('Email', `<a href="mailto:${lead.tdac_email}" style="color:#4a90e2;">${lead.tdac_email}</a>`)}
+          ${field('Gender', lead.gender)}
+          ${field('Occupation', lead.occupation)}
+          ${field('Country/Territory of Residence', lead.country_of_residence)}
+          ${field('City/State of Residence', lead.city_of_residence)}
+          ${field('Phone Number', lead.phone_number)}
+          ${field('Email Address', `<a href="mailto:${lead.tdac_email}" style="color:#4a90e2;">${lead.tdac_email}</a>`)}
         </div>
       </div>
 
       <div class="modal-section">
-        <h4>Информация о прибытии</h4>
+        <h4>Arrival Information</h4>
         <div class="modal-grid">
-          ${field('Дата прибытия', lead.arrival_date)}
-          ${field('Номер рейса / машины', lead.flight_number)}
-          ${field('Вид транспорта', lead.mode_of_transport)}
-          ${field('Цель путешествия', lead.purpose_of_travel)}
+          ${field('Date of Arrival', lead.arrival_date)}
+          ${field('Arrival Flight No./Vehicle No.', lead.flight_number)}
+          ${field('Mode of Transport', lead.mode_of_transport)}
+          ${field('Purpose of Travel', lead.purpose_of_travel)}
         </div>
       </div>
 
       <div class="modal-section">
-        <h4>Информация об убытии</h4>
+        <h4>Departure Information</h4>
         <div class="modal-grid">
-          ${field('Дата убытия', lead.departure_date)}
-          ${field('Номер рейса / машины', lead.flight_number_departure)}
-          ${field('Вид транспорта', lead.mode_of_transport_departure)}
+          ${field('Date of Departure', lead.departure_date)}
+          ${field('Departure Flight No./Vehicle No.', lead.flight_number_departure)}
+          ${field('Mode of Transport (Departure)', lead.mode_of_transport_departure)}
         </div>
       </div>
 
       <div class="modal-section">
-        <h4>Размещение</h4>
+        <h4>Accommodation</h4>
         <div class="modal-grid">
-          ${field('Пассажир в транзите', lead.transit_passenger ? 'Да' : 'Нет')}
-          ${field('Тип проживания', lead.accommodation_type)}
-          ${field('Адрес / отель', lead.accommodation_address, true)}
+          ${field('Transit Passenger', lead.transit_passenger ? 'Yes' : 'No')}
+          ${field('Type of Accommodation in Thailand', lead.accommodation_type)}
+          ${field('Hotel name and address', lead.accommodation_address, true)}
         </div>
       </div>
 
