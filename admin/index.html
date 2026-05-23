@@ -1115,8 +1115,7 @@
         throw new Error(result.error || 'Failed to update lead');
       }
 
-      // Reload modal with updated data
-      openLead(result.lead);
+      // Just reload the table, don't open the modal
       loadLeads(leadsPage);
     } catch (err) {
       console.error('updateProcessedStatus error:', err);
@@ -1129,7 +1128,7 @@
     const map = {
       'not_processed': { label: 'Не обработан', color: '#fee2e2', textColor: '#991b1b' },
       'processed': { label: 'Обработан', color: '#d1fae5', textColor: '#065f46' },
-      'duplicate': { label: 'Дубль', color: '#fce7f3', textColor: '#9d174d' }
+      'duplicate': { label: 'Дубль', color: '#dbeafe', textColor: '#0c4a6e' }
     };
     const config = map[status] || { label: status, color: '#f3f4f6', textColor: '#4b5563' };
     return `<span style="background:${config.color}; color:${config.textColor}; padding:4px 10px; border-radius:20px; font-size:11px; font-weight:600;">${config.label}</span>`;
