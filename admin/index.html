@@ -856,11 +856,7 @@
         <td class="td-email">${l.tdac_email}</td>
         <td>${l.arrival_date || '—'}</td>
         <td>${statusBadge(l.status)}</td>
-        <td onclick="event.stopPropagation()"><select onchange="updateProcessedStatus('${l.id}', this.value)" style="padding: 4px 8px; border: 1px solid #e0e4ec; border-radius: 4px; font-size: 12px; cursor: pointer; background: #fff;">
-          <option value="not_processed" ${l.processed === 'not_processed' ? 'selected' : ''}>Не обработан</option>
-          <option value="processed" ${l.processed === 'processed' ? 'selected' : ''}>Обработан</option>
-          <option value="duplicate" ${l.processed === 'duplicate' ? 'selected' : ''}>Дубль</option>
-        </select></td>
+        <td onclick="event.stopPropagation()">${processedStatusSelector(l.id, l.processed)}</td>
         <td class="amount">${l.amount_paid ? '$' + (l.amount_paid/100).toFixed(2) : '—'}</td>
       </tr>
     `).join('');
@@ -1132,6 +1128,31 @@
     };
     const config = map[status] || { label: status, color: '#f3f4f6', textColor: '#4b5563' };
     return `<span style="background:${config.color}; color:${config.textColor}; padding:4px 10px; border-radius:20px; font-size:11px; font-weight:600;">${config.label}</span>`;
+  }
+
+  // ── PROCESSED STATUS SELECTOR (clickable for Leads table)
+  function processedStatusSelector(leadId, status) {
+    const map = {
+      'not_processed': { label: 'Не обработан', color: '#fee2e2', textColor: '#991b1b' },
+      'processed': { label: 'Обработан', color: '#d1fae5', textColor: '#065f46' },
+      'duplicate': { label: 'Дубль', color: '#dbeafe', textColor: '#0c4a6e' }
+    };
+    const config = map[status] || { label: status, color: '#f3f4f6', textColor: '#4b5563' };
+    const menuId = `menu-${leadId}`;
+
+    return `
+      <div style="position:relative; display:inline-block;">
+        <span onclick="event.stopPropagation(); document.getElementById('${menuId}').style.display = document.getElementById('${menuId}').style.display === 'none' ? 'block' : 'none';"
+              style="background:${config.color}; color:${config.textColor}; padding:4px 10px; border-radius:20px; font-size:11px; font-weight:600; cursor:pointer; display:inline-block;">
+          ${config.label}
+        </span>
+        <div id="${menuId}" style="position:absolute; top:100%; left:0; background:#fff; border:1px solid #e0e4ec; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1); min-width:150px; z-index:10; display:none; margin-top:4px;">
+          <div onclick="event.stopPropagation(); updateProcessedStatus('${leadId}', 'not_processed'); document.getElementById('${menuId}').style.display='none';" style="padding:8px 12px; cursor:pointer; font-size:12px; color:#1a1f36; border-bottom:1px solid #f0f2f5; background:#fee2e2;">Не обработан</div>
+          <div onclick="event.stopPropagation(); updateProcessedStatus('${leadId}', 'processed'); document.getElementById('${menuId}').style.display='none';" style="padding:8px 12px; cursor:pointer; font-size:12px; color:#1a1f36; border-bottom:1px solid #f0f2f5; background:#d1fae5;">Обработан</div>
+          <div onclick="event.stopPropagation(); updateProcessedStatus('${leadId}', 'duplicate'); document.getElementById('${menuId}').style.display='none';" style="padding:8px 12px; cursor:pointer; font-size:12px; color:#1a1f36; background:#dbeafe;">Дубль</div>
+        </div>
+      </div>
+    `;
   }
 </script>
 </body>
