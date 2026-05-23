@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin — Thailand TDAC</title>
+  <title>Админ-панель — Thailand TDAC</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -523,11 +523,11 @@
 <!-- ═══ LOGIN SCREEN ═══ -->
 <div id="login-screen">
   <div class="login-card">
-    <h1>🇹🇭 TDAC Admin</h1>
-    <p>Thailand Digital Arrival Card</p>
-    <input type="password" id="password-input" placeholder="Enter admin password" onkeydown="if(event.key==='Enter')login()">
-    <button onclick="login()">Sign In</button>
-    <p id="login-error">Incorrect password. Try again.</p>
+    <h1>🇹🇭 Админ-панель TDAC</h1>
+    <p>Цифровая карточка прибытия в Таиланд</p>
+    <input type="password" id="password-input" placeholder="Введите пароль администратора" onkeydown="if(event.key==='Enter')login()">
+    <button onclick="login()">Вход</button>
+    <p id="login-error">Неверный пароль. Попробуйте снова.</p>
   </div>
 </div>
 
@@ -537,25 +537,25 @@
   <!-- Sidebar -->
   <div class="sidebar">
     <div class="sidebar-logo">
-      <span>🇹🇭 TDAC Admin</span>
-      <small>Management Panel</small>
+      <span>🇹🇭 Админ-панель TDAC</span>
+      <small>Панель управления</small>
     </div>
     <nav>
       <a onclick="showPage('dashboard')" id="nav-dashboard" class="active">
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-        <span>Dashboard</span>
+        <span>Панель управления</span>
       </a>
       <a onclick="showPage('leads')" id="nav-leads">
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        <span>Leads</span>
+        <span>Заявки</span>
       </a>
       <a onclick="showPage('payments')" id="nav-payments">
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-        <span>Payments</span>
+        <span>Платежи</span>
       </a>
     </nav>
     <div class="sidebar-bottom">
-      <button onclick="logout()">← Logout</button>
+      <button onclick="logout()">← Выход</button>
     </div>
   </div>
 
@@ -566,26 +566,26 @@
     <div class="page active" id="page-dashboard">
       <div class="page-header">
         <div>
-          <h2>Dashboard</h2>
-          <small id="last-updated">Loading...</small>
+          <h2>Панель управления</h2>
+          <small id="last-updated">Загрузка...</small>
         </div>
         <button class="btn-refresh" onclick="loadAll()">
           <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-5"/></svg>
-          Refresh
+          Обновить
         </button>
       </div>
 
       <div class="stats-row" id="stats-cards">
-        <div class="stat-card"><div class="label">Total Leads</div><div class="value" id="stat-total">—</div></div>
-        <div class="stat-card"><div class="label">Paid</div><div class="value green" id="stat-paid">—</div></div>
-        <div class="stat-card"><div class="label">Pending</div><div class="value blue" id="stat-pending">—</div></div>
-        <div class="stat-card"><div class="label">Revenue</div><div class="value green" id="stat-revenue">—</div></div>
+        <div class="stat-card"><div class="label">Всего заявок</div><div class="value" id="stat-total">—</div></div>
+        <div class="stat-card"><div class="label">Оплачено</div><div class="value green" id="stat-paid">—</div></div>
+        <div class="stat-card"><div class="label">В ожидании</div><div class="value blue" id="stat-pending">—</div></div>
+        <div class="stat-card"><div class="label">Доход</div><div class="value green" id="stat-revenue">—</div></div>
       </div>
 
       <div class="table-wrap">
-        <div style="padding: 16px 20px; border-bottom: 1px solid #e0e4ec; font-weight: 600; font-size: 14px;">Recent Leads</div>
+        <div style="padding: 16px 20px; border-bottom: 1px solid #e0e4ec; font-weight: 600; font-size: 14px;">Последние заявки</div>
         <div id="dashboard-leads-body">
-          <div class="loading"><span class="spinner"></span>Loading...</div>
+          <div class="loading"><span class="spinner"></span>Загрузка...</div>
         </div>
       </div>
     </div>
@@ -594,28 +594,28 @@
     <div class="page" id="page-leads">
       <div class="page-header">
         <div>
-          <h2>All Leads</h2>
-          <small id="leads-count">Loading...</small>
+          <h2>Все заявки</h2>
+          <small id="leads-count">Загрузка...</small>
         </div>
-        <button class="btn-export" onclick="exportCSV()">↓ Export CSV</button>
+        <button class="btn-export" onclick="exportCSV()">↓ Экспорт CSV</button>
       </div>
 
       <div class="toolbar">
         <div class="search-box">
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input type="text" placeholder="Search name, email, passport..." id="leads-search" oninput="debounceSearch()">
+          <input type="text" placeholder="Поиск по имени, email, паспорту..." id="leads-search" oninput="debounceSearch()">
         </div>
         <select class="filter-select" id="leads-status-filter" onchange="loadLeads(1)">
-          <option value="all">All statuses</option>
-          <option value="pending">Pending</option>
-          <option value="paid">Paid</option>
-          <option value="processing">Processing</option>
-          <option value="completed">Completed</option>
-          <option value="refunded">Refunded</option>
+          <option value="all">Все статусы</option>
+          <option value="pending">В ожидании</option>
+          <option value="paid">Оплачено</option>
+          <option value="processing">Обработка</option>
+          <option value="completed">Завершено</option>
+          <option value="refunded">Возвращено</option>
         </select>
         <button class="btn-refresh" onclick="loadLeads(1)">
           <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-5"/></svg>
-          Refresh
+          Обновить
         </button>
       </div>
 
@@ -624,26 +624,26 @@
           <thead>
             <tr>
               <th>#</th>
-              <th>Date</th>
-              <th>Name</th>
-              <th>Passport</th>
-              <th>Nationality</th>
+              <th>Дата</th>
+              <th>Имя</th>
+              <th>Паспорт</th>
+              <th>Гражданство</th>
               <th>Email</th>
-              <th>Arrival</th>
-              <th>Status</th>
-              <th>Processed</th>
-              <th>Amount</th>
+              <th>Прибытие</th>
+              <th>Статус</th>
+              <th>Обработано</th>
+              <th>Сумма</th>
             </tr>
           </thead>
           <tbody id="leads-table-body">
-            <tr><td colspan="10"><div class="loading"><span class="spinner"></span>Loading...</div></td></tr>
+            <tr><td colspan="10"><div class="loading"><span class="spinner"></span>Загрузка...</div></td></tr>
           </tbody>
         </table>
         <div class="pagination">
           <span id="leads-pagination-info">—</span>
           <div class="pagination-buttons">
-            <button id="leads-prev" onclick="leadsPage--; loadLeads(leadsPage)" disabled>← Prev</button>
-            <button id="leads-next" onclick="leadsPage++; loadLeads(leadsPage)" disabled>Next →</button>
+            <button id="leads-prev" onclick="leadsPage--; loadLeads(leadsPage)" disabled>← Назад</button>
+            <button id="leads-next" onclick="leadsPage++; loadLeads(leadsPage)" disabled>Далее →</button>
           </div>
         </div>
       </div>
@@ -653,38 +653,38 @@
     <div class="page" id="page-payments">
       <div class="page-header">
         <div>
-          <h2>Payments</h2>
-          <small>Stripe payment history</small>
+          <h2>Платежи</h2>
+          <small>История платежей Stripe</small>
         </div>
         <button class="btn-refresh" onclick="loadPayments()">
           <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-5"/></svg>
-          Refresh
+          Обновить
         </button>
       </div>
 
       <div class="stats-row" id="payment-stats-cards">
-        <div class="stat-card"><div class="label">Total Revenue</div><div class="value green" id="pstat-revenue">—</div></div>
-        <div class="stat-card"><div class="label">Successful</div><div class="value green" id="pstat-paid">—</div></div>
-        <div class="stat-card"><div class="label">Pending</div><div class="value blue" id="pstat-pending">—</div></div>
-        <div class="stat-card"><div class="label">Refunded</div><div class="value red" id="pstat-refunded">—</div></div>
+        <div class="stat-card"><div class="label">Общий доход</div><div class="value green" id="pstat-revenue">—</div></div>
+        <div class="stat-card"><div class="label">Успешных</div><div class="value green" id="pstat-paid">—</div></div>
+        <div class="stat-card"><div class="label">В ожидании</div><div class="value blue" id="pstat-pending">—</div></div>
+        <div class="stat-card"><div class="label">Возвращено</div><div class="value red" id="pstat-refunded">—</div></div>
       </div>
 
       <div class="table-wrap">
         <table>
           <thead>
             <tr>
-              <th>Date</th>
-              <th>Applicant</th>
+              <th>Дата</th>
+              <th>Заявитель</th>
               <th>Email</th>
-              <th>Passport</th>
-              <th>Arrival</th>
-              <th>Amount</th>
-              <th>Status</th>
-              <th>Stripe ID</th>
+              <th>Паспорт</th>
+              <th>Прибытие</th>
+              <th>Сумма</th>
+              <th>Статус</th>
+              <th>ID Stripe</th>
             </tr>
           </thead>
           <tbody id="payments-table-body">
-            <tr><td colspan="8"><div class="loading"><span class="spinner"></span>Loading...</div></td></tr>
+            <tr><td colspan="8"><div class="loading"><span class="spinner"></span>Загрузка...</div></td></tr>
           </tbody>
         </table>
       </div>
@@ -697,7 +697,7 @@
 <div class="modal-overlay" id="lead-modal" onclick="if(event.target===this)closeModal()">
   <div class="modal">
     <div class="modal-header">
-      <h3 id="modal-title">Lead Details</h3>
+      <h3 id="modal-title">Данные заявки</h3>
       <button class="modal-close" onclick="closeModal()">×</button>
     </div>
     <div class="modal-body" id="modal-body">
@@ -714,6 +714,17 @@
   let searchTimer;
   let allLeadsCache = [];
 
+  // ── LOAD PASSWORD FROM LOCALSTORAGE ────────────────────
+  function initSession() {
+    const savedPassword = localStorage.getItem('adminPassword');
+    if (savedPassword) {
+      adminPassword = savedPassword;
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('app').style.display = 'block';
+      loadAll();
+    }
+  }
+
   // ── LOGIN ────────────────────────────────────────────
   function login() {
     const pw = document.getElementById('password-input').value.trim();
@@ -724,6 +735,7 @@
 
     if (pw === ADMIN_PASSWORD) {
       adminPassword = pw;
+      localStorage.setItem('adminPassword', pw);
       document.getElementById('login-error').style.display = 'none';
       document.getElementById('login-screen').style.display = 'none';
       document.getElementById('app').style.display = 'block';
@@ -735,6 +747,7 @@
 
   function logout() {
     adminPassword = '';
+    localStorage.removeItem('adminPassword');
     document.getElementById('app').style.display = 'none';
     document.getElementById('login-screen').style.display = 'flex';
     document.getElementById('password-input').value = '';
@@ -760,7 +773,7 @@
   async function loadDashboard() {
     try {
       const res = await fetch(`${API_BASE}/get-payments?password=${encodeURIComponent(adminPassword)}`);
-      if (!res.ok) throw new Error('Failed');
+      if (!res.ok) throw new Error('Ошибка');
       const data = await res.json();
 
       const s = data.summary;
@@ -784,7 +797,7 @@
   function renderDashboardLeads(leads) {
     const body = document.getElementById('dashboard-leads-body');
     if (!leads.length) {
-      body.innerHTML = '<div class="empty-state"><p>No leads yet</p></div>';
+      body.innerHTML = '<div class="empty-state"><p>Заявок еще нет</p></div>';
       return;
     }
     body.innerHTML = `
@@ -823,14 +836,14 @@
       const status = document.getElementById('leads-status-filter')?.value || 'all';
       const url = `${API_BASE}/get-leads?password=${encodeURIComponent(adminPassword)}&page=${page}&limit=25&status=${status}&search=${encodeURIComponent(search)}`;
       const res = await fetch(url);
-      if (!res.ok) throw new Error('Failed');
+      if (!res.ok) throw new Error('Ошибка');
       const data = await res.json();
       leadsTotal = data.total;
       allLeadsCache = data.leads || [];
 
       renderLeadsTable(data.leads || [], data.total, page);
     } catch {
-      body.innerHTML = '<tr><td colspan="9"><div class="empty-state"><p>Failed to load leads. Check connection.</p></div></td></tr>';
+      body.innerHTML = '<tr><td colspan="9"><div class="empty-state"><p>Ошибка загрузки заявок. Проверьте соединение.</p></div></td></tr>';
     }
   }
 
@@ -839,7 +852,7 @@
     document.getElementById('leads-count').textContent = `${total} total leads`;
 
     if (!leads.length) {
-      body.innerHTML = '<tr><td colspan="10"><div class="empty-state"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><p>No leads found</p></div></td></tr>';
+      body.innerHTML = '<tr><td colspan="10"><div class="empty-state"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><p>Заявки не найдены</p></div></td></tr>';
       return;
     }
 
@@ -872,7 +885,7 @@
   async function loadPayments() {
     try {
       const res = await fetch(`${API_BASE}/get-payments?password=${encodeURIComponent(adminPassword)}`);
-      if (!res.ok) throw new Error('Failed');
+      if (!res.ok) throw new Error('Ошибка');
       const data = await res.json();
 
       const s = data.summary;
@@ -884,7 +897,7 @@
       renderPaymentsTable(data.payments || []);
     } catch {
       document.getElementById('payments-table-body').innerHTML =
-        '<tr><td colspan="8"><div class="empty-state"><p>Failed to load payments.</p></div></td></tr>';
+        '<tr><td colspan="8"><div class="empty-state"><p>Ошибка загрузки платежей.</p></div></td></tr>';
     }
   }
 
@@ -920,79 +933,79 @@
     document.getElementById('modal-body').innerHTML = `
 
       <div class="modal-section">
-        <h4>Status & Payment</h4>
+        <h4>Статус и платеж</h4>
         <div class="modal-grid">
-          ${field('Payment Status', statusBadge(lead.status))}
-          ${field('Processing Status', `
+          ${field('Статус платежа', statusBadge(lead.status))}
+          ${field('Статус обработки', `
             <select onchange="updateProcessedStatus('${lead.id}', this.value)" style="padding: 6px 10px; border: 1.5px solid #e0e4ec; border-radius: 6px; font-size: 13px; font-weight: 500; cursor: pointer; background: #fff;">
               <option value="not_processed" ${lead.processed === 'not_processed' ? 'selected' : ''}>Не обработан</option>
               <option value="processed" ${lead.processed === 'processed' ? 'selected' : ''}>Обработан</option>
               <option value="duplicate" ${lead.processed === 'duplicate' ? 'selected' : ''}>Дубль</option>
             </select>
           `)}
-          ${field('Submitted', formatDate(lead.created_at))}
-          ${field('Amount Paid', lead.amount_paid ? '$' + (lead.amount_paid/100).toFixed(2) + ' ' + (lead.currency||'').toUpperCase() : '—')}
-          ${field('Paid At', lead.paid_at ? formatDate(lead.paid_at) : '—')}
-          ${field('Stripe Payment ID', `<span style="font-family:monospace;font-size:12px;">${lead.stripe_payment_intent_id || '—'}</span>`)}
+          ${field('Отправлено', formatDate(lead.created_at))}
+          ${field('Сумма оплачена', lead.amount_paid ? '$' + (lead.amount_paid/100).toFixed(2) + ' ' + (lead.currency||'').toUpperCase() : '—')}
+          ${field('Оплачено', lead.paid_at ? formatDate(lead.paid_at) : '—')}
+          ${field('ID платежа Stripe', `<span style="font-family:monospace;font-size:12px;">${lead.stripe_payment_intent_id || '—'}</span>`)}
         </div>
       </div>
 
       <div class="modal-section">
-        <h4>Passport Information</h4>
+        <h4>Информация о паспорте</h4>
         <div class="modal-grid">
-          ${field('Family Name', lead.family_name)}
-          ${field('First Name', lead.first_name)}
-          ${field('Middle Name', lead.middle_name)}
-          ${field('Passport Number', `<span style="font-family:monospace;">${lead.passport_number}</span>`)}
-          ${field('Nationality', lead.nationality)}
-          ${field('Date of Birth', lead.date_of_birth)}
+          ${field('Фамилия', lead.family_name)}
+          ${field('Имя', lead.first_name)}
+          ${field('Отчество', lead.middle_name)}
+          ${field('Номер паспорта', `<span style="font-family:monospace;">${lead.passport_number}</span>`)}
+          ${field('Гражданство', lead.nationality)}
+          ${field('Дата рождения', lead.date_of_birth)}
         </div>
       </div>
 
       <div class="modal-section">
-        <h4>Personal Details</h4>
+        <h4>Личные данные</h4>
         <div class="modal-grid">
-          ${field('Gender', lead.gender)}
-          ${field('Occupation', lead.occupation)}
-          ${field('Country of Residence', lead.country_of_residence)}
-          ${field('City', lead.city_of_residence)}
-          ${field('Phone', lead.phone_number)}
+          ${field('Пол', lead.gender)}
+          ${field('Род занятий', lead.occupation)}
+          ${field('Страна проживания', lead.country_of_residence)}
+          ${field('Город', lead.city_of_residence)}
+          ${field('Телефон', lead.phone_number)}
           ${field('Email', `<a href="mailto:${lead.tdac_email}" style="color:#4a90e2;">${lead.tdac_email}</a>`)}
         </div>
       </div>
 
       <div class="modal-section">
-        <h4>Arrival Information</h4>
+        <h4>Информация о прибытии</h4>
         <div class="modal-grid">
-          ${field('Arrival Date', lead.arrival_date)}
-          ${field('Flight / Vehicle No.', lead.flight_number)}
-          ${field('Mode of Transport', lead.mode_of_transport)}
-          ${field('Purpose of Travel', lead.purpose_of_travel)}
+          ${field('Дата прибытия', lead.arrival_date)}
+          ${field('Номер рейса / машины', lead.flight_number)}
+          ${field('Вид транспорта', lead.mode_of_transport)}
+          ${field('Цель путешествия', lead.purpose_of_travel)}
         </div>
       </div>
 
       <div class="modal-section">
-        <h4>Departure Information</h4>
+        <h4>Информация об убытии</h4>
         <div class="modal-grid">
-          ${field('Departure Date', lead.departure_date)}
-          ${field('Flight / Vehicle No.', lead.flight_number_departure)}
-          ${field('Mode of Transport', lead.mode_of_transport_departure)}
+          ${field('Дата убытия', lead.departure_date)}
+          ${field('Номер рейса / машины', lead.flight_number_departure)}
+          ${field('Вид транспорта', lead.mode_of_transport_departure)}
         </div>
       </div>
 
       <div class="modal-section">
-        <h4>Accommodation</h4>
+        <h4>Размещение</h4>
         <div class="modal-grid">
-          ${field('Transit Passenger', lead.transit_passenger ? 'Yes' : 'No')}
-          ${field('Accommodation Type', lead.accommodation_type)}
-          ${field('Address / Hotel', lead.accommodation_address, true)}
+          ${field('Пассажир в транзите', lead.transit_passenger ? 'Да' : 'Нет')}
+          ${field('Тип проживания', lead.accommodation_type)}
+          ${field('Адрес / отель', lead.accommodation_address, true)}
         </div>
       </div>
 
       <div class="modal-section" style="border-top: 1px solid #e0e4ec; padding-top: 16px; margin-top: 16px;">
-        <h4 style="color: #e53e3e; margin-bottom: 12px;">Actions</h4>
+        <h4 style="color: #e53e3e; margin-bottom: 12px;">Действия</h4>
         <button onclick="deleteLead('${lead.id}')" style="padding: 10px 16px; background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 14px;">
-          🗑️ Delete Lead
+          🗑️ Удалить заявку
         </button>
       </div>
     `;
@@ -1017,12 +1030,12 @@
     const data = await res.json();
     const leads = data.leads || [];
 
-    const headers = ['ID','Date','Status','Family Name','First Name','Middle Name','Passport','Nationality',
-      'Date of Birth','Gender','Occupation','Country','City','Phone','Email',
-      'Arrival Date','Flight No','Mode of Transport','Purpose',
-      'Departure Date','Flight No Departure','Mode Departure',
-      'Accommodation Type','Accommodation Address','Transit',
-      'Amount Paid','Paid At','Stripe ID'];
+    const headers = ['ID','Дата','Статус','Фамилия','Имя','Отчество','Паспорт','Гражданство',
+      'Дата рождения','Пол','Род занятий','Страна','Город','Телефон','Email',
+      'Дата прибытия','Номер рейса','Вид транспорта','Цель',
+      'Дата убытия','Номер рейса убыл','Вид транспорта убыл',
+      'Тип проживания','Адрес проживания','Транзит',
+      'Сумма оплачена','Оплачено','ID Stripe'];
 
     const rows = leads.map(l => [
       l.id, formatDate(l.created_at), l.status,
@@ -1031,7 +1044,7 @@
       l.country_of_residence, l.city_of_residence, l.phone_number, l.tdac_email,
       l.arrival_date, l.flight_number || '', l.mode_of_transport, l.purpose_of_travel,
       l.departure_date, l.flight_number_departure || '', l.mode_of_transport_departure,
-      l.accommodation_type || '', l.accommodation_address || '', l.transit_passenger ? 'Yes' : 'No',
+      l.accommodation_type || '', l.accommodation_address || '', l.transit_passenger ? 'Да' : 'Нет',
       l.amount_paid ? (l.amount_paid/100).toFixed(2) : '', l.paid_at ? formatDate(l.paid_at) : '',
       l.stripe_payment_intent_id || ''
     ]);
@@ -1052,9 +1065,9 @@
 
   function statusBadge(status) {
     const map = {
-      pending: 'Pending', paid: 'Paid', processing: 'Processing',
-      completed: 'Completed', refunded: 'Refunded', cancelled: 'Cancelled',
-      failed: 'Failed', succeeded: 'Succeeded'
+      pending: 'В ожидании', paid: 'Оплачено', processing: 'Обработка',
+      completed: 'Завершено', refunded: 'Возвращено', cancelled: 'Отменено',
+      failed: 'Ошибка', succeeded: 'Успешно'
     };
     return `<span class="status-badge status-${status}">${map[status] || status}</span>`;
   }
@@ -1070,7 +1083,7 @@
 
   // ── DELETE LEAD ──────────────────────────────────────────────
   async function deleteLead(leadId) {
-    if (!confirm('Are you sure you want to delete this lead? This action cannot be undone.')) {
+    if (!confirm('Вы уверены, что хотите удалить эту заявку? Это действие нельзя отменить.')) {
       return;
     }
 
@@ -1084,10 +1097,10 @@
       const result = await response.json();
 
       if (!response.ok || !result.success) {
-        throw new Error(result.error || 'Failed to delete lead');
+        throw new Error(result.error || 'Ошибка удаления заявки');
       }
 
-      alert('Lead deleted successfully');
+      alert('Заявка успешно удалена');
       closeModal();
       loadLeads(leadsPage);
     } catch (err) {
@@ -1108,7 +1121,7 @@
       const result = await response.json();
 
       if (!response.ok || !result.success) {
-        throw new Error(result.error || 'Failed to update lead');
+        throw new Error(result.error || 'Ошибка обновления заявки');
       }
 
       // Just reload the table, don't open the modal
@@ -1154,6 +1167,9 @@
       </div>
     `;
   }
+
+  // ── INITIALIZE SESSION ON PAGE LOAD ────────────────────
+  initSession();
 </script>
 </body>
 </html>
