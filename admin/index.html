@@ -631,11 +631,12 @@
               <th>Email</th>
               <th>Arrival</th>
               <th>Status</th>
+              <th>Processed</th>
               <th>Amount</th>
             </tr>
           </thead>
           <tbody id="leads-table-body">
-            <tr><td colspan="9"><div class="loading"><span class="spinner"></span>Loading...</div></td></tr>
+            <tr><td colspan="10"><div class="loading"><span class="spinner"></span>Loading...</div></td></tr>
           </tbody>
         </table>
         <div class="pagination">
@@ -836,7 +837,7 @@
     document.getElementById('leads-count').textContent = `${total} total leads`;
 
     if (!leads.length) {
-      body.innerHTML = '<tr><td colspan="9"><div class="empty-state"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><p>No leads found</p></div></td></tr>';
+      body.innerHTML = '<tr><td colspan="10"><div class="empty-state"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><p>No leads found</p></div></td></tr>';
       return;
     }
 
@@ -853,6 +854,7 @@
         <td class="td-email">${l.tdac_email}</td>
         <td>${l.arrival_date || '—'}</td>
         <td>${statusBadge(l.status)}</td>
+        <td><span class="status-badge ${l.processed ? 'status-succeeded' : 'status-failed'}" style="cursor:pointer;" onclick="event.stopPropagation(); toggleProcessed('${l.id}', ${l.processed})">${l.processed ? '✓ Yes' : '✗ No'}</span></td>
         <td class="amount">${l.amount_paid ? '$' + (l.amount_paid/100).toFixed(2) : '—'}</td>
       </tr>
     `).join('');
@@ -918,7 +920,10 @@
       <div class="modal-section">
         <h4>Status & Payment</h4>
         <div class="modal-grid">
-          ${field('Status', statusBadge(lead.status))}
+          ${field('Payment Status', statusBadge(lead.status))}
+          ${field('Processed', `<button style="padding: 6px 12px; background: ${lead.processed ? '#d1fae5' : '#fee2e2'}; color: ${lead.processed ? '#065f46' : '#991b1b'}; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 13px;" onclick="toggleProcessed('${lead.id}', ${lead.processed})">
+            ${lead.processed ? '✓ Yes' : '✗ No'}
+          </button>`)}
           ${field('Submitted', formatDate(lead.created_at))}
           ${field('Amount Paid', lead.amount_paid ? '$' + (lead.amount_paid/100).toFixed(2) + ' ' + (lead.currency||'').toUpperCase() : '—')}
           ${field('Paid At', lead.paid_at ? formatDate(lead.paid_at) : '—')}
@@ -976,6 +981,13 @@
           ${field('Accommodation Type', lead.accommodation_type)}
           ${field('Address / Hotel', lead.accommodation_address, true)}
         </div>
+      </div>
+
+      <div class="modal-section" style="border-top: 1px solid #e0e4ec; padding-top: 16px; margin-top: 16px;">
+        <h4 style="color: #e53e3e; margin-bottom: 12px;">Actions</h4>
+        <button onclick="deleteLead('${lead.id}')" style="padding: 10px 16px; background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 14px;">
+          🗑️ Delete Lead
+        </button>
       </div>
     `;
     document.getElementById('lead-modal').classList.add('open');
@@ -1048,6 +1060,58 @@
   function debounceSearch() {
     clearTimeout(searchTimer);
     searchTimer = setTimeout(() => loadLeads(1), 400);
+  }
+
+  // ── DELETE LEAD ──────────────────────────────────────────────
+  async function deleteLead(leadId) {
+    if (!confirm('Are you sure you want to delete this lead? This action cannot be undone.')) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`${API_BASE}/delete-lead`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ leadId, password: adminPassword })
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.error || 'Failed to delete lead');
+      }
+
+      alert('Lead deleted successfully');
+      closeModal();
+      loadLeads(leadsPage);
+    } catch (err) {
+      console.error('deleteLead error:', err);
+      alert('⚠️ Error: ' + err.message);
+    }
+  }
+
+  // ── TOGGLE PROCESSED ─────────────────────────────────────────
+  async function toggleProcessed(leadId, currentValue) {
+    try {
+      const response = await fetch(`${API_BASE}/update-lead?password=${encodeURIComponent(adminPassword)}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ leadId, processed: !currentValue })
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.error || 'Failed to update lead');
+      }
+
+      // Reload modal with updated data
+      openLead(result.lead);
+      loadLeads(leadsPage);
+    } catch (err) {
+      console.error('toggleProcessed error:', err);
+      alert('⚠️ Error: ' + err.message);
+    }
   }
 </script>
 </body>

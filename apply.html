@@ -1635,37 +1635,51 @@
                 return;
             }
 
-            const formData = new FormData(form);
-
-            // Build payload — field names match apply.html form + api/submit-application.js
-            const data = {
-                familyName:                 formData.get('familyName'),
-                firstName:                  formData.get('firstName'),
-                middleName:                 formData.get('middleName') || null,
-                passportNumber:             formData.get('passportNumber'),
-                nationality:                formData.get('nationality'),
-                dateOfBirth:                formData.get('dateOfBirth'),
-                occupation:                 formData.get('occupation'),
-                gender:                     formData.get('gender'),
-                countryOfResidence:         formData.get('countryOfResidence'),
-                cityOfResidence:            formData.get('cityOfResidence'),
-                phoneNumber:                formData.get('phoneNumber'),
-                arrivalDate:                formData.get('arrivalDate'),
-                purposeOfTravel:            formData.get('purposeOfTravel'),
-                othersPurpose:              formData.get('othersPurpose') || null,
-                modeOfTransport:            formData.get('modeOfTransport'),
-                othersTransport:            formData.get('othersTransport') || null,
-                flightNumber:               formData.get('flightNumber') || null,
-                departureDate:              formData.get('departureDate'),
-                modeOfTransportDeparture:   formData.get('modeOfTransportDeparture'),
-                othersTransportDeparture:   formData.get('othersTransportDeparture') || null,
-                flightNumberDeparture:      formData.get('flightNumberDeparture') || null,
-                transitPassenger:           !!form.querySelector('[name="transitPassenger"]')?.checked,
-                accommodationType:          formData.get('accommodationType') || null,
-                othersAccommodation:        formData.get('othersAccommodation') || null,
-                accommodationAddress:       formData.get('accommodationAddress') || null,
-                tdacEmail:                  formData.get('tdacEmail')
+            // Collect common trip data (shared by all applicants)
+            const tripData = {
+                arrivalDate:                document.querySelector('input[name="arrivalDate"]').value,
+                purposeOfTravel:            document.querySelector('select[name="purposeOfTravel"]').value,
+                othersPurpose:              document.querySelector('input[name="othersPurpose"]')?.value || null,
+                modeOfTransport:            document.querySelector('select[name="modeOfTransport"]').value,
+                othersTransport:            document.querySelector('input[name="othersTransport"]')?.value || null,
+                flightNumber:               document.querySelector('input[name="flightNumber"]')?.value || null,
+                departureDate:              document.querySelector('input[name="departureDate"]').value,
+                modeOfTransportDeparture:   document.querySelector('select[name="modeOfTransportDeparture"]').value,
+                othersTransportDeparture:   document.querySelector('input[name="othersTransportDeparture"]')?.value || null,
+                flightNumberDeparture:      document.querySelector('input[name="flightNumberDeparture"]')?.value || null,
+                transitPassenger:           !!document.querySelector('input[name="transitPassenger"]')?.checked,
+                accommodationType:          document.querySelector('select[name="accommodationType"]')?.value || null,
+                othersAccommodation:        document.querySelector('input[name="othersAccommodation"]')?.value || null,
+                accommodationAddress:       document.querySelector('textarea[name="accommodationAddress"]')?.value || null,
+                tdacEmail:                  document.querySelector('input[name="tdacEmail"]').value
             };
+
+            // Collect individual applicant data
+            const applicantBlocks = document.querySelectorAll('#applicants-container .applicant-block');
+            const applicants = [];
+
+            applicantBlocks.forEach(block => {
+                const suffix = block.dataset.applicant;
+                const familyNameField = block.querySelector(`input[name="familyName${suffix === '1' ? '' : '_' + suffix}"]`);
+                const firstNameField = block.querySelector(`input[name="firstName${suffix === '1' ? '' : '_' + suffix}"]`);
+
+                const applicantData = {
+                    familyName:         familyNameField?.value,
+                    firstName:          firstNameField?.value,
+                    middleName:         block.querySelector(`input[name="middleName${suffix === '1' ? '' : '_' + suffix}"]`)?.value || null,
+                    passportNumber:     block.querySelector(`input[name="passportNumber${suffix === '1' ? '' : '_' + suffix}"]`)?.value,
+                    nationality:        block.querySelector(`input[name="nationality${suffix === '1' ? '' : '_' + suffix}"]`)?.value,
+                    dateOfBirth:        block.querySelector(`input[name="dateOfBirth${suffix === '1' ? '' : '_' + suffix}"]`)?.value,
+                    occupation:         block.querySelector(`input[name="occupation${suffix === '1' ? '' : '_' + suffix}"]`)?.value,
+                    gender:             block.querySelector(`input[name="gender${suffix === '1' ? '' : '_' + suffix}"]:checked`)?.value,
+                    countryOfResidence: block.querySelector(`input[name="countryOfResidence${suffix === '1' ? '' : '_' + suffix}"]`)?.value,
+                    cityOfResidence:    block.querySelector(`input[name="cityOfResidence${suffix === '1' ? '' : '_' + suffix}"]`)?.value,
+                    phoneNumber:        block.querySelector(`input[name="phoneNumber${suffix === '1' ? '' : '_' + suffix}"]`)?.value,
+                    ...tripData
+                };
+
+                applicants.push(applicantData);
+            });
 
             // Update button to loading state
             const nextBtn = document.getElementById('nextBtn');
@@ -1677,7 +1691,7 @@
                 const response = await fetch('/api/submit-application', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
+                    body: JSON.stringify({ applicants })
                 });
 
                 const result = await response.json();
