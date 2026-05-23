@@ -1,5 +1,5 @@
 // POST /api/submit-application
-// Saves multiple leads to Supabase (no Stripe yet)
+// Saves lead to Supabase (no Stripe yet)
 
 const { createClient } = require('@supabase/supabase-js');
 
@@ -17,51 +17,43 @@ module.exports = async (req, res) => {
       process.env.SUPABASE_SERVICE_KEY
     );
 
-    const { applicants } = req.body;
+    const data = req.body;
 
-    if (!Array.isArray(applicants) || applicants.length === 0) {
-      return res.status(400).json({ error: 'No applicants provided' });
-    }
-
-    // Convert each applicant to database format
-    const leadsToInsert = applicants.map(applicant => ({
-      family_name: applicant.familyName,
-      first_name: applicant.firstName,
-      middle_name: applicant.middleName || null,
-      passport_number: applicant.passportNumber,
-      nationality: applicant.nationality,
-      date_of_birth: applicant.dateOfBirth,
-      occupation: applicant.occupation,
-      gender: applicant.gender,
-      country_of_residence: applicant.countryOfResidence,
-      city_of_residence: applicant.cityOfResidence,
-      phone_number: applicant.phoneNumber,
-      arrival_date: applicant.arrivalDate,
-      purpose_of_travel: applicant.purposeOfTravel || applicant.othersPurpose,
-      mode_of_transport: applicant.modeOfTransport || applicant.othersTransport,
-      flight_number: applicant.flightNumber || null,
-      departure_date: applicant.departureDate,
-      mode_of_transport_departure: applicant.modeOfTransportDeparture || applicant.othersTransportDeparture,
-      flight_number_departure: applicant.flightNumberDeparture || null,
-      accommodation_type: applicant.transitPassenger ? 'transit' : (applicant.accommodationType || applicant.othersAccommodation),
-      accommodation_address: applicant.accommodationAddress || null,
-      transit_passenger: applicant.transitPassenger === true || applicant.transitPassenger === 'true',
-      tdac_email: applicant.tdacEmail,
-      status: 'pending'
-    }));
-
-    // Insert all applicants at once
-    const { data: leads, error } = await supabase
+    const { data: lead, error } = await supabase
       .from('leads')
-      .insert(leadsToInsert)
-      .select();
+      .insert({
+        family_name: data.familyName,
+        first_name: data.firstName,
+        middle_name: data.middleName || null,
+        passport_number: data.passportNumber,
+        nationality: data.nationality,
+        date_of_birth: data.dateOfBirth,
+        occupation: data.occupation,
+        gender: data.gender,
+        country_of_residence: data.countryOfResidence,
+        city_of_residence: data.cityOfResidence,
+        phone_number: data.phoneNumber,
+        arrival_date: data.arrivalDate,
+        purpose_of_travel: data.purposeOfTravel || data.othersPurpose,
+        mode_of_transport: data.modeOfTransport || data.othersTransport,
+        flight_number: data.flightNumber || null,
+        departure_date: data.departureDate,
+        mode_of_transport_departure: data.modeOfTransportDeparture || data.othersTransportDeparture,
+        flight_number_departure: data.flightNumberDeparture || null,
+        accommodation_type: data.transitPassenger ? 'transit' : (data.accommodationType || data.othersAccommodation),
+        accommodation_address: data.accommodationAddress || null,
+        transit_passenger: data.transitPassenger === true || data.transitPassenger === 'true',
+        tdac_email: data.tdacEmail,
+        status: 'pending'
+      })
+      .select()
+      .single();
 
     if (error) throw new Error(`DB error: ${error.message}`);
 
     return res.status(200).json({
       success: true,
-      leads_count: leads.length,
-      lead_ids: leads.map(l => l.id),
+      lead_id: lead.id,
       // No Stripe yet - payment will be added later
       client_secret: null
     });
