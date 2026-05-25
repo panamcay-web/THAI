@@ -1,5 +1,8 @@
 {
- "name": "App",
+ "name": "Thailand Digital Arrival Card",
+ "short_name": "TDAC",
+ "background_color": "#ffffff",
+ "theme_color": "#1a1f36",
  "icons": [
   {
    "src": "\/android-icon-36x36.png",
