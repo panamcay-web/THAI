@@ -42,8 +42,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 44px;
             line-height: 1;
+        }
+
+        .icon svg {
+            width: 48px;
+            height: 48px;
         }
 
         h1 {
@@ -94,10 +98,14 @@
 </head>
 <body>
     <div class="card">
-        <div class="icon" aria-hidden="true">✅</div>
+        <div class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 6L9 17L4 12" stroke="#16a766" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
         <h1>Payment Successful!</h1>
         <p>Thank you. Your Thailand Digital Arrival Card (TDAC) application has been received and your payment is confirmed.</p>
-        <p>We'll review your application and send the approved TDAC to your email within 24 hours.</p>
+        <p>We'll review your application and send the approved TDAC to your email within 15 minutes.</p>
 
         <div class="divider"></div>
         <p class="note">A payment receipt has been sent to your email by Stripe. If you have any questions, contact us at <strong>support@thaisupportcenter.com</strong>.</p>
