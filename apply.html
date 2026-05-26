@@ -1720,19 +1720,38 @@
                     throw new Error(result.error || 'Server error. Please try again.');
                 }
 
-                // If Stripe is ready - open payment modal
-                // If not yet - show success screen directly
-                if (result.client_secret) {
-                    openPaymentModal(result.client_secret);
-                } else {
-                    // Stripe not connected yet - show success screen
-                    showPaymentSuccess();
+                // Leads saved to the admin panel. Now create a Stripe Checkout
+                // Session and send the user to Stripe's hosted payment page.
+                nextBtn.textContent = 'Redirecting to payment…';
+
+                const firstApplicant = applicants[0] || {};
+                const csResponse = await fetch('/api/create-checkout-session', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        leadIds: result.lead_ids,
+                        email: tripData.tdacEmail,
+                        name: [firstApplicant.firstName, firstApplicant.familyName].filter(Boolean).join(' ')
+                    })
+                });
+
+                const csData = await csResponse.json();
+
+                if (!csResponse.ok || !csData.url) {
+                    throw new Error(csData.error || 'Could not start payment. Please try again.');
                 }
+
+                // Clear saved form state before leaving the page.
+                localStorage.removeItem('tdacFormState');
+                localStorage.removeItem('tdacCurrentStep');
+
+                // Redirect to Stripe's hosted payment page.
+                window.location.href = csData.url;
+                return;
 
             } catch (err) {
                 console.error('submitApplication error:', err);
                 alert('⚠️ Error: ' + err.message);
-            } finally {
                 nextBtn.disabled = false;
                 nextBtn.textContent = origLabel;
             }
@@ -2844,8 +2863,10 @@
 
     <script>
         // ─── Stripe Configuration ────────────────────────────────────────────
-        // Replace with your real publishable key when you have it
-        const STRIPE_PUBLISHABLE_KEY = 'pk_test_YOUR_STRIPE_PUBLISHABLE_KEY';
+        // Test publishable key (safe to expose). Payment now uses Stripe's
+        // hosted Checkout page via /api/create-checkout-session, so this is
+        // only used by the legacy redirect-status check below.
+        const STRIPE_PUBLISHABLE_KEY = 'pk_test_51RO0KjGdW5ezKj5FZ1SZm8oBuSKWQAO3yeAGb6NxMX5FayDgOCfqO7giD6iv890rqtcPiW8Vfvv0m46gFoVQs2Qx00BOxsx4gU';
 
         let _stripe = null;
         let _elements = null;
