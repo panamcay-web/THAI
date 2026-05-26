@@ -32,6 +32,18 @@ module.exports = async (req, res) => {
       return res.status(400).json({ error: 'Lead ID is required' });
     }
 
+    // A paid lead has rows in the `payments` table that reference it
+    // (payments.lead_id -> leads.id, with no ON DELETE CASCADE). Postgres blocks
+    // deleting the lead while those rows exist — which is why previously only
+    // pending leads (which have no payment rows) could be deleted. Remove the
+    // dependent payment rows first, then delete the lead itself.
+    const { error: payErr } = await supabase
+      .from('payments')
+      .delete()
+      .eq('lead_id', leadId);
+
+    if (payErr) throw new Error(`DB error (payments): ${payErr.message}`);
+
     const { error } = await supabase
       .from('leads')
       .delete()
