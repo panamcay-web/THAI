@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18175982317"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'AW-18175982317');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thailand Pass — TDAC Application</title>
@@ -296,6 +305,94 @@
             line-height: 1.6;
             color: #6b7190;
             text-align: center;
+        }
+
+        /* ---- Compare: Do it yourself vs TDAC ---- */
+        .compare-section { padding: 80px 48px 60px; }
+
+        .compare-section h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a1f36;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .compare-notice {
+            max-width: 1000px;
+            margin: 0 auto 40px;
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            background: #fef9ec;
+            border: 1px solid #f3e3b3;
+            border-left: 4px solid #e0a516;
+            border-radius: 10px;
+            padding: 18px 22px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #5c4a17;
+        }
+        .compare-notice svg { flex: 0 0 auto; width: 22px; height: 22px; color: #d99e0b; margin-top: 1px; }
+        .compare-notice strong { color: #1a1f36; }
+        .compare-notice a { color: #1a1f36; font-weight: 600; }
+
+        .compare-grid {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            align-items: stretch;
+        }
+
+        .compare-card { border-radius: 16px; padding: 40px 36px; }
+        .compare-card.diy { background: #fff; border: 1px solid #e0e2ea; }
+        .compare-card.smart { background: #1a1f36; color: #fff; }
+
+        .compare-head { text-align: center; margin-bottom: 32px; }
+        .compare-icon {
+            width: 56px; height: 56px;
+            margin: 0 auto 16px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 14px;
+        }
+        .compare-icon svg { width: 28px; height: 28px; }
+        .compare-card.diy .compare-icon { background: #f0f1f5; }
+        .compare-card.diy .compare-icon svg { color: #9aa0b4; }
+        .compare-card.smart .compare-icon { background: rgba(255,255,255,0.12); }
+        .compare-card.smart .compare-icon svg { color: #fff; }
+
+        .compare-card h3 { font-size: 24px; font-weight: 700; color: #1a1f36; margin-bottom: 6px; }
+        .compare-card.smart h3 { color: #fff; }
+        .compare-sub { font-size: 15px; color: #8a90a6; }
+        .compare-card.smart .compare-sub { color: #aeb4cc; }
+
+        .compare-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 20px; }
+        .compare-list li { display: flex; gap: 14px; font-size: 15px; line-height: 1.55; }
+        .compare-list .ic { flex: 0 0 auto; width: 22px; height: 22px; margin-top: 1px; }
+        .compare-card.diy .compare-list li { color: #4a5068; }
+        .compare-card.diy .ic { color: #c0c4d4; }
+        .compare-card.smart .compare-list li { color: #e7e9f2; }
+        .compare-card.smart .ic { color: #5fd99a; }
+
+        .compare-cta {
+            display: block; width: 100%; box-sizing: border-box; text-align: center;
+            margin-top: 32px;
+            background: #fff; color: #1a1f36;
+            font-size: 16px; font-weight: 700;
+            padding: 16px 24px; border-radius: 999px;
+            text-decoration: none;
+            transition: background .2s;
+        }
+        .compare-cta:hover { background: #eef0f6; }
+
+        @media (max-width: 768px) {
+            .compare-section { padding: 48px 20px; }
+            .compare-section h2 { font-size: 24px; }
+            .compare-grid { grid-template-columns: 1fr; }
+            .compare-card { padding: 32px 24px; }
+            .compare-notice { font-size: 13px; padding: 16px 18px; }
         }
 
         .faq-section {
@@ -1104,6 +1201,64 @@
     </div>
     <div class="show-all-btn">
         <button onclick="toggleCountries()">Show all countries</button>
+    </div>
+</section>
+
+<!-- Do it yourself vs TDAC -->
+<section class="compare-section">
+    <h2>Do it yourself, or the smart way?</h2>
+
+    <div class="compare-notice">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12 9v4M12 17h.01" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div>
+            <strong>IMPORTANT NOTICE:</strong> This website is owned and operated by <strong>TechnoDucks Inc</strong>, a private agency. We are <strong>not</strong> affiliated with any government or official entity. We charge a professional service fee for our management and assistance services, which is in addition to any mandatory government fees. You may apply directly through the official Thailand Digital Arrival Card portal (<a href="https://tdac.immigration.go.th" target="_blank" rel="noopener">tdac.immigration.go.th</a>) without our assistance and fees.
+        </div>
+    </div>
+
+    <div class="compare-grid">
+        <!-- Do it yourself -->
+        <div class="compare-card diy">
+            <div class="compare-head">
+                <div class="compare-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <circle cx="12" cy="12" r="9"/>
+                        <path d="M3 12h18" stroke-linecap="round"/>
+                        <path d="M12 3c2.6 2.7 2.6 15.3 0 18M12 3c-2.6 2.7-2.6 15.3 0 18" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <h3>Do it yourself</h3>
+                <div class="compare-sub">The traditional approach</div>
+            </div>
+            <ul class="compare-list">
+                <li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Government sites often fail — errors, downtime, slow pages — and instructions are scattered.</span></li>
+                <li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Without expert guidance, small mistakes can turn into rejections or travel delays.</span></li>
+                <li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Unclear security standards may leave personal data exposed to unnecessary risk.</span></li>
+                <li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Family/group submissions are confusing and force repetitive, duplicate data entry.</span></li>
+                <li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Few real-time checks; typos and missing fields show up only after you submit.</span></li>
+            </ul>
+        </div>
+
+        <!-- The smart way -->
+        <div class="compare-card smart">
+            <div class="compare-head">
+                <div class="compare-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/></svg>
+                </div>
+                <h3>TDAC Thailand</h3>
+                <div class="compare-sub">The smart way</div>
+            </div>
+            <ul class="compare-list">
+                <li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Clear, step-by-step guidance tailored to your destination and document type.</span></li>
+                <li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>24/7 expert support via chat and email — real humans, not bots.</span></li>
+                <li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Strong encryption and strict privacy controls to safeguard your information.</span></li>
+                <li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Add companions in one streamlined flow; shared details are prefilled for you.</span></li>
+                <li><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Live validation and a pre-submission review to catch errors before they cost you.</span></li>
+            </ul>
+            <a href="apply.html" class="compare-cta">Apply Now</a>
+        </div>
     </div>
 </section>
 

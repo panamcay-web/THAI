@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18175982317"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'AW-18175982317');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thailand TDAC Application Form</title>
@@ -2863,10 +2872,10 @@
 
     <script>
         // ─── Stripe Configuration ────────────────────────────────────────────
-        // Test publishable key (safe to expose). Payment now uses Stripe's
+        // Live publishable key (safe to expose). Payment now uses Stripe's
         // hosted Checkout page via /api/create-checkout-session, so this is
         // only used by the legacy redirect-status check below.
-        const STRIPE_PUBLISHABLE_KEY = 'pk_test_51RO0KjGdW5ezKj5FZ1SZm8oBuSKWQAO3yeAGb6NxMX5FayDgOCfqO7giD6iv890rqtcPiW8Vfvv0m46gFoVQs2Qx00BOxsx4gU';
+        const STRIPE_PUBLISHABLE_KEY = 'pk_live_51RO0KeKGUck1kPn2O2BpfRogyXFPSlhclc1OynK2dU4W3LSkdz6sl5BcuWSTerQQrywLK7CsS1n1KT7Q5C1Pyyxb00mM5F3uO6';
 
         let _stripe = null;
         let _elements = null;
